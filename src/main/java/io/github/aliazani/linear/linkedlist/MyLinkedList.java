@@ -126,7 +126,7 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
 
     private LinkedListNode<N> getPrevious(LinkedListNode<N> node) {
         for (LinkedListNode<N> eachNode : this)
-            if (eachNode.getNext() == node) return eachNode;
+            if (eachNode.getNext().equals(node)) return eachNode;
 
         return null;
     }
@@ -231,7 +231,7 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
         LinkedListNode<N> secondNode = first;
 
         secondNode = createDistanceFromFirst(k, secondNode);
-        while (secondNode != last) {
+        while (!secondNode.equals(last)) {
             firstNode = firstNode.getNext();
             secondNode = secondNode.getNext();
         }
@@ -293,7 +293,7 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
             slow = slow.getNext();
             fast = fast.getNext().getNext();
 
-            if (slow == fast) return true;
+            if (slow.equals(fast)) return true;
         }
 
         return false;
