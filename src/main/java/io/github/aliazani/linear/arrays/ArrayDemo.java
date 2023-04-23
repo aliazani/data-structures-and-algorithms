@@ -32,6 +32,7 @@ public class ArrayDemo {
         numbers2.insert(2);
         log.info(MessageFormat.format("numbers 1 intersect numbers 2: {0}", numbers2.intersect(numbers1)));
     }
+
     public void showJavaImplementationOfArray() {
         log.warn("showJavaImplementationOfArray");
 
