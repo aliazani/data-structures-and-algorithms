@@ -4,13 +4,13 @@ import java.util.Stack;
 
 public class MinStack<T extends Comparable<T>> {
     private final Stack<T> stack = new Stack();
-    private final Stack<T> minStack = new Stack();
+    private final Stack<T> minTrackingStack = new Stack();
 
     public void push(T item) {
         stack.push(item);
 
-        if (minStack.isEmpty() || isLessThanOrEqualToMin(item))
-            minStack.push(item);
+        if (minTrackingStack.isEmpty() || isLessThanOrEqualToMin(item))
+            minTrackingStack.push(item);
     }
 
     public T pop() {
@@ -19,17 +19,17 @@ public class MinStack<T extends Comparable<T>> {
 
         T top = stack.pop();
 
-        if (minStack.peek().equals(top))
-            minStack.pop();
+        if (minTrackingStack.peek().equals(top))
+            minTrackingStack.pop();
 
         return top;
     }
 
     public T min() {
-        return minStack.peek();
+        return minTrackingStack.peek();
     }
 
     private boolean isLessThanOrEqualToMin(T item) {
-        return item.compareTo(minStack.peek()) <= 0;
+        return item.compareTo(minTrackingStack.peek()) <= 0;
     }
 }
