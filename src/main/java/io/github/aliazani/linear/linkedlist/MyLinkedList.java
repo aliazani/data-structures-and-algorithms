@@ -300,11 +300,11 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
     }
 
     /**
-     * Returns the LinkedListNode<N> object at the specified index in this LinkedList.
+     * Returns the node at the specified index in the linked list.
      *
-     * @param index the index of the element to return
-     * @return the LinkedListNode<N> object at the specified index in this LinkedList, or null if the index is out of range
-     * @throws IndexOutOfBoundsException if the index is negative or greater than or equal to the size of this LinkedList
+     * @param index the index of the node to get
+     * @return the node at the specified index
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size())
      */
     public LinkedListNode<N> getNode(int index) {
         int i = 0;
@@ -315,11 +315,11 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
     }
 
     /**
-     * Returns the N object at the specified index in this LinkedList.
+     * Returns the value of the node at the specified index in the linked list.
      *
-     * @param index the index of the element to return
-     * @return the N object at the specified index in this LinkedList, or null if the index is out of range
-     * @throws IndexOutOfBoundsException if the index is negative or greater than or equal to the size of this LinkedList
+     * @param index the index of the node to get the value of
+     * @return the value of the node at the specified index
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size())
      */
     public N getNodeValue(int index) {
         int i = 0;
