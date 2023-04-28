@@ -308,8 +308,24 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
      */
     public LinkedListNode<N> getNode(int index) {
         int i = 0;
+        if (size == 1 && index == 0) return first;
         for (LinkedListNode<N> node : this)
             if (i++ == index) return node;
+        throw new IndexOutOfBoundsException();
+    }
+
+    /**
+     * Returns the N object at the specified index in this LinkedList.
+     *
+     * @param index the index of the element to return
+     * @return the N object at the specified index in this LinkedList, or null if the index is out of range
+     * @throws IndexOutOfBoundsException if the index is negative or greater than or equal to the size of this LinkedList
+     */
+    public N getNodeValue(int index) {
+        int i = 0;
+        if (size == 1 && index == 0) return first.getValue();
+        for (LinkedListNode<N> node : this)
+            if (i++ == index) return node.getValue();
         throw new IndexOutOfBoundsException();
     }
 
