@@ -71,19 +71,39 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
         size++;
     }
 
+    /**
+     * Checks if the linked list is empty.
+     *
+     * @return true if the list is empty, false otherwise.
+     */
     private boolean isEmpty() {
         return first == null;
     }
 
+    /**
+     * Inserts a new node at the beginning of an empty linked list.
+     *
+     * @param node the new node to be inserted.
+     */
     private void insertNewNodeToEmptyLinkedList(LinkedListNode<N> node) {
         first = last = node;
     }
 
+    /**
+     * Inserts a new node at the end of the linked list.
+     *
+     * @param node the new node to be inserted.
+     */
     private void insertNewNodeAtTheEnd(LinkedListNode<N> node) {
         last.setNext(node);
         last = node;
     }
 
+    /**
+     * Inserts a new node at the beginning of the linked list.
+     *
+     * @param node the new node to be inserted.
+     */
     private void insertNewNodeAtTheBeginning(LinkedListNode<N> node) {
         node.setNext(first);
         first = node;
@@ -102,6 +122,11 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
         size--;
     }
 
+    /**
+     * This method replaces the first node of the linked list with the second node.
+     * It does so by setting the next node of the first node to null and then setting the first node to be the second node.
+     * Note: This method assumes that there are at least two nodes in the linked list.
+     */
     private void replaceFirstNodeWithSecondNode() {
         LinkedListNode<N> second = first.getNext();
         first.setNext(null);
@@ -120,10 +145,21 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
         size--;
     }
 
+    /**
+     * Checks if the linked-list has only one node.
+     *
+     * @return true if the list has only one node, false otherwise
+     */
     private boolean hasOneItem() {
         return first.equals(last);
     }
 
+    /**
+     * Returns the previous node of the given node in the linked list.
+     *
+     * @param node the node whose previous node needs to be found
+     * @return the previous node of the given node, or null if the given node is the first node in the linked list
+     */
     private LinkedListNode<N> getPrevious(LinkedListNode<N> node) {
         for (LinkedListNode<N> eachNode : this)
             if (eachNode.getNext().equals(node)) return eachNode;
@@ -131,7 +167,12 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
         return null;
     }
 
-
+    /**
+     * Replaces the last node in the linked list with its previous node.
+     *
+     * @param previous the previous node of the last node in the linked list
+     * @throws NullPointerException if the previous node is null
+     */
     private void replaceTheLastNodeWithPrevious(LinkedListNode<N> previous) {
         if (previous == null) throw new NullPointerException();
 
@@ -209,6 +250,12 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
         swapFirstAndLast(previous);
     }
 
+    /**
+     * Swaps the positions of the first and last nodes in the linked list.
+     *
+     * @param previous the node preceding the first node.
+     * @throws NullPointerException if previous node is null.
+     */
     private void swapFirstAndLast(LinkedListNode<N> previous) {
         last = first;
         last.setNext(null);
@@ -239,6 +286,13 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
         return firstNode.getValue();
     }
 
+    /**
+     * Creates a distance of k-1 nodes from the first node of the linked list to the second node.
+     *
+     * @param k          The position of the node from the first node of the linked list.
+     * @param secondNode The second node of the linked list.
+     * @return The second node with k-1 nodes distance from the first node of the linked list.
+     */
     private LinkedListNode<N> createDistanceFromFirst(int k, LinkedListNode<N> secondNode) {
         for (int n = 0; n < k - 1; n++)
             secondNode = secondNode.getNext();
@@ -271,11 +325,23 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
             return MessageFormat.format("Middle = {0}, {1}", middle.getValue(), middle.getNext().getValue());
     }
 
+    /**
+     * Returns a boolean indicating if the given LinkedListNode object is not at the end of the MyLinkedList object.
+     *
+     * @param end The LinkedListNode object to check.
+     * @return true if the given LinkedListNode object is not at the end of the MyLinkedList object, false otherwise.
+     */
     private boolean isNotAtTheEndOfTheList(LinkedListNode<N> end) {
         return !end.equals(last) &&
                 !end.getNext().equals(last);
     }
 
+    /**
+     * Returns a boolean indicating if the number of nodes in the MyLinkedList object is odd.
+     *
+     * @param end The last LinkedListNode object in the MyLinkedList object.
+     * @return true if the number of nodes in the MyLinkedList object is odd, false otherwise.
+     */
     private boolean isNumberOfNodeOdd(LinkedListNode<N> end) {
         return end.equals(last);
     }
@@ -345,6 +411,13 @@ public class MyLinkedList<N extends Comparable<N>> implements Iterable<LinkedLis
         return stringFormOfLinkedList.toString();
     }
 
+    /**
+     * Appends the value of each node in the MyLinkedList to a StringBuilder in the format "value -> ".
+     * <p>
+     * Does not append "->" after the last node's value.
+     *
+     * @param stringFormOfLinkedList The StringBuilder object to which the node values are appended.
+     */
     private void appendNodes(StringBuilder stringFormOfLinkedList) {
         for (LinkedListNode<N> node : this)
             if (node.getNext() != null)
