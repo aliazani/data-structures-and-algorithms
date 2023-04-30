@@ -1,20 +1,10 @@
 package io.github.aliazani.linear.linkedlist;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 /**
- * The LinkedListNode class represents a node in a linked list.
- * <p>
- * Each node contains a value of type N and a reference to the next node.
+ * Represents a node in a linked list.
  *
- * @param <N> the type of value stored in the node
+ * @param <T> the type of the value contained in the node.
  */
-@Getter
-@Setter
-@RequiredArgsConstructor
-class LinkedListNode<N> {
-    private final N value;
-    private LinkedListNode<N> next;
+public interface LinkedListNode<T> {
 }
