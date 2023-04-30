@@ -175,10 +175,10 @@ public class MySinglyLinkedList<N extends Comparable<N>> implements Iterable<Sin
         else if (index == size - 1) deleteLast();
         else {
             SinglyLinkedListNode<N> prevNode = getNode(index - 1);
-            SinglyLinkedListNode<N> currentNode = prevNode.getNext();
+            SinglyLinkedListNode<N> nodeToDelete = prevNode.getNext();
 
-            prevNode.setNext(currentNode.getNext());
-            currentNode.setNext(null);
+            prevNode.setNext(nodeToDelete.getNext());
+            nodeToDelete.setNext(null);
         }
 
         size--;
