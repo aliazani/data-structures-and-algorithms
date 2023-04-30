@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
+@DisplayName("Doubly Linked-List")
 class MyDoublyLinkedListTest {
     private MyDoublyLinkedList<Integer> myDoublyLinkedList;
 

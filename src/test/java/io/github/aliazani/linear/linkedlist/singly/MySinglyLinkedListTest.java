@@ -8,6 +8,7 @@ import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("Singly Linked-List")
 class MySinglyLinkedListTest {
     private MySinglyLinkedList<Integer> mySinglyLinkedListOfInteger;
     private MySinglyLinkedList<String> mySinglyLinkedListOfString;
