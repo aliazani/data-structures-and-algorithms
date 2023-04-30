@@ -103,9 +103,9 @@ public class MySinglyLinkedList<N extends Comparable<N>> implements Iterable<Sin
 
             previousNode.setNext(insertedNode);
             insertedNode.setNext(nodeAtIndex);
-        }
 
-        size++;
+            size++;
+        }
     }
 
     /**
@@ -180,9 +180,9 @@ public class MySinglyLinkedList<N extends Comparable<N>> implements Iterable<Sin
 
             prevNode.setNext(nodeToDelete.getNext());
             nodeToDelete.setNext(null);
-        }
 
-        size--;
+            size--;
+        }
     }
 
     /**

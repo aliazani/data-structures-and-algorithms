@@ -111,9 +111,9 @@ public class MyDoublyLinkedList<N extends Comparable<N>> implements Iterable<Dou
 
             previousNode.setNext(insertedNode);
             nodeAtIndex.setPrev(insertedNode);
-        }
 
-        size++;
+            size++;
+        }
     }
 
     /**
@@ -188,11 +188,10 @@ public class MyDoublyLinkedList<N extends Comparable<N>> implements Iterable<Dou
 
             nodeToDelete.setPrev(null);
             nodeToDelete.setNext(null);
+
+            size--;
         }
-
-        size--;
     }
-
 
     /**
      * Returns the index of the first occurrence of the specified element in this list,
