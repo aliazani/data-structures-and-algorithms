@@ -170,7 +170,7 @@ public class MySinglyLinkedList<N extends Comparable<N>> implements Iterable<Sin
      */
     @Override
     public void delete(int index) {
-        if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
 
         if (index == 0) deleteFirst();
         else if (index == size - 1) deleteLast();
