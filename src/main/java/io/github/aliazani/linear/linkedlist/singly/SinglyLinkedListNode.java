@@ -1,5 +1,6 @@
-package io.github.aliazani.linear.linkedlist;
+package io.github.aliazani.linear.linkedlist.singly;
 
+import io.github.aliazani.linear.linkedlist.LinkedListNode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

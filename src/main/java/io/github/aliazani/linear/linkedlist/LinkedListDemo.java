@@ -1,5 +1,7 @@
 package io.github.aliazani.linear.linkedlist;
 
+import io.github.aliazani.linear.linkedlist.doubly.MyDoublyLinkedList;
+import io.github.aliazani.linear.linkedlist.singly.MySinglyLinkedList;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.MessageFormat;

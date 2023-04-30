@@ -1,6 +1,7 @@
-package io.github.aliazani.linear.linkedlist;
+package io.github.aliazani.linear.linkedlist.singly;
 
 import io.github.aliazani.linear.arrays.MyArray;
+import io.github.aliazani.linear.linkedlist.MyLinkedList;
 
 import java.text.MessageFormat;
 import java.util.Iterator;

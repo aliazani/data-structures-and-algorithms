@@ -1,4 +1,4 @@
-package io.github.aliazani.linear.linkedlist;
+package io.github.aliazani.linear.linkedlist.singly;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
