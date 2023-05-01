@@ -237,16 +237,6 @@ public class MyDoublyLinkedList<N extends Comparable<N>> implements Iterable<Dou
     }
 
     /**
-     * Creates a loop in the doubly linked list by setting the next node of the last node to the first node
-     * and the previous node of the first node to the last node.
-     */
-    @Override
-    public void createWithLoop() {
-        last.setNext(first);
-        first.setPrev(last);
-    }
-
-    /**
      * Returns true if this linked list contains a loop, false otherwise.
      *
      * @return true if this linked list contains a loop, false otherwise

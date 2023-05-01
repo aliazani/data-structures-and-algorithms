@@ -21,8 +21,6 @@ public interface MyLinkedList<N extends Comparable<N>> {
 
     int size();
 
-    void createWithLoop();
-
     boolean hasLoop();
 
     MyArray<N> toArray();

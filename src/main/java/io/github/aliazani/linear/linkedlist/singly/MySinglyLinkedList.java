@@ -229,14 +229,6 @@ public class MySinglyLinkedList<N extends Comparable<N>> implements Iterable<Sin
     }
 
     /**
-     * Creates a loop in the linked list by setting the last node's "next" reference to the first node.
-     */
-    @Override
-    public void createWithLoop() {
-        last.setNext(first);
-    }
-
-    /**
      * Returns true if this linked list contains a loop, false otherwise.
      *
      * @return true if this linked list contains a loop, false otherwise
