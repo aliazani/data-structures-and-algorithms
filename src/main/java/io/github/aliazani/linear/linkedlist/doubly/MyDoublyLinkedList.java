@@ -91,7 +91,7 @@ public class MyDoublyLinkedList<N extends Comparable<N>> implements Iterable<Dou
      *
      * @param item  the element to be added to the list
      * @param index the index at which the element is to be inserted
-     * @throws IndexOutOfBoundsException if index is out of range (index < 0 || index > size())
+     * @throws IndexOutOfBoundsException if index is out of range (index {@literal <} 0 || index {@literal >} size())
      */
     @Override
     public void add(N item, int index) {
@@ -317,7 +317,7 @@ public class MyDoublyLinkedList<N extends Comparable<N>> implements Iterable<Dou
     /**
      * Returns the value of the k-th element from the end of this list.
      *
-     * @param k the distance from the end of the list (1 <= k <= size)
+     * @param k the distance from the end of the list (1 {@literal <}= k {@literal <}= size)
      * @return the value of the k-th element from the end of this list
      * @throws IllegalArgumentException if this list is empty or if k is greater than the size of the list
      */
@@ -369,7 +369,7 @@ public class MyDoublyLinkedList<N extends Comparable<N>> implements Iterable<Dou
      *
      * @param index the index of the node to return
      * @return the node at the specified index in this list
-     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size)
+     * @throws IndexOutOfBoundsException if the index is out of range (index {@literal <} 0 || index {@literal >}= size)
      */
     @Override
     public DoublyLinkedListNode<N> getNode(int index) {
@@ -388,7 +388,7 @@ public class MyDoublyLinkedList<N extends Comparable<N>> implements Iterable<Dou
      *
      * @param index the index of the node to return
      * @return the value of the node at the specified index in this list
-     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size)
+     * @throws IndexOutOfBoundsException if the index is out of range (index {@literal <} 0 || index {@literal >}= size)
      */
     @Override
     public N getNodeValue(int index) {
