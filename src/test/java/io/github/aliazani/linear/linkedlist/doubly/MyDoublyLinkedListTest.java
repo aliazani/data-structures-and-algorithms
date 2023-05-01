@@ -23,9 +23,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Add a node at the beginning of the list - " +
+    @DisplayName("addFirst - " +
             "When the list is empty - " +
-            "Insert node to empty list")
+            "Should insert node to empty list")
     void addFirst_listIsEmpty_insertIntoEmptyList() {
         listOfIntegers.addFirst(10);
 
@@ -33,9 +33,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Add a node at the beginning of the list - " +
+    @DisplayName("addFirst - " +
             "When the list is not empty - " +
-            "Insert node at the beginning of the list")
+            "Should insert node at the beginning of the list")
     void addFirst_listIsNotEmpty_insertAtTheBeginningOfList() {
         listOfIntegers.addFirst(10);
         listOfIntegers.addFirst(20);
@@ -44,9 +44,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Add a node at the end of the list - " +
+    @DisplayName("addLast - " +
             "When the list is empty - " +
-            "Insert node to empty list")
+            "Should insert node to empty list")
     void addLast_listIsEmpty_insertIntoEmptyList() {
         listOfIntegers.addLast(10);
 
@@ -54,9 +54,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Add a node at the end of the list - " +
+    @DisplayName("addLast - " +
             "When the list is not empty - " +
-            "Insert node at the end of the list")
+            "Should insert node at the end of the list")
     void addLast_listIsNotEmpty_insertAtTheEndOfList() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -65,9 +65,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Add a node at the given index - " +
-            "When index is (less than 0) or (greater than list size)  - " +
-            "Throw IndexOutOfBoundsException")
+    @DisplayName("add - " +
+            "When index is (less than 0) or (greater than list size) - " +
+            "Should throw IndexOutOfBoundsException")
     void add_indexIsLessThanZeroOrGreaterThanListSize_throwIndexOutOfBounds() {
         listOfIntegers.add(20, 0);
 
@@ -76,9 +76,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Add a node at the given index - " +
+    @DisplayName("add - " +
             "When index is 0 (at the beginning of the list) - " +
-            "Insert node at the beginning of the list")
+            "Should insert node at the beginning of the list")
     void add_indexIsZero_insertAtTheBeginningOfList() {
         MyDoublyLinkedList<Integer> spy = spy(listOfIntegers);
 
@@ -89,9 +89,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Add a node at the given index - " +
+    @DisplayName("add - " +
             "When index is size (at the end of the list) - " +
-            "Insert node at the end of the list")
+            "Should insert node at the end of the list")
     void add_indexIsEqualToSize_insertAtTheEndOfList() {
         listOfIntegers.add(10, 0);
         listOfIntegers.add(20, 1);
@@ -104,9 +104,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Add a node at the given index - " +
+    @DisplayName("add - " +
             "When index is between 1 and (size - 1) - " +
-            "Insert node between two nodes")
+            "Should insert node between two nodes")
     void add_indexBetweenOneAndSizeMinusOne_insertBetweenTwoNodes() {
         listOfIntegers.add(10, 0);
         listOfIntegers.add(20, 1);
@@ -117,18 +117,18 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Remove the first node from the list - " +
+    @DisplayName("deleteFirst - " +
             "When the list is empty - " +
-            "Throw NoSuchElementException")
+            "Should throw NoSuchElementException")
     void deleteFirst_listIsEmpty_throwNoSuchElement() {
         assertEquals("[]", listOfIntegers.toString());
         assertThrows(NoSuchElementException.class, () -> listOfIntegers.deleteFirst());
     }
 
     @Test
-    @DisplayName("Remove the first node from the list - " +
+    @DisplayName("deleteFirst - " +
             "When the list has one item - " +
-            "Remove that item and make the list empty")
+            "Should remove that item and make the list empty")
     void deleteFirst_listHasOneItem_makeTheListEmptyByRemovingItem() {
         listOfIntegers.addLast(10);
 
@@ -138,9 +138,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Remove the first node from the list - " +
+    @DisplayName("deleteFirst - " +
             "When the list has more than one item - " +
-            "Remove the first item from the list")
+            "Should remove the first item from the list")
     void deleteFirst_listHasMoreThanOneItem_removeFirstItem() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -152,18 +152,18 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Remove the last node from the list - " +
+    @DisplayName("deleteLast - " +
             "When the list is empty - " +
-            "Throw NoSuchElementException")
+            "Should throw NoSuchElementException")
     void deleteLast_listIsEmpty_throwNoSuchElement() {
         assertEquals("[]", listOfIntegers.toString());
         assertThrows(NoSuchElementException.class, () -> listOfIntegers.deleteLast());
     }
 
     @Test
-    @DisplayName("Remove the last node from the list - " +
+    @DisplayName("deleteLast - " +
             "When the list has one item - " +
-            "Remove that item and make the list empty")
+            "Should remove that item and make the list empty")
     void deleteLast_listHasOneItem_makeTheListEmptyByRemovingItem() {
         listOfIntegers.addLast(10);
 
@@ -173,9 +173,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Remove the last node from the list - " +
+    @DisplayName("deleteLast - " +
             "When the list has more than one item - " +
-            "Remove the last item from the list")
+            "Should remove the last item from the list")
     void deleteLast_listHasMoreThanOneItem_removeLastItem() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -187,9 +187,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Remove a node at the given index - " +
-            "When index is (less than 0) or (greater than list size or equal to list size)  - " +
-            "Throw IndexOutOfBoundsException")
+    @DisplayName("delete - " +
+            "When index is (less than 0) or (greater than list size or equal to list size) - " +
+            "Should throw IndexOutOfBoundsException")
     void delete_indexIsLessThanZeroOrGreaterEqualToListSize_throwIndexOutOfBounds() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -199,9 +199,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Remove a node at the given index - " +
+    @DisplayName("delete - " +
             "When index is 0 (at the beginning of the list) - " +
-            "Remove node at the beginning of the list")
+            "Should remove node at the beginning of the list")
     void delete_indexIsZero_removeAtTheBeginningOfList() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -214,9 +214,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Remove a node at the given index - " +
+    @DisplayName("delete - " +
             "When index is (size - 1) - " +
-            "Remove node at the end of the list")
+            "Should remove node at the end of the list")
     void delete_indexIsEqualToSize_removeAtTheEndOfList() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -229,9 +229,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Remove a node at the given index - " +
+    @DisplayName("delete - " +
             "When index is between 1 and (size - 2) - " +
-            "Remove node between two nodes")
+            "Should remove node between two nodes")
     void delete_indexBetweenOneAndSizeMinusTwo_removeNodeBetweenTwoNodes() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -243,9 +243,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Return the index of first occurrence of an item - " +
+    @DisplayName("indexOf - " +
             "When item is null - " +
-            "Return (-1)")
+            "Should return (-1)")
     void indexOf_itemIsNull_returnNegativeOne() {
         listOfIntegers.addLast(10);
 
@@ -253,9 +253,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Return the index of first occurrence of an item - " +
+    @DisplayName("indexOf - " +
             "When item is at the list - " +
-            "Return index of given item")
+            "Should return index of given item")
     void indexOf_itemIsAtList_returnIndexOfItem() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(10);
@@ -267,9 +267,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Return the index of first occurrence of an item - " +
+    @DisplayName("indexOf - " +
             "When item is not at the list - " +
-            "Return (-1)")
+            "Should return (-1)")
     void indexOf_itemIsNotAtList_returnNegativeOne() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -278,9 +278,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Check that the list contains a specified item - " +
-            "When the list does not contain the item -" +
-            "Return false")
+    @DisplayName("contains - " +
+            "When the list does not contain the item - " +
+            "Should return false")
     void contains_listDoesNotContainItem_returnFalse() {
         listOfIntegers.addLast(10);
 
@@ -288,9 +288,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Check that the list contains a specified item - " +
-            "When the list contains the item -" +
-            "Return true")
+    @DisplayName("contains - " +
+            "When the list contains the item - " +
+            "Should return true")
     void contains_listContainsItem_returnTrue() {
         listOfIntegers.addLast(10);
 
@@ -298,17 +298,17 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Return number of items in the list" +
-            "When list is empty -" +
-            "Return 0")
+    @DisplayName("size - " +
+            "When list is empty - " +
+            "Should return 0")
     void size_listIsEmpty_returnZero() {
         assertEquals(0, listOfIntegers.size());
     }
 
     @Test
-    @DisplayName("Return number of items in the list" +
-            "When list is not empty -" +
-            "Return the size of items in list")
+    @DisplayName("size - " +
+            "When list is not empty - " +
+            "Should return the size of items in list")
     void size_listIsNotEmpty_returnTheNumberOfItemsInList() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -319,9 +319,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Detect if a list contains a loop - " +
-            "When the list is not empty and does not have a loop" +
-            "Return false")
+    @DisplayName("hasLoop - " +
+            "When the list is not empty and does not have a loop - " +
+            "Should return false")
     void hasLoop_listIsNotEmptyAndDoesNotHaveALoop_returnFalse() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -331,9 +331,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Detect if a list contains a loop - " +
-            "When the list is not empty and have a loop" +
-            "Return false")
+    @DisplayName("hasLoop - " +
+            "When the list is not empty and have a loop - " +
+            "Should return false")
     void hasLoop_listIsNotEmptyAndHaveALoop_returnTrue() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -346,9 +346,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Convert the list to an array - " +
+    @DisplayName("toArray - " +
             "When list is empty - " +
-            "Return empty array")
+            "Should return empty array")
     void toArray_listIsEmpty_returnEmptyArray() {
         MyArray<Integer> array = listOfIntegers.toArray();
 
@@ -357,9 +357,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Convert the list to an array - " +
+    @DisplayName("toArray - " +
             "When list is not empty - " +
-            "Return an array which is converted from a list")
+            "Should return an array which is converted from a list")
     void toArray_listIsNotEmpty_returnConvertedList() {
         listOfIntegers.addLast(1);
         listOfIntegers.addLast(2);
@@ -371,9 +371,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Reverse the order of items in list - " +
+    @DisplayName("reverse - " +
             "When list is empty - " +
-            "Do nothing")
+            "Should do nothing")
     void reverse_listIsEmpty_doNothing() {
         listOfIntegers.reverse();
 
@@ -381,9 +381,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Reverse the order of items in list - " +
+    @DisplayName("reverse - " +
             "When list has one item - " +
-            "Do nothing")
+            "Should do nothing")
     void reverse_listHasOneItem_doNothing() {
         listOfIntegers.addLast(10);
 
@@ -393,9 +393,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Reverse the order of items in list - " +
+    @DisplayName("reverse - " +
             "When list has three items - " +
-            "Reverse the order of items")
+            "Should reverse the order of items")
     void reverse_listHasThreeItems_reverseTheOrderOfItems() {
         listOfIntegers.addLast(1);
         listOfIntegers.addLast(2);
@@ -410,9 +410,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Reverse the order of items in list - " +
+    @DisplayName("reverse - " +
             "When list has more than three items - " +
-            "Reverse the order of items")
+            "Should reverse the order of items")
     void reverse_listHasMoreThanThreeItems_reverseTheOrderOfItems() {
         listOfIntegers.addLast(1);
         listOfIntegers.addLast(2);
@@ -433,9 +433,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Reverse the order of items in list and delete first and last item - " +
+    @DisplayName("reverse - " +
             "When list has more than three items - " +
-            "Reverse the order of items and after properly delete the first and last item")
+            "Should reverse the order of items and after properly delete the first and last item")
     void reverseAndDelete_listHasMoreThanThreeItems_reverseTheOrderOfItemsAndDeleteTheProperChangedNode() {
         listOfIntegers.addLast(1);
         listOfIntegers.addLast(2);
@@ -458,18 +458,18 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Get the kth node from the end of a list - " +
+    @DisplayName("getKthFromTheEnd - " +
             "When list is empty - " +
-            "Throw IllegalArgumentException")
+            "Should throw IllegalArgumentException")
     void getKthFromTheEnd_listIsEmpty_throwIllegalArgument() {
 
         assertThrows(IllegalArgumentException.class, () -> listOfIntegers.getKthFromTheEnd(1));
     }
 
     @Test
-    @DisplayName("Get the kth node from the end of a list - " +
+    @DisplayName("getKthFromTheEnd - " +
             "When k is greater than number of items in list - " +
-            "Throw IllegalArgumentException")
+            "Should throw IllegalArgumentException")
     void getKthFromTheEnd_KIsGreaterThanSize_throwIllegalArgument() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -478,9 +478,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Get the kth node from the end of a list - " +
+    @DisplayName("getKthFromTheEnd - " +
             "When list is not empty and k is less than number of items in list - " +
-            "Return the k-th item from the end of the list")
+            "Should return the k-th item from the end of the list")
     void getKthFromTheEnd_listIsNotEmptyAndKIsLessThanSize_returnTheKthItemFromTheEnd() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -490,17 +490,17 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Find the middle node of a list - " +
+    @DisplayName("getMiddle - " +
             "When list is empty - " +
-            "Throw IllegalArgumentException")
+            "Should throw IllegalArgumentException")
     void getMiddle_listIsEmpty_ThrowIllegalArgument() {
         assertThrows(IllegalArgumentException.class, () -> listOfIntegers.getMiddle());
     }
 
     @Test
-    @DisplayName("Find the middle node of a list - " +
+    @DisplayName("getMiddle - " +
             "When list's length is odd - " +
-            "Return middle item")
+            "Should return middle item")
     void getMiddle_listSizeIsOdd_returnMiddleItem() {
         listOfIntegers.addLast(1);
         listOfIntegers.addLast(2);
@@ -512,9 +512,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Find the middle node of a list - " +
+    @DisplayName("getMiddle - " +
             "When list's length is even - " +
-            "Return two middle items")
+            "Should return two middle items")
     void getMiddle_listSizeIsEven_returnTwoMiddleItems() {
         listOfIntegers.addLast(1);
         listOfIntegers.addLast(2);
@@ -525,17 +525,17 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Return the node at the specified index in this list - " +
+    @DisplayName("getNode - " +
             "When list is empty - " +
-            "Throw IndexOutOfBoundsException")
+            "Should throw IndexOutOfBoundsException")
     void getNode_listIsEmpty_throwIndexOutOfBounds() {
         assertThrows(IndexOutOfBoundsException.class, () -> listOfIntegers.getNode(0));
     }
 
     @Test
-    @DisplayName("Return the node at the specified index in this list - " +
+    @DisplayName("getNode - " +
             "When index is (greater than number of items in list - 1) or (less than 0) - " +
-            "Throw IndexOutOfBoundsException")
+            "Should throw IndexOutOfBoundsException")
     void getNode_indexIsGreaterThanSize_throwIndexOutOfBounds() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
@@ -545,9 +545,9 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Return the node at the specified index in this list - " +
+    @DisplayName("getNode - " +
             "When index is (less than or equal to the number of items in list - 1) or (greater than 0) - " +
-            "Return node at the given index")
+            "Should return node at the given index")
     void getNode_indexIsGreaterThanZeroAndLessThanSizeMinusOne_returnNodeAtTheGivenIndex() {
         listOfIntegers.addLast(10);
         assertEquals(10, listOfIntegers.getNode(0).getValue());
@@ -558,10 +558,10 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Return the vale of a node at the specified index in this list - " +
+    @DisplayName("getNodeValue - " +
             "When is called - " +
-            "Return the value of the node and call getNode")
-    void getNodeValue_whenIsCalled_returnTheValueOfANodeAtTheGivenIndexAndCallGetNodeMethod() {
+            "Should return the value of the node and call getNode")
+    void getNodeValue_isCalled_returnTheValueOfANodeAtTheGivenIndexAndCallGetNodeMethod() {
         listOfIntegers.addLast(10);
         listOfIntegers.addLast(20);
         listOfIntegers.addLast(30);
@@ -586,7 +586,7 @@ class MyDoublyLinkedListTest {
     }
 
     @Test
-    @DisplayName("Test using the list with a different data type.")
+    @DisplayName("use the list with a different data type.")
     void checkOneOperationForAnotherType() {
         listOfStrings.addLast("a");
         listOfStrings.addLast("b");
