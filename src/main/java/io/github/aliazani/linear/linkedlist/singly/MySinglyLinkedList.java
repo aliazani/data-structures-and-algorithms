@@ -306,9 +306,7 @@ public class MySinglyLinkedList<N extends Comparable<N>> implements Iterable<Sin
      */
     @Override
     public N getKthFromTheEnd(int k) {
-        if (isEmpty()) throw new IllegalArgumentException();
-
-        if (k > size) throw new IllegalArgumentException();
+        if (isEmpty() || k > size) throw new IllegalArgumentException();
 
         SinglyLinkedListNode<N> firstNode = first;
         SinglyLinkedListNode<N> secondNode = first;
