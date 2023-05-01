@@ -276,10 +276,11 @@ public class MySinglyLinkedList<N extends Comparable<N>> implements Iterable<Sin
      */
     @Override
     public void reverse() {
-        if (isEmpty()) return;
+        if (isEmpty() || hasOneItem()) return;
 
         SinglyLinkedListNode<N> previous = first;
         SinglyLinkedListNode<N> currentNode = first.getNext();
+
         while (currentNode != null) {
             SinglyLinkedListNode<N> next = currentNode.getNext();
             currentNode.setNext(previous);

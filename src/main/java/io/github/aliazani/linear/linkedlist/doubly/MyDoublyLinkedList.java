@@ -286,7 +286,7 @@ public class MyDoublyLinkedList<N extends Comparable<N>> implements Iterable<Dou
      */
     @Override
     public void reverse() {
-        if (isEmpty()) return;
+        if (isEmpty() || hasOneItem()) return;
 
         DoublyLinkedListNode<N> currentNode = last;
         DoublyLinkedListNode<N> previousNode = last.getPrev();
