@@ -357,11 +357,11 @@ public class MySinglyLinkedList<N extends Comparable<N>> implements Iterable<Sin
      *
      * @param index the index of the node to return
      * @return the node at the specified index in this list
-     * @throws IndexOutOfBoundsException if the index is out of range (index {@literal <} 0 || index {@literal >}= size)
+     * @throws IndexOutOfBoundsException if the index is out of range (index {@literal <} 0 || index {@literal >}= size - 1)
      */
     @Override
     public SinglyLinkedListNode<N> getNode(int index) {
-        if (index > size)
+        if (index > size - 1 || index < 0)
             throw new IndexOutOfBoundsException();
 
         SinglyLinkedListNode<N> node = first;
