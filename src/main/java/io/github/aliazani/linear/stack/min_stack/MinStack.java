@@ -2,10 +2,11 @@ package io.github.aliazani.linear.stack;
 
 import java.util.Stack;
 
-public class MinStack<T extends Comparable<T>> {
+public class MinStack<T extends Comparable<T>> implements MyStack<T> {
     private final Stack<T> stack = new Stack();
     private final Stack<T> minTrackingStack = new Stack();
 
+    @Override
     public void push(T item) {
         stack.push(item);
 
@@ -13,6 +14,7 @@ public class MinStack<T extends Comparable<T>> {
             minTrackingStack.push(item);
     }
 
+    @Override
     public T pop() {
         if (stack.isEmpty())
             throw new IllegalStateException();
@@ -23,6 +25,16 @@ public class MinStack<T extends Comparable<T>> {
             minTrackingStack.pop();
 
         return top;
+    }
+
+    @Override
+    public T peek() {
+        return null;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return stack.isEmpty() && minTrackingStack.isEmpty();
     }
 
     public T min() {
