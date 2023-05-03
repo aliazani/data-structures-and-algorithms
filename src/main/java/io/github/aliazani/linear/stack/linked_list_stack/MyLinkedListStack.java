@@ -1,10 +1,12 @@
-package io.github.aliazani.linear.stack;
+package io.github.aliazani.linear.stack.linked_list_stack;
+
+import io.github.aliazani.linear.stack.MyStack;
 
 import java.util.LinkedList;
 
 public class MyLinkedListStack<E extends Comparable<E>> implements MyStack<E> {
     private final LinkedList<E> linkedList;
-    private int count;
+    private int size;
 
     public MyLinkedListStack() {
         linkedList = new LinkedList<>();
@@ -13,7 +15,7 @@ public class MyLinkedListStack<E extends Comparable<E>> implements MyStack<E> {
     @Override
     public void push(E item) {
         linkedList.add(item);
-        count++;
+        size++;
     }
 
 
@@ -23,7 +25,7 @@ public class MyLinkedListStack<E extends Comparable<E>> implements MyStack<E> {
             throw new IllegalStateException();
 
         E top = linkedList.removeLast();
-        count--;
+        size--;
 
         return top;
     }
@@ -38,7 +40,12 @@ public class MyLinkedListStack<E extends Comparable<E>> implements MyStack<E> {
 
     @Override
     public boolean isEmpty() {
-        return count == 0;
+        return size == 0;
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 
     @Override

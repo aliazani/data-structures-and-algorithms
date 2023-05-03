@@ -1,5 +1,7 @@
 package io.github.aliazani.linear.stack;
 
+import io.github.aliazani.linear.stack.array_stack.MyArrayListStack;
+import io.github.aliazani.linear.stack.linked_list_stack.MyLinkedListStack;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.MessageFormat;
@@ -62,5 +64,4 @@ public class StackDemo {
         log.info(MessageFormat.format("Linkedlist stack after peek an item: {0}", myLinkedListStack));
         log.info(MessageFormat.format("Linkedlist stack is Empty: {0}", myLinkedListStack.isEmpty()));
     }
-
 }

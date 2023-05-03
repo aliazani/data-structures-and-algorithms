@@ -1,10 +1,13 @@
-package io.github.aliazani.linear.stack;
+package io.github.aliazani.linear.stack.min_stack;
+
+import io.github.aliazani.linear.stack.MyStack;
 
 import java.util.Stack;
 
 public class MinStack<T extends Comparable<T>> implements MyStack<T> {
     private final Stack<T> stack = new Stack();
     private final Stack<T> minTrackingStack = new Stack();
+    private int size;
 
     @Override
     public void push(T item) {
@@ -12,6 +15,8 @@ public class MinStack<T extends Comparable<T>> implements MyStack<T> {
 
         if (minTrackingStack.isEmpty() || isLessThanOrEqualToMin(item))
             minTrackingStack.push(item);
+
+        size++;
     }
 
     @Override
@@ -24,6 +29,8 @@ public class MinStack<T extends Comparable<T>> implements MyStack<T> {
         if (minTrackingStack.peek().equals(top))
             minTrackingStack.pop();
 
+        size--;
+
         return top;
     }
 
@@ -35,6 +42,11 @@ public class MinStack<T extends Comparable<T>> implements MyStack<T> {
     @Override
     public boolean isEmpty() {
         return stack.isEmpty() && minTrackingStack.isEmpty();
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 
     public T min() {
