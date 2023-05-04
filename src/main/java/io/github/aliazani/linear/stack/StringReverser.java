@@ -13,7 +13,7 @@ public class StringReverser {
         if (str == null)
             throw new NullPointerException();
 
-        for (char ch: str.toCharArray())
+        for (char ch : str.toCharArray())
             stringStack.push(ch);
 
         while (!stringStack.empty())

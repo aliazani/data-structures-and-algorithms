@@ -56,12 +56,12 @@ public class StackDemo {
         myLinkedListStack.push(2);
         myLinkedListStack.push(3);
 
-        log.info(MessageFormat.format("Linkedlist stack: {0}", myLinkedListStack));
-        log.info(MessageFormat.format("Minimum item in Linkedlist stack: {0}", myLinkedListStack));
-        log.info(MessageFormat.format("Top item in Linkedlist stack: {0}", myLinkedListStack.pop()));
-        log.info(MessageFormat.format("Linkedlist stack after pop an item: {0}", myLinkedListStack));
-        log.info(MessageFormat.format("Top item in Linkedlist stack: {0}", myLinkedListStack.peek()));
-        log.info(MessageFormat.format("Linkedlist stack after peek an item: {0}", myLinkedListStack));
-        log.info(MessageFormat.format("Linkedlist stack is Empty: {0}", myLinkedListStack.isEmpty()));
+        log.info(MessageFormat.format("Linked-list stack: {0}", myLinkedListStack));
+        log.info(MessageFormat.format("Minimum item in Linked-list stack: {0}", myLinkedListStack));
+        log.info(MessageFormat.format("Top item in Linked-list stack: {0}", myLinkedListStack.pop()));
+        log.info(MessageFormat.format("Linked-list stack after pop an item: {0}", myLinkedListStack));
+        log.info(MessageFormat.format("Top item in Linked-list stack: {0}", myLinkedListStack.peek()));
+        log.info(MessageFormat.format("Linked-list stack after peek an item: {0}", myLinkedListStack));
+        log.info(MessageFormat.format("Linked-list stack is Empty: {0}", myLinkedListStack.isEmpty()));
     }
 }

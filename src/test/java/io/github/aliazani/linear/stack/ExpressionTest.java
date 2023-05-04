@@ -9,15 +9,17 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExpressionTest {
-
     private static Stream<Arguments> provideExpressionsAndIsBalanced() {
         return Stream.of(
-                Arguments.of("[(1 * 4) + (2 * 8)]", true),
+                Arguments.of("[]", true),
                 Arguments.of("", true),
+                Arguments.of("[(1 * 4) + (2 * 8)]", true),
                 Arguments.of("A", true),
                 Arguments.of("(1 + 2}", false),
                 Arguments.of("(", false),
-                Arguments.of("]", false)
+                Arguments.of("]", false),
+                Arguments.of("(]", false)
+
         );
     }
 

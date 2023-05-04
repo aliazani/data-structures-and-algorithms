@@ -15,11 +15,9 @@ public class Expression {
 
     public boolean isBalanced() {
         for (char ch : input.toCharArray())
-            if (isOpeningBracket(ch))
-                stack.push(ch);
+            if (isOpeningBracket(ch)) stack.push(ch);
             else if (isClosingBracket(ch) &&
-                    (stack.empty() || !bracketsMatch(stack.pop(), ch)))
-                return false;
+                    (stack.empty() || !bracketsMatch(stack.pop(), ch))) return false;
 
         return stack.empty();
     }
