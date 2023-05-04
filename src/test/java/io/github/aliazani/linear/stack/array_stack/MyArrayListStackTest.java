@@ -8,6 +8,7 @@ import java.util.EmptyStackException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("stack using array-list")
 class MyArrayListStackTest {
     MyArrayListStack<Integer> stack;
 
