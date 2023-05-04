@@ -1,5 +1,6 @@
 package io.github.aliazani.linear.stack;
 
+import io.github.aliazani.linear.stack.min_stack.MinStack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
