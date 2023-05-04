@@ -8,8 +8,7 @@ public class TwoStacks<T extends Comparable<T>> {
     private int top2Pointer;
 
     public TwoStacks(int capacity) {
-        if (capacity <= 0)
-            throw new IllegalArgumentException("capacity must be 1 or greater.");
+        if (capacity <= 0) throw new IllegalArgumentException("capacity must be 1 or greater.");
 
         items = (T[]) new Comparable[capacity];
         top1Pointer = -1;
@@ -17,18 +16,17 @@ public class TwoStacks<T extends Comparable<T>> {
     }
 
     public void push1(T item) {
-        if (isFull1())
-            throw new IllegalStateException();
+        if (isFull1()) throw new IllegalStateException();
 
         items[++top1Pointer] = item;
     }
 
     public T pop1() {
-        if (isEmpty1())
-            throw new IllegalStateException();
+        if (isEmpty1()) throw new IllegalStateException();
 
         T top = items[top1Pointer];
         items[top1Pointer--] = null;
+
         return top;
     }
 
@@ -41,18 +39,17 @@ public class TwoStacks<T extends Comparable<T>> {
     }
 
     public void push2(T item) {
-        if (isFull2())
-            throw new IllegalStateException();
+        if (isFull2()) throw new IllegalStateException();
 
         items[--top2Pointer] = item;
     }
 
     public T pop2() {
-        if (isEmpty2())
-            throw new IllegalStateException();
+        if (isEmpty2()) throw new IllegalStateException();
 
-        T top = items[top1Pointer];
+        T top = items[top2Pointer];
         items[top2Pointer++] = null;
+
         return top;
     }
 
