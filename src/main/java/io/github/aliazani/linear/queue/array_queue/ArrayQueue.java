@@ -65,6 +65,7 @@ public class ArrayQueue<T extends Comparable<T>> implements MyQueue<T> {
      * Returns the element at the front of the queue without removing it.
      *
      * @return the element at the front of the queue.
+     * @throws NoSuchElementException if the queue is empty.
      */
     @Override
     public T peek() {
