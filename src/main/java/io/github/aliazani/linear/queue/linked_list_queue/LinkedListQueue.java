@@ -1,8 +1,8 @@
 package io.github.aliazani.linear.queue.linked_list_queue;
 
-import io.github.aliazani.linear.linkedlist.singly.MySinglyLinkedList;
 import io.github.aliazani.linear.queue.MyQueue;
 
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 /**
@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
  * @param <T> the type of elements stored in the queue
  */
 public class LinkedListQueue<T extends Comparable<T>> implements MyQueue<T> {
-    private final MySinglyLinkedList<T> mySinglyLinkedList = new MySinglyLinkedList<>();
+    private final LinkedList<T> linkedList = new LinkedList<>();
     private int size;
 
     /**
@@ -21,7 +21,7 @@ public class LinkedListQueue<T extends Comparable<T>> implements MyQueue<T> {
      */
     @Override
     public void enqueue(T item) {
-        mySinglyLinkedList.addLast(item);
+        linkedList.addLast(item);
 
         size++;
     }
@@ -36,8 +36,8 @@ public class LinkedListQueue<T extends Comparable<T>> implements MyQueue<T> {
     public T dequeue() {
         if (isEmpty()) throw new NoSuchElementException();
 
-        T head = mySinglyLinkedList.getNodeValue(0);
-        mySinglyLinkedList.deleteFirst();
+        T head = linkedList.get(0);
+        linkedList.removeFirst();
 
         size--;
 
@@ -54,7 +54,7 @@ public class LinkedListQueue<T extends Comparable<T>> implements MyQueue<T> {
     public T peek() {
         if (isEmpty()) throw new NoSuchElementException();
 
-        return mySinglyLinkedList.getNodeValue(0);
+        return linkedList.get(0);
     }
 
     /**
@@ -84,6 +84,6 @@ public class LinkedListQueue<T extends Comparable<T>> implements MyQueue<T> {
      */
     @Override
     public String toString() {
-        return mySinglyLinkedList.toString();
+        return linkedList.toString();
     }
 }

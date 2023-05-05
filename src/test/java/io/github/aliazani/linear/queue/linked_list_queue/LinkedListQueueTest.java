@@ -1,6 +1,5 @@
 package io.github.aliazani.linear.queue.linked_list_queue;
 
-import io.github.aliazani.linear.queue.array_queue.ArrayQueue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,11 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("LinkedListQueue")
 class LinkedListQueueTest {
-    ArrayQueue<Integer> queue;
+    LinkedListQueue<Integer> queue;
 
     @BeforeEach
     void setUp() {
-        queue = new ArrayQueue<>(Integer.class, 3);
+        queue = new LinkedListQueue<>();
     }
 
     @Test
@@ -31,18 +30,6 @@ class LinkedListQueueTest {
 
         queue.enqueue(3);
         assertEquals("[1, 2, 3]", queue.toString());
-    }
-
-    @Test
-    @DisplayName("enqueue - " +
-            "When adding an element to a full queue - " +
-            "Should throw IllegalStateException")
-    void enqueue_queueIsFull_throwIllegalStateException() {
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
-
-        assertThrows(IllegalStateException.class, () -> queue.enqueue(4));
     }
 
     @Test
