@@ -1,4 +1,6 @@
-package io.github.aliazani.linear.queue;
+package io.github.aliazani.linear.queue.array_queue;
+
+import io.github.aliazani.linear.queue.MyQueue;
 
 import java.lang.reflect.Array;
 import java.util.NoSuchElementException;
@@ -8,7 +10,7 @@ import java.util.NoSuchElementException;
  *
  * @param <T> the type of elements in the queue.
  */
-public class ArrayQueue<T> {
+public class ArrayQueue<T extends Comparable<T>> implements MyQueue<T> {
     private final T[] elements;
     private int size;
     private int rear;
@@ -30,11 +32,13 @@ public class ArrayQueue<T> {
      * @param item the element to be added.
      * @throws IllegalStateException if the queue is full.
      */
+    @Override
     public void enqueue(T item) {
         if (isFull()) throw new IllegalStateException();
 
         elements[rear] = item;
         rear = (rear + 1) % elements.length;
+
         size++;
     }
 
@@ -44,6 +48,7 @@ public class ArrayQueue<T> {
      * @return the element at the front of the queue.
      * @throws NoSuchElementException if the queue is empty.
      */
+    @Override
     public T dequeue() {
         if (isEmpty()) throw new NoSuchElementException();
 
@@ -61,8 +66,21 @@ public class ArrayQueue<T> {
      *
      * @return the element at the front of the queue.
      */
+    @Override
     public T peek() {
+        if (isEmpty()) throw new NoSuchElementException();
+
         return elements[front];
+    }
+
+    /**
+     * Returns the number of elements in the queue.
+     *
+     * @return the number of elements in the queue.
+     */
+    @Override
+    public int size() {
+        return size;
     }
 
     /**
@@ -70,6 +88,7 @@ public class ArrayQueue<T> {
      *
      * @return true if the queue is empty, false otherwise.
      */
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }

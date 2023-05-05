@@ -1,14 +1,14 @@
 package io.github.aliazani.linear.queue;
 
-import io.github.aliazani.linear.linkedlist.MyLinkedList;
+import io.github.aliazani.linear.linkedlist.singly.MySinglyLinkedList;
 
 /**
  * The LinkedListQueue class implements a queue using a linked list data structure.
  *
  * @param <T> the type of elements stored in the queue
  */
-public class LinkedListQueue<T extends Comparable<T>> {
-    private final MyLinkedList<T> myLinkedList = new MyLinkedList<>();
+public class LinkedListQueue<T extends Comparable<T>> implements MyQueue<T> {
+    private final MySinglyLinkedList<T> mySinglyLinkedList = new MySinglyLinkedList<>();
     private int size;
 
     /**
@@ -16,8 +16,9 @@ public class LinkedListQueue<T extends Comparable<T>> {
      *
      * @param item the item to be added
      */
+    @Override
     public void enqueue(T item) {
-        myLinkedList.addLast(item);
+        mySinglyLinkedList.addLast(item);
 
         size++;
     }
@@ -28,12 +29,13 @@ public class LinkedListQueue<T extends Comparable<T>> {
      * @return the item at the front of the queue
      * @throws IllegalStateException if the queue is empty
      */
+    @Override
     public T dequeue() {
         if (isEmpty())
             throw new IllegalStateException();
 
-        T head = myLinkedList.getNodeValue(0);
-        myLinkedList.deleteFirst();
+        T head = mySinglyLinkedList.getNodeValue(0);
+        mySinglyLinkedList.deleteFirst();
         size--;
 
         return head;
@@ -45,11 +47,12 @@ public class LinkedListQueue<T extends Comparable<T>> {
      * @return the item at the front of the queue
      * @throws IllegalStateException if the queue is empty
      */
+    @Override
     public T peek() {
         if (isEmpty())
             throw new IllegalStateException();
 
-        return myLinkedList.getNodeValue(0);
+        return mySinglyLinkedList.getNodeValue(0);
     }
 
     /**
@@ -57,6 +60,7 @@ public class LinkedListQueue<T extends Comparable<T>> {
      *
      * @return the size of the queue
      */
+    @Override
     public int size() {
         return size;
     }
@@ -66,6 +70,7 @@ public class LinkedListQueue<T extends Comparable<T>> {
      *
      * @return true if the queue is empty, false otherwise
      */
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
@@ -75,7 +80,8 @@ public class LinkedListQueue<T extends Comparable<T>> {
      *
      * @return a string representation of the queue
      */
+    @Override
     public String toString() {
-        return myLinkedList.toString();
+        return mySinglyLinkedList.toString();
     }
 }

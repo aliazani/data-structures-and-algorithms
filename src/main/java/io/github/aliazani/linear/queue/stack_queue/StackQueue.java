@@ -10,7 +10,7 @@ import java.util.Stack;
  *
  * @param <T> the type of elements in the Queue
  */
-public class StackQueue<T> {
+public class StackQueue<T extends Comparable<T>> implements MyQueue<T> {
     private final Stack<T> reversedStack = new Stack<>();
     private final Stack<T> stack = new Stack<>();
     private int size;
@@ -20,6 +20,7 @@ public class StackQueue<T> {
      *
      * @param item the element to add
      */
+    @Override
     public void enqueue(T item) {
         stack.push(item);
         size++;
@@ -30,6 +31,7 @@ public class StackQueue<T> {
      *
      * @return the element at the front of the queue
      */
+    @Override
     public T dequeue() {
         if (isEmpty())
             throw new IllegalStateException();
@@ -47,6 +49,7 @@ public class StackQueue<T> {
      *
      * @return the element at the front of the queue
      */
+    @Override
     public T peek() {
         if (reversedStack.isEmpty())
             reverseTheStack();
@@ -67,6 +70,7 @@ public class StackQueue<T> {
      *
      * @return true if the queue contains no elements
      */
+    @Override
     public boolean isEmpty() {
         return stack.isEmpty() && reversedStack.isEmpty();
     }
@@ -76,6 +80,7 @@ public class StackQueue<T> {
      *
      * @return the number of elements in the queue.
      */
+    @Override
     public int size() {
         return size;
     }

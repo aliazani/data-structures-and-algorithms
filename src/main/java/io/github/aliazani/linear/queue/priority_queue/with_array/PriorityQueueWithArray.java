@@ -10,7 +10,7 @@ import java.util.Arrays;
  *
  * @param <T> the type of the elements stored in the priority queue.
  */
-public class PriorityQueueWithArray<T extends Comparable<T>> {
+public class PriorityQueueWithArray<T extends Comparable<T>> implements MyQueue<T> {
     private final T[] elements;
     private int size;
 
@@ -32,12 +32,13 @@ public class PriorityQueueWithArray<T extends Comparable<T>> {
      * @param item the element to add.
      * @throws IllegalStateException if the priority queue is full.
      */
-    public void add(T item) {
-        if (isFull())
-            throw new IllegalStateException();
+    @Override
+    public void enqueue(T item) {
+        if (isFull()) throw new IllegalStateException();
 
         int properIndex = shiftItemsToInsert(item);
         elements[properIndex] = item;
+
         size++;
     }
 
@@ -74,7 +75,8 @@ public class PriorityQueueWithArray<T extends Comparable<T>> {
      * @return the element with the highest priority.
      * @throws IllegalStateException if the priority queue is empty.
      */
-    public T remove() {
+    @Override
+    public T dequeue() {
         if (isEmpty())
             throw new IllegalStateException();
 
@@ -84,11 +86,22 @@ public class PriorityQueueWithArray<T extends Comparable<T>> {
         return tail;
     }
 
+    @Override
+    public T peek() {
+        return elements[size - 1];
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
     /**
      * Returns whether the priority queue is empty.
      *
      * @return true if the priority queue is empty, false otherwise.
      */
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
