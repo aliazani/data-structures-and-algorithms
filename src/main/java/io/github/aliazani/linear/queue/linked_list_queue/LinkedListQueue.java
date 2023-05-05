@@ -1,6 +1,9 @@
-package io.github.aliazani.linear.queue;
+package io.github.aliazani.linear.queue.linked_list_queue;
 
 import io.github.aliazani.linear.linkedlist.singly.MySinglyLinkedList;
+import io.github.aliazani.linear.queue.MyQueue;
+
+import java.util.NoSuchElementException;
 
 /**
  * The LinkedListQueue class implements a queue using a linked list data structure.
@@ -27,15 +30,15 @@ public class LinkedListQueue<T extends Comparable<T>> implements MyQueue<T> {
      * Removes and returns the item at the front of the queue.
      *
      * @return the item at the front of the queue
-     * @throws IllegalStateException if the queue is empty
+     * @throws NoSuchElementException if the queue is empty
      */
     @Override
     public T dequeue() {
-        if (isEmpty())
-            throw new IllegalStateException();
+        if (isEmpty()) throw new NoSuchElementException();
 
         T head = mySinglyLinkedList.getNodeValue(0);
         mySinglyLinkedList.deleteFirst();
+
         size--;
 
         return head;
@@ -45,12 +48,11 @@ public class LinkedListQueue<T extends Comparable<T>> implements MyQueue<T> {
      * Returns the item at the front of the queue without removing it.
      *
      * @return the item at the front of the queue
-     * @throws IllegalStateException if the queue is empty
+     * @throws NoSuchElementException if the queue is empty
      */
     @Override
     public T peek() {
-        if (isEmpty())
-            throw new IllegalStateException();
+        if (isEmpty()) throw new NoSuchElementException();
 
         return mySinglyLinkedList.getNodeValue(0);
     }
