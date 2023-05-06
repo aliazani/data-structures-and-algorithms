@@ -9,7 +9,7 @@ import java.util.Stack;
  * @param <T> the type of elements in the Queue
  */
 public class QueueReverser<T> {
-    private final Stack<T> stack = new Stack<>();
+    private final Stack<T> temporaryStack = new Stack<>();
 
     /**
      * Reverses the given number of elements in a Queue.
@@ -19,17 +19,12 @@ public class QueueReverser<T> {
      * @throws IllegalArgumentException if n is less than 0 or greater than the size of the Queue
      */
     public void reverse(Queue<T> queue, int n) {
+        if (n < 0 || n > queue.size()) throw new IllegalArgumentException();
 
-        if (n < 0 || n > queue.size())
-            throw new IllegalArgumentException();
+        for (int i = 0; i < n; i++) temporaryStack.push(queue.remove());
 
-        for (int i = 0; i < n; i++)
-            stack.push(queue.remove());
+        while (!temporaryStack.isEmpty()) queue.add(temporaryStack.pop());
 
-        while (!stack.isEmpty())
-            queue.add(stack.pop());
-
-        for (int i = 0; i < queue.size() - n; i++)
-            queue.add(queue.remove());
+        for (int i = 0; i < queue.size() - n; i++) queue.add(queue.remove());
     }
 }
