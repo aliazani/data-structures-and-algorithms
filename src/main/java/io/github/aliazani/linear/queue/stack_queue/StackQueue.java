@@ -1,8 +1,11 @@
-package io.github.aliazani.linear.queue;
+package io.github.aliazani.linear.queue.stack_queue;
+
+import io.github.aliazani.linear.queue.MyQueue;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
 /**
@@ -23,6 +26,7 @@ public class StackQueue<T extends Comparable<T>> implements MyQueue<T> {
     @Override
     public void enqueue(T item) {
         stack.push(item);
+
         size++;
     }
 
@@ -30,14 +34,13 @@ public class StackQueue<T extends Comparable<T>> implements MyQueue<T> {
      * Removes and returns the element at the front of the queue.
      *
      * @return the element at the front of the queue
+     * @throws NoSuchElementException if the queue is empty
      */
     @Override
     public T dequeue() {
-        if (isEmpty())
-            throw new IllegalStateException();
+        if (isEmpty()) throw new NoSuchElementException();
 
-        if (reversedStack.isEmpty())
-            reverseTheStack();
+        if (reversedStack.isEmpty()) reverseTheStack();
 
         size--;
 
@@ -48,21 +51,19 @@ public class StackQueue<T extends Comparable<T>> implements MyQueue<T> {
      * Returns the element at the front of the queue without removing it.
      *
      * @return the element at the front of the queue
+     * @throws NoSuchElementException if the queue is empty
      */
     @Override
     public T peek() {
-        if (reversedStack.isEmpty())
-            reverseTheStack();
+        if (isEmpty()) throw new NoSuchElementException();
+
+        if (reversedStack.isEmpty()) reverseTheStack();
 
         return reversedStack.peek();
     }
 
-    /**
-     * Reverses the order of elements in the stack by transferring them to the reversedStack.
-     */
     private void reverseTheStack() {
-        while (!stack.isEmpty())
-            reversedStack.push(stack.pop());
+        while (!stack.isEmpty()) reversedStack.push(stack.pop());
     }
 
     /**
@@ -105,6 +106,7 @@ public class StackQueue<T extends Comparable<T>> implements MyQueue<T> {
     private String reverse(String str) {
         String[] parts = str.substring(1, str.length() - 1).split(", ");
         Collections.reverse(Arrays.asList(parts));
+
         return "[" + String.join(", ", parts) + "]";
     }
 }
