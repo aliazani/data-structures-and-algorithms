@@ -1,5 +1,8 @@
 package io.github.aliazani.linear.queue;
 
+import io.github.aliazani.linear.queue.array_queue.ArrayQueue;
+import io.github.aliazani.linear.queue.priority_queue.with_array.PriorityQueueWithArray;
+import io.github.aliazani.linear.queue.stack_queue.StackQueue;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.MessageFormat;
@@ -126,14 +129,14 @@ public class QueueDemo {
     public static void showMyPriorityQueue() {
         log.warn("PriorityQueue my implementation: ");
         PriorityQueueWithArray<Integer> priorityQueue = new PriorityQueueWithArray<>(Integer.class, 6);
-        priorityQueue.add(0);
-        priorityQueue.add(10);
-        priorityQueue.add(8);
-        priorityQueue.add(2);
-        priorityQueue.add(11);
-        priorityQueue.add(1);
+        priorityQueue.enqueue(0);
+        priorityQueue.enqueue(10);
+        priorityQueue.enqueue(8);
+        priorityQueue.enqueue(2);
+        priorityQueue.enqueue(11);
+        priorityQueue.enqueue(1);
         log.info(priorityQueue.toString());
-        log.info(MessageFormat.format("PriorityQueue of Integer removes an item: {0}", priorityQueue.remove()));
+        log.info(MessageFormat.format("PriorityQueue of Integer removes an item: {0}", priorityQueue.dequeue()));
         log.info(MessageFormat.format("PriorityQueue of Integer after removing an item: {0}", priorityQueue));
     }
 
