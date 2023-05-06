@@ -1,6 +1,9 @@
-package io.github.aliazani.linear.queue;
+package io.github.aliazani.linear.stack.queue_stack;
+
+import io.github.aliazani.linear.stack.MyStack;
 
 import java.util.ArrayDeque;
+import java.util.EmptyStackException;
 import java.util.Queue;
 
 /**
@@ -8,16 +11,17 @@ import java.util.Queue;
  *
  * @param <T> the type of elements in this stack
  */
-public class StackWithTwoQueues<T> {
+public class StackWithTwoQueues<T> implements MyStack<T> {
+    T top;
     private Queue<T> queue1 = new ArrayDeque<>();
     private Queue<T> queue2 = new ArrayDeque<>();
-    T top;
 
     /**
      * Pushes an item onto the top of this stack.
      *
      * @param item the item to be pushed onto this stack
      */
+    @Override
     public void push(T item) {
         queue1.add(item);
         top = item;
@@ -27,11 +31,11 @@ public class StackWithTwoQueues<T> {
      * Removes the top element from this stack and returns it.
      *
      * @return the top element of this stack
-     * @throws IllegalStateException if the stack is empty
+     * @throws EmptyStackException if the stack is empty
      */
+    @Override
     public T pop() {
-        if (isEmpty())
-            throw new IllegalStateException();
+        if (isEmpty()) throw new EmptyStackException();
 
         while (queue1.size() > 1) {
             top = queue1.remove();
@@ -53,10 +57,24 @@ public class StackWithTwoQueues<T> {
     }
 
     /**
+     * Returns the top element of this stack without removing it.
+     *
+     * @return the top element of this stack
+     * @throws EmptyStackException if the stack is empty
+     */
+    @Override
+    public T peek() {
+        if (isEmpty()) throw new EmptyStackException();
+
+        return top;
+    }
+
+    /**
      * Checks if this stack is empty.
      *
      * @return true if this stack is empty, false otherwise
      */
+    @Override
     public boolean isEmpty() {
         return queue1.isEmpty();
     }
@@ -66,23 +84,10 @@ public class StackWithTwoQueues<T> {
      *
      * @return the number of elements in this stack
      */
+    @Override
     public int size() {
         return queue1.size();
     }
-
-    /**
-     * Returns the top element of this stack without removing it.
-     *
-     * @return the top element of this stack
-     * @throws IllegalStateException if the stack is empty
-     */
-    public T peek() {
-        if (isEmpty())
-            throw new IllegalStateException();
-
-        return top;
-    }
-
 
     /**
      * Returns a string representation of this stack.

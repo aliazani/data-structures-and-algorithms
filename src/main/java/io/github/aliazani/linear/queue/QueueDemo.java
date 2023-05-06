@@ -29,8 +29,6 @@ public class QueueDemo {
         Queue<Integer> integerQueue = new ArrayDeque<>(Arrays.asList(10, 20, 30, 40, 50, 60));
         queueReverser.reverse(integerQueue, 3);
         log.info(MessageFormat.format("Queue after reversing the first three items:{0}", integerQueue));
-
-        showStackWith2Queues();
     }
 
     public static void showQueueDefaultImplementation() {
@@ -138,22 +136,5 @@ public class QueueDemo {
         log.info(priorityQueue.toString());
         log.info(MessageFormat.format("PriorityQueue of Integer removes an item: {0}", priorityQueue.dequeue()));
         log.info(MessageFormat.format("PriorityQueue of Integer after removing an item: {0}", priorityQueue));
-    }
-
-    public static void showStackWith2Queues() {
-        log.warn("Implementation of Stack with two Queues:");
-
-        StackWithTwoQueues<Integer> stack = new StackWithTwoQueues<>();
-        stack.push(1);
-        stack.push(2);
-        stack.push(3);
-        stack.push(4);
-        log.info(MessageFormat.format("Stack: {0}", stack));
-        log.info(MessageFormat.format("Stack pop: {0}", stack.pop()));
-        log.info(MessageFormat.format("Stack after popping one element: {0}", stack));
-        log.info(MessageFormat.format("Stack pop: {0}", stack.pop()));
-        log.info(MessageFormat.format("Stack after popping two elements: {0}", stack));
-        log.info(MessageFormat.format("Stack peek: {0}", stack.peek()));
-        log.info(MessageFormat.format("Stack After peeking an element: {0}", stack));
     }
 }
