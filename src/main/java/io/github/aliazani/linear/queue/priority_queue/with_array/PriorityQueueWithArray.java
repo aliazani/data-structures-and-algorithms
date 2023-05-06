@@ -1,7 +1,10 @@
-package io.github.aliazani.linear.queue;
+package io.github.aliazani.linear.queue.priority_queue.with_array;
+
+import io.github.aliazani.linear.queue.MyQueue;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 /**
  * A priority queue implementation based on a fixed-size array.
@@ -42,12 +45,7 @@ public class PriorityQueueWithArray<T extends Comparable<T>> implements MyQueue<
         size++;
     }
 
-    /**
-     * Returns whether the priority queue is full.
-     *
-     * @return true if the priority queue is full, false otherwise.
-     */
-    public boolean isFull() {
+    private boolean isFull() {
         return size == elements.length;
     }
 
@@ -61,10 +59,8 @@ public class PriorityQueueWithArray<T extends Comparable<T>> implements MyQueue<
         int i;
 
         for (i = size - 1; i >= 0; i--)
-            if (elements[i].compareTo(item) > 0)
-                elements[i + 1] = elements[i];
-            else
-                break;
+            if (elements[i].compareTo(item) > 0) elements[i + 1] = elements[i];
+            else break;
 
         return i + 1;
     }
@@ -73,12 +69,11 @@ public class PriorityQueueWithArray<T extends Comparable<T>> implements MyQueue<
      * Removes and returns the element with the highest priority from the priority queue.
      *
      * @return the element with the highest priority.
-     * @throws IllegalStateException if the priority queue is empty.
+     * @throws NoSuchElementException if the priority queue is empty.
      */
     @Override
     public T dequeue() {
-        if (isEmpty())
-            throw new IllegalStateException();
+        if (isEmpty()) throw new NoSuchElementException();
 
         T tail = elements[--size];
         elements[size] = null;
@@ -86,11 +81,24 @@ public class PriorityQueueWithArray<T extends Comparable<T>> implements MyQueue<
         return tail;
     }
 
+    /**
+     * Returns the item at the front of the queue without removing it.
+     *
+     * @return the item at the front of the queue
+     * @throws NoSuchElementException if the queue is empty
+     */
     @Override
     public T peek() {
+        if (isEmpty()) throw new NoSuchElementException();
+
         return elements[size - 1];
     }
 
+    /**
+     * Returns the size of the queue.
+     *
+     * @return the size of the queue
+     */
     @Override
     public int size() {
         return size;
