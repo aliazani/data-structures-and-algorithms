@@ -134,6 +134,14 @@ class MyHashTableLinearProbingTest {
 
     @Test
     @DisplayName("get - " +
+            "When table is empty - " +
+            "Should throw NoSuchElementException")
+    void get_tableIsEmpty_throwNoSuchElement() {
+        assertThrows(NoSuchElementException.class, () -> table.get(1));
+    }
+
+    @Test
+    @DisplayName("get - " +
             "When the key is in the table - " +
             "Should return the corresponding value")
     void get_keyInTable_returnValue() {
