@@ -5,6 +5,7 @@ import io.github.aliazani.linear.hashtables.MyHashTable;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class MyHashTableLinearProbing<K extends Comparable<K>, V extends Comparable<V>> implements MyHashTable<K, V> {
     private final Entry<K, V>[] entries;
@@ -62,7 +63,7 @@ public class MyHashTableLinearProbing<K extends Comparable<K>, V extends Compara
         for (int probeDistance = 0; probeDistance < entries.length; probeDistance++) {
             int index = getIndex(key, probeDistance);
             Entry<K, V> entry = entries[index];
-            if (entry == null) return index;
+            if (Objects.equals(entry, null)) return index;
         }
 
         return -1;
@@ -72,7 +73,7 @@ public class MyHashTableLinearProbing<K extends Comparable<K>, V extends Compara
         for (int probeDistance = 0; probeDistance < entries.length; probeDistance++) {
             int index = getIndex(key, probeDistance);
             Entry<K, V> entry = entries[index];
-            if (entry != null && entry.getKey() == key) return index;
+            if (entry != null && Objects.equals(entry.getKey(), key)) return index;
         }
 
         return -1;
