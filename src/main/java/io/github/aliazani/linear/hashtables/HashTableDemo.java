@@ -13,16 +13,17 @@ import java.util.stream.Collectors;
 public class HashTableDemo {
     public static void main(String[] args) {
         showJavaImplementationOfHashMap();
-
+        log.warn("FindFirstNonRepeatingCharacter");
         log.info(String.valueOf(MapHelper.findFirstNonRepeatingCharacter("A Green Apple.")));
-
         showJavaImplementationOfSet();
+        log.warn("FindFirstRepeatingCharacter");
         log.info(String.valueOf(MapHelper.findFirstRepeatedCharacter("A Green apple")));
-
         showMyHashTable();
-
+        log.warn("mostFrequent");
         log.info(String.valueOf(MapHelper.mostFrequent(new int[]{1, 2, 3, 3, 3, 1, 2, 4, 5, 4, 3, 9, 3})));
+        log.warn("countPairsWithDiff");
         log.info(String.valueOf(MapHelper.countPairsWithDiff(new int[]{1, 7, 5, 9, 2, 12, 3, 3, 4, 9}, 2)));
+        log.warn("twoSum");
         log.info(Arrays.toString(MapHelper.twoSum(new int[]{2, 7, 11, 15}, 9)));
     }
 
