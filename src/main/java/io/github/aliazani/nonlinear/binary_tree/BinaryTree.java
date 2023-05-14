@@ -16,6 +16,7 @@ public class BinaryTree<T extends Comparable<T>> {
     public void insert(T value) {
         if (value == null) throw new IllegalArgumentException("can not assign null value to a node.");
         root = insertRecursive(root, value);
+        size++;
     }
 
     private Node<T> insertRecursive(Node<T> current, T value) {
