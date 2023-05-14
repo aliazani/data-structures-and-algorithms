@@ -1,5 +1,8 @@
 package io.github.aliazani.nonlinear.binary_tree;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class BinaryTree<T extends Comparable<T>> {
     private Node<T> root;
     private int size;
@@ -37,6 +40,54 @@ public class BinaryTree<T extends Comparable<T>> {
             else return true;
         }
         return false;
+    }
+
+    public String traversePreOrder () {
+        StringBuilder strBuilder = new StringBuilder();
+        traversePreOrder(root, strBuilder);
+        strBuilder.replace(strBuilder.lastIndexOf(","), strBuilder.toString().length(), "");
+
+        return strBuilder.toString();
+    }
+
+    private void traversePreOrder(Node<T> root, StringBuilder strBuilder) {
+        if (isEmpty(root))
+            return;
+        strBuilder.append(root.getValue()).append(", ");
+        traversePreOrder(root.getLeftChild(), strBuilder);
+        traversePreOrder(root.getRightChild(), strBuilder);
+    }
+
+    public String traversePostOrder() {
+        StringBuilder strBuilder = new StringBuilder();
+        traversePostOrder(root, strBuilder);
+        strBuilder.replace(strBuilder.lastIndexOf(","), strBuilder.toString().length(), "");
+
+        return strBuilder.toString();
+    }
+
+    private void traversePostOrder(Node<T> root, StringBuilder strBuilder) {
+        if (isEmpty(root))
+            return;
+        traversePostOrder(root.getLeftChild(), strBuilder);
+        traversePostOrder(root.getRightChild(), strBuilder);
+        strBuilder.append(root.getValue()).append(", ");
+    }
+
+    public String traverseInOrder() {
+        StringBuilder strBuilder = new StringBuilder();
+        traverseInOrder(root, strBuilder);
+        strBuilder.replace(strBuilder.lastIndexOf(","), strBuilder.toString().length(), "");
+
+        return strBuilder.toString();
+    }
+
+    private void traverseInOrder(Node<T> root, StringBuilder strBuilder) {
+        if (isEmpty(root))
+            return;
+        traverseInOrder(root.getLeftChild(), strBuilder);
+        strBuilder.append(root.getValue()).append(", ");
+        traverseInOrder(root.getRightChild(), strBuilder);
     }
 
     //    public boolean isBalanced() {
@@ -92,41 +143,8 @@ public class BinaryTree<T extends Comparable<T>> {
 //                isBinarySearchTree(root.rightChild, root.value, max);
 //    }
 //
-//    public void traversePreOrder() {
-//        traversePreOrder(root);
-//    }
 //
-//    private void traversePreOrder(Node<T> root) {
-//        if (isEmpty(root))
-//            return;
-//        System.out.println(root.value);
-//        traversePreOrder(root.leftChild);
-//        traversePreOrder(root.rightChild);
-//    }
 //
-//    public void traversePostOrder() {
-//        traversePostOrder(root);
-//    }
-//
-//    private void traversePostOrder(Node<T> root) {
-//        if (isEmpty(root))
-//            return;
-//        traversePostOrder(root.leftChild);
-//        traversePostOrder(root.rightChild);
-//        System.out.println(root.value);
-//    }
-//
-//    public void traverseInOrder() {
-//        traverseInOrder(root);
-//    }
-//
-//    private void traverseInOrder(Node<T> root) {
-//        if (isEmpty(root))
-//            return;
-//        traverseInOrder(root.leftChild);
-//        System.out.println(root.value);
-//        traverseInOrder(root.rightChild);
-//    }
 //
 //    public int height() {
 //        return height(root);
@@ -258,9 +276,9 @@ public class BinaryTree<T extends Comparable<T>> {
 //        }
 //    }
 
-//    private boolean isEmpty(Node<T> node) {
-//        return node == null;
-//    }
+    private boolean isEmpty(Node<T> node) {
+        return node == null;
+    }
 
     @Override
     public String toString() {
@@ -277,7 +295,7 @@ public class BinaryTree<T extends Comparable<T>> {
 //            return;
 //
 //        // Increase distance between levels
-//        space += 10;
+//        space += 5;
 //
 //
 //        // Process right child first
@@ -286,7 +304,7 @@ public class BinaryTree<T extends Comparable<T>> {
 //        // Print current node after space
 //        // count
 //        System.out.print("\n");
-//        for (int i = 10; i < space; i++)
+//        for (int i = 5; i < space; i++)
 //            System.out.print(" ");
 //        System.out.print(root.getValue() + "\n");
 //
