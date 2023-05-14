@@ -11,45 +11,35 @@ public class BinaryTree<T extends Comparable<T>> {
     }
 
     public void insert(T value) {
-        Node<T> node = new Node<>(value);
-
-        if (root == null) {
-            root = node;
-            return;
-        }
-
-        Node<T> current = root;
-        while (true) {
-            if (value.compareTo(current.getValue()) < 0) {
-                if (current.getLeftChild() == null) {
-                    current.setLeftChild(node);
-                    break;
-                }
-                current = current.getLeftChild();
-            } else {
-                if (current.getRightChild() == null) {
-                    current.setRightChild(node);
-                    break;
-                }
-                current = current.getRightChild();
-            }
-        }
+        if (value == null) throw new IllegalArgumentException("can not assign null value to a node.");
+        root = insertRecursive(root, value);
     }
 
-    public boolean find(T value) {
+    private Node<T> insertRecursive(Node<T> current, T value) {
+        if (current == null) return new Node<>(value);
+
+        int comparison = value.compareTo(current.getValue());
+        if (comparison == 0) throw new IllegalStateException("Binary Tree cannot have duplicate values.");
+        else if (comparison < 0) current.setLeftChild(insertRecursive(current.getLeftChild(), value));
+        else current.setRightChild(insertRecursive(current.getRightChild(), value));
+
+        return current;
+    }
+
+    public boolean contains(T value) {
         Node<T> current = root;
+        if (value == null) throw new IllegalArgumentException("value can not be null");
+
         while (current != null) {
-            if (value.compareTo(current.getValue()) < 0)
-                current = current.getLeftChild();
-            else if (value.compareTo(current.getValue()) > 0)
-                current = current.getRightChild();
-            else
-                return true;
+            int comparison = value.compareTo(current.getValue());
+            if (comparison < 0) current = current.getLeftChild();
+            else if (comparison > 0) current = current.getRightChild();
+            else return true;
         }
         return false;
     }
 
-//    public boolean isBalanced() {
+    //    public boolean isBalanced() {
 //        var current = root;
 //        while (!isLeaf(current)) {
 //            if (Math.abs(height(current.leftChild) - height(current.rightChild)) > 1)
@@ -141,17 +131,18 @@ public class BinaryTree<T extends Comparable<T>> {
 //    public int height() {
 //        return height(root);
 //    }
-//
+
 //    private int height(Node<T> root) {
 //        if (isEmpty((Node<T>) root))
 //            return -1;
 //        if (isLeaf(root))
 //            return 0;
 //        return 1 + Math.max(
-//                height(root.leftChild),
-//                height(root.rightChild));
+//                height(root.getLeftChild()),
+//                height(root.getRightChild()));
 //    }
-//
+
+    //
 //    public void printNodesAtDistance(int distance) {
 //        printNodesAtDistance(root, distance);
 //    }
@@ -225,7 +216,8 @@ public class BinaryTree<T extends Comparable<T>> {
 //    public int size() {
 //        return size;
 //    }
-//
+
+    //
 //    public int countLeaves() {
 //        return countLeaves(root);
 //    }
@@ -238,17 +230,68 @@ public class BinaryTree<T extends Comparable<T>> {
 //        countLeaves(root.rightChild);
 //        return countLeaves;
 //    }
-//
-//    private boolean isLeaf(Node<T> root) {
-//        return root.rightChild == null && root.leftChild == null;
+    private boolean isLeaf(Node<T> node) {
+        return node.getRightChild() == null
+                && node.getLeftChild() == null;
+    }
+
+//    public void printTree(T[][] M, Node<T> root, int col, int row, int height) {
+//        if (root == null)
+//            return;
+//        M[row][col] = root.getValue();
+//        printTree(M, root.getLeftChild(), col - (int) Math.pow(2, height - 2), row + 1, height - 1);
+//        printTree(M, root.getRightChild(), col + (int) Math.pow(2, height - 2), row + 1, height - 1);
+//    }
+//    public void TreePrinter() {
+//        int h = height(root);
+//        int col = getcol(h);
+//        T[][] M = (T[][]) new Comparable[h][col];
+//        printTree(M, root, col / 2, 0, h);
+//        for (int i = 0; i < h; i++) {
+//            for (int j = 0; j < col; j++) {
+//                if (M[i][j] == 0)
+//                    System.out.print("  ");
+//                else
+//                    System.out.print(M[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
+//    }
+
+//    private boolean isEmpty(Node<T> node) {
+//        return node == null;
+//    }
+
+    @Override
+    public String toString() {
+        return root.toString();
+    }
+
+//    public void print() {
+//        print2DUtil(root, 0);
 //    }
 //
-//    private boolean isEmpty(Node<T> root) {
-//        return root == null;
-//    }
+//    private void print2DUtil(Node<T> root, int space) {
+//        // Base case
+//        if (root == null)
+//            return;
 //
-//    @Override
-//    public String toString() {
-//        return root.toString();
+//        // Increase distance between levels
+//        space += 10;
+//
+//
+//        // Process right child first
+//        print2DUtil(root.getRightChild(), space);
+//
+//        // Print current node after space
+//        // count
+//        System.out.print("\n");
+//        for (int i = 10; i < space; i++)
+//            System.out.print(" ");
+//        System.out.print(root.getValue() + "\n");
+//
+//        // Process left child
+//        print2DUtil(root.getLeftChild(), space);
 //    }
+
 }
