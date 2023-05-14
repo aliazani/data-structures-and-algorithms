@@ -83,17 +83,17 @@ class BinaryTreeTest {
 
     @DisplayName("traversePreOrder - " +
             "When tree has one item - " +
-            "Should print that Item")
+            "Should return that Item")
     @Test
-    void traversePreOrder_treeHasOneItem_printThatItem() {
+    void traversePreOrder_treeHasOneItem_returnThatItem() {
         assertEquals("20", bts.traversePreOrder());
     }
 
     @DisplayName("traversePreOrder - " +
             "When tree has more  than one item - " +
-            "Should print Items pre-order")
+            "Should return Items pre-order")
     @Test
-    void traversePreOrder_treeMoreThanHasOneItem_printItemsPreOrder() {
+    void traversePreOrder_treeMoreThanHasOneItem_returnItemsPreOrder() {
         bts.insert(10);
         bts.insert(12);
         bts.insert(8);
@@ -105,17 +105,17 @@ class BinaryTreeTest {
 
     @DisplayName("traversePostOrder - " +
             "When tree has one item - " +
-            "Should print that Item")
+            "Should return that Item")
     @Test
-    void traversePostOrder_treeHasOneItem_printThatItem() {
+    void traversePostOrder_treeHasOneItem_returnThatItem() {
         assertEquals("20", bts.traversePostOrder());
     }
 
     @DisplayName("traversePostOrder - " +
             "When tree has more  than one item - " +
-            "Should print Items post-order")
+            "Should return Items post-order")
     @Test
-    void traversePostOrder_treeMoreThanHasOneItem_printItemsPostOrder() {
+    void traversePostOrder_treeMoreThanHasOneItem_returnItemsPostOrder() {
         bts.insert(10);
         bts.insert(12);
         bts.insert(8);
@@ -127,17 +127,17 @@ class BinaryTreeTest {
 
     @DisplayName("traverseInOrder - " +
             "When tree has one item - " +
-            "Should print that Item")
+            "Should return that Item")
     @Test
-    void traverseInOrder_treeHasOneItem_printThatItem() {
+    void traverseInOrder_treeHasOneItem_returnThatItem() {
         assertEquals("20", bts.traverseInOrder());
     }
 
     @DisplayName("traverseIntOrder - " +
             "When tree has more  than one item - " +
-            "Should print Items in-order")
+            "Should return Items in-order")
     @Test
-    void traverseInOrder_treeMoreThanHasOneItem_printItemsInOrder() {
+    void traverseInOrder_treeMoreThanHasOneItem_returnItemsInOrder() {
         bts.insert(10);
         bts.insert(12);
         bts.insert(8);
