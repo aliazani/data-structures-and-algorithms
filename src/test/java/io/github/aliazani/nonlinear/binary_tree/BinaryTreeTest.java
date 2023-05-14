@@ -146,4 +146,36 @@ class BinaryTreeTest {
         bts.insert(21);
         assertEquals("8, 10, 12, 20, 21, 25, 30", bts.traverseInOrder());
     }
+
+    @DisplayName("height - " +
+            "When tree root is null - " +
+            "Should return (-1)")
+    @Test
+    void height_rootIsNull_returnNegativeOne() {
+        bts = new BinaryTree<>(null);
+
+        assertEquals(-1, bts.height());
+    }
+
+    @DisplayName("height - " +
+            "When tree has one item - " +
+            "Should return 0")
+    @Test
+    void height_treeHasOneItem_returnZero() {
+        assertEquals(0, bts.height());
+    }
+
+    @DisplayName("height - " +
+            "When tree has more than one item - " +
+            "Should return height")
+    @Test
+    void height_treeHasMoreThanOneItem_returnHeight() {
+        bts.insert(10);
+        bts.insert(12);
+        bts.insert(8);
+        bts.insert(4);
+        bts.insert(2);
+
+        assertEquals(4, bts.height());
+    }
 }

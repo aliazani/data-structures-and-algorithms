@@ -42,7 +42,7 @@ public class BinaryTree<T extends Comparable<T>> {
         return false;
     }
 
-    public String traversePreOrder () {
+    public String traversePreOrder() {
         StringBuilder strBuilder = new StringBuilder();
         traversePreOrder(root, strBuilder);
         strBuilder.replace(strBuilder.lastIndexOf(","), strBuilder.toString().length(), "");
@@ -88,6 +88,18 @@ public class BinaryTree<T extends Comparable<T>> {
         traverseInOrder(root.getLeftChild(), strBuilder);
         strBuilder.append(root.getValue()).append(", ");
         traverseInOrder(root.getRightChild(), strBuilder);
+    }
+
+    public int height() {
+        return height(root);
+    }
+
+    private int height(Node<T> root) {
+        if (isEmpty(root)) return -1;
+        if (isLeaf(root)) return 0;
+        return 1 + Math.max(
+                height(root.getLeftChild()),
+                height(root.getRightChild()));
     }
 
     //    public boolean isBalanced() {
@@ -144,21 +156,6 @@ public class BinaryTree<T extends Comparable<T>> {
 //    }
 //
 //
-//
-//
-//    public int height() {
-//        return height(root);
-//    }
-
-//    private int height(Node<T> root) {
-//        if (isEmpty((Node<T>) root))
-//            return -1;
-//        if (isLeaf(root))
-//            return 0;
-//        return 1 + Math.max(
-//                height(root.getLeftChild()),
-//                height(root.getRightChild()));
-//    }
 
     //
 //    public void printNodesAtDistance(int distance) {
@@ -248,10 +245,6 @@ public class BinaryTree<T extends Comparable<T>> {
 //        countLeaves(root.rightChild);
 //        return countLeaves;
 //    }
-    private boolean isLeaf(Node<T> node) {
-        return node.getRightChild() == null
-                && node.getLeftChild() == null;
-    }
 
 //    public void printTree(T[][] M, Node<T> root, int col, int row, int height) {
 //        if (root == null)
@@ -277,7 +270,12 @@ public class BinaryTree<T extends Comparable<T>> {
 //    }
 
     private boolean isEmpty(Node<T> node) {
-        return node == null;
+        return node == null || node.getValue() == null;
+    }
+
+    private boolean isLeaf(Node<T> node) {
+        return node.getRightChild() == null
+                && node.getLeftChild() == null;
     }
 
     @Override
