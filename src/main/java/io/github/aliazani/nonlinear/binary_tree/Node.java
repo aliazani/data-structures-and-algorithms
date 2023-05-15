@@ -9,11 +9,13 @@ import java.text.MessageFormat;
 @Setter
 public class Node<T> {
     private T value;
+    private Node<T> parent;
     private Node<T> leftChild;
     private Node<T> rightChild;
 
-    public Node(T value) {
+    public Node(T value, Node<T> parent) {
         this.value = value;
+        this.parent = parent;
     }
 
     @Override
