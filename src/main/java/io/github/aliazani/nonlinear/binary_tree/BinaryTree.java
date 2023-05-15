@@ -2,6 +2,9 @@ package io.github.aliazani.nonlinear.binary_tree;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 @Slf4j
 public class BinaryTree<T extends Comparable<T>> {
     private Node<T> root;
@@ -9,31 +12,43 @@ public class BinaryTree<T extends Comparable<T>> {
 //    private int countLeaves;
 
     public BinaryTree(T root) {
-        this.root = new Node<>(root);
+        this.root = new Node<>(root, null);
         size++;
     }
 
     public void insert(T value) {
-        if (value == null) throw new IllegalArgumentException("can not assign null value to a node.");
-        root = insertRecursive(root, value);
-        size++;
-    }
+        if (value == null) throw new IllegalArgumentException("Cannot assign null value to a node.");
 
-    private Node<T> insertRecursive(Node<T> current, T value) {
-        if (current == null) return new Node<>(value);
+        if (isEmpty(root)) {
+            root = new Node<>(value, null);
+            size++;
+            return;
+        }
 
-        int comparison = value.compareTo(current.getValue());
-        if (comparison == 0) throw new IllegalStateException("Binary Tree cannot have duplicate values.");
-        else if (comparison < 0) current.setLeftChild(insertRecursive(current.getLeftChild(), value));
-        else current.setRightChild(insertRecursive(current.getRightChild(), value));
+        Node<T> current = root;
+        while (true) {
+            int comparison = value.compareTo(current.getValue());
+            if (comparison == 0) throw new IllegalStateException("Binary Tree cannot have duplicate values.");
 
-        return current;
+            Node<T> nextChild = comparison < 0 ?
+                    current.getLeftChild() :
+                    current.getRightChild();
+            if (nextChild == null) {
+                Node<T> newNode = new Node<>(value, current);
+                if (comparison < 0) current.setLeftChild(newNode);
+                else current.setRightChild(newNode);
+                size++;
+
+                return;
+            }
+            current = nextChild;
+        }
     }
 
     public boolean contains(T value) {
-        Node<T> current = root;
         if (value == null) throw new IllegalArgumentException("value can not be null");
 
+        Node<T> current = root;
         while (current != null) {
             int comparison = value.compareTo(current.getValue());
             if (comparison < 0) current = current.getLeftChild();
@@ -41,6 +56,40 @@ public class BinaryTree<T extends Comparable<T>> {
             else return true;
         }
         return false;
+    }
+
+    public boolean contains2(T value) {
+        if (value == null) throw new IllegalArgumentException("value can not be null");
+
+        return containsRecursive(root, value);
+    }
+
+    private boolean containsRecursive(Node<T> node, T value) {
+        if (node == null) return false;
+
+        int comparison = value.compareTo(node.getValue());
+        if (comparison < 0) return containsRecursive(node.getLeftChild(), value);
+        else if (comparison > 0) return containsRecursive(node.getRightChild(), value);
+        else return true;
+    }
+
+    public String traverseLevelOrder() {
+        if (isEmpty(root)) return "";
+
+        StringBuilder strBuilder = new StringBuilder();
+        Queue<Node<T>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            Node<T> current = queue.poll();
+            strBuilder.append(current.getValue()).append(", ");
+
+            if (current.getLeftChild() != null) queue.offer(current.getLeftChild());
+            if (current.getRightChild() != null) queue.offer(current.getRightChild());
+        }
+
+        strBuilder.setLength(strBuilder.length() - 2);
+        return strBuilder.toString();
     }
 
     public String traversePreOrder() {
@@ -103,6 +152,22 @@ public class BinaryTree<T extends Comparable<T>> {
                 height(root.getRightChild()));
     }
 
+    public T minimum() {
+        return minimum(root);
+    }
+
+    private T minimum(Node<T> root) {
+        if (isLeaf(root)) return root.getValue();
+
+        T minValue;
+        T left = minimum(root.getLeftChild());
+        T right = minimum(root.getRightChild());
+        minValue = (right.compareTo(left) < 0) ? right : left;
+        minValue = root.getValue().compareTo(minValue) < 0 ? root.getValue() : minValue;
+
+        return minValue;
+    }
+
     //    public boolean isBalanced() {
 //        var current = root;
 //        while (!isLeaf(current)) {
@@ -155,8 +220,6 @@ public class BinaryTree<T extends Comparable<T>> {
 //        return isBinarySearchTree(root.leftChild, min, root.value) &&
 //                isBinarySearchTree(root.rightChild, root.value, max);
 //    }
-//
-//
 
     //
 //    public void printNodesAtDistance(int distance) {
@@ -195,22 +258,6 @@ public class BinaryTree<T extends Comparable<T>> {
 //        return false;
 //    }
 //
-//    public T minimum() {
-//        return minimum(root);
-//    }
-//
-//    private T minimum(Node<T> root) {
-//        if (isLeaf(root))
-//            return root.value;
-//
-//        T minValue = null;
-//        var left = minimum(root.leftChild);
-//        var right = minimum(root.rightChild);
-//        minValue = (right.compareTo(left) < 0) ? right : left;
-//        minValue = root.value.compareTo(minValue) < 0 ? root.value : minValue;
-//
-//        return minValue;
-//    }
 //
 //    public T maximum() {
 //        return maximum(root);
@@ -310,5 +357,4 @@ public class BinaryTree<T extends Comparable<T>> {
 //        // Process left child
 //        print2DUtil(root.getLeftChild(), space);
 //    }
-
 }

@@ -9,11 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("BinaryTree")
 class BinaryTreeTest {
-    BinaryTree<Integer> bts;
+    BinaryTree<Integer> binaryTree;
 
     @BeforeEach
     void setUp() {
-        bts = new BinaryTree<>(20);
+        binaryTree = new BinaryTree<>(20);
     }
 
     @DisplayName("insert - " +
@@ -21,10 +21,10 @@ class BinaryTreeTest {
             "Should insert that item as the left child")
     @Test
     void insert_itemIsLessThanRoot_insertAsLeftChild() {
-        bts.insert(10);
+        binaryTree.insert(10);
 
         assertEquals("(Value: 20, RightChild: null, LeftChild: (Value: 10, RightChild: null, LeftChild: null))",
-                bts.toString());
+                binaryTree.toString());
     }
 
     @DisplayName("insert - " +
@@ -32,10 +32,10 @@ class BinaryTreeTest {
             "Should insert that item as the right child")
     @Test
     void insert_itemIsGreaterThanRoot_insertAsRightChild() {
-        bts.insert(30);
+        binaryTree.insert(30);
 
         assertEquals("(Value: 20, RightChild: (Value: 30, RightChild: null, LeftChild: null), LeftChild: null)",
-                bts.toString());
+                binaryTree.toString());
     }
 
     @DisplayName("insert - " +
@@ -43,7 +43,7 @@ class BinaryTreeTest {
             "Should throw IllegalStateException")
     @Test
     void insert_duplicateItem_throwIllegalState() {
-        assertThrows(IllegalStateException.class, () -> bts.insert(20));
+        assertThrows(IllegalStateException.class, () -> binaryTree.insert(20));
     }
 
     @DisplayName("insert - " +
@@ -51,7 +51,7 @@ class BinaryTreeTest {
             "Should throw IllegalArgumentException")
     @Test
     void insert_itemIsNull_throwIllegalArgument() {
-        assertThrows(IllegalArgumentException.class, () -> bts.insert(null));
+        assertThrows(IllegalArgumentException.class, () -> binaryTree.insert(null));
     }
 
     @DisplayName("contains - " +
@@ -59,10 +59,10 @@ class BinaryTreeTest {
             "Should return true")
     @Test
     void contains_valueIsInTheTree_returnTrue() {
-        bts.insert(10);
+        binaryTree.insert(10);
 
-       assertTrue(bts.contains(20));
-        assertTrue(bts.contains(10));
+       assertTrue(binaryTree.contains(20));
+        assertTrue(binaryTree.contains(10));
     }
 
     @DisplayName("contains - " +
@@ -70,7 +70,7 @@ class BinaryTreeTest {
             "Should return false")
     @Test
     void contains_valueIsNotInTheTree_returnFalse() {
-        assertFalse(bts.contains(15));
+        assertFalse(binaryTree.contains(15));
     }
 
     @DisplayName("contains - " +
@@ -78,7 +78,71 @@ class BinaryTreeTest {
             "Should throw IllegalArgumentException")
     @Test
     void contains_valueIsNull_throwIllegalArgument() {
-        assertThrows(IllegalArgumentException.class, () -> bts.contains(null));
+        assertThrows(IllegalArgumentException.class, () -> binaryTree.contains(null));
+    }
+
+    @DisplayName("contains2 - " +
+            "When value is in the tree - " +
+            "Should return true")
+    @Test
+    void contains2_valueIsInTheTree_returnTrue() {
+        binaryTree.insert(10);
+
+        assertTrue(binaryTree.contains2(20));
+        assertTrue(binaryTree.contains2(10));
+    }
+
+    @DisplayName("contains2 - " +
+            "When value is not in the tree - " +
+            "Should return false")
+    @Test
+    void contains2_valueIsNotInTheTree_returnFalse() {
+        assertFalse(binaryTree.contains2(15));
+    }
+
+    @DisplayName("contains2 - " +
+            "When value is null - " +
+            "Should throw IllegalArgumentException")
+    @Test
+    void contains2_valueIsNull_throwIllegalArgument() {
+        assertThrows(IllegalArgumentException.class, () -> binaryTree.contains2(null));
+    }
+
+    @Test
+    @DisplayName("traverseLevelOrder - " +
+            "When tree is empty - " +
+            "Should return an empty string")
+    void traverseLevelOrder_emptyTree_returnsEmptyString() {
+        BinaryTree<Integer> binaryTree = new BinaryTree<>(null);
+
+        assertEquals("", binaryTree.traverseLevelOrder());
+    }
+
+    @Test
+    @DisplayName("traverseLevelOrder - " +
+            "When tree has a single node - " +
+            "Should return the value of the root node")
+    void traverseLevelOrder_singleNodeTree_returnsRootValue() {
+        BinaryTree<Integer> binaryTree = new BinaryTree<>(20);
+
+        assertEquals("20", binaryTree.traverseLevelOrder());
+    }
+
+    @Test
+    @DisplayName("traverseLevelOrder - " +
+            "When tree has multiple nodes - " +
+            "Should return the level order traversal string")
+    void traverseLevelOrder_multipleNodesTree_returnsLevelOrderTraversalString() {
+        BinaryTree<Integer> binaryTree = new BinaryTree<>(50);
+        binaryTree.insert(20);
+        binaryTree.insert(60);
+        binaryTree.insert(5);
+        binaryTree.insert(55);
+        binaryTree.insert(15);
+        binaryTree.insert(25);
+        binaryTree.insert(70);
+
+        assertEquals("50, 20, 60, 5, 25, 55, 70, 15", binaryTree.traverseLevelOrder());
     }
 
     @DisplayName("traversePreOrder - " +
@@ -86,7 +150,7 @@ class BinaryTreeTest {
             "Should return that Item")
     @Test
     void traversePreOrder_treeHasOneItem_returnThatItem() {
-        assertEquals("20", bts.traversePreOrder());
+        assertEquals("20", binaryTree.traversePreOrder());
     }
 
     @DisplayName("traversePreOrder - " +
@@ -94,13 +158,13 @@ class BinaryTreeTest {
             "Should return Items pre-order")
     @Test
     void traversePreOrder_treeMoreThanHasOneItem_returnItemsPreOrder() {
-        bts.insert(10);
-        bts.insert(12);
-        bts.insert(8);
-        bts.insert(25);
-        bts.insert(30);
-        bts.insert(21);
-        assertEquals("20, 10, 8, 12, 25, 21, 30", bts.traversePreOrder());
+        binaryTree.insert(10);
+        binaryTree.insert(12);
+        binaryTree.insert(8);
+        binaryTree.insert(25);
+        binaryTree.insert(30);
+        binaryTree.insert(21);
+        assertEquals("20, 10, 8, 12, 25, 21, 30", binaryTree.traversePreOrder());
     }
 
     @DisplayName("traversePostOrder - " +
@@ -108,7 +172,7 @@ class BinaryTreeTest {
             "Should return that Item")
     @Test
     void traversePostOrder_treeHasOneItem_returnThatItem() {
-        assertEquals("20", bts.traversePostOrder());
+        assertEquals("20", binaryTree.traversePostOrder());
     }
 
     @DisplayName("traversePostOrder - " +
@@ -116,13 +180,13 @@ class BinaryTreeTest {
             "Should return Items post-order")
     @Test
     void traversePostOrder_treeMoreThanHasOneItem_returnItemsPostOrder() {
-        bts.insert(10);
-        bts.insert(12);
-        bts.insert(8);
-        bts.insert(25);
-        bts.insert(30);
-        bts.insert(21);
-        assertEquals("8, 12, 10, 21, 30, 25, 20", bts.traversePostOrder());
+        binaryTree.insert(10);
+        binaryTree.insert(12);
+        binaryTree.insert(8);
+        binaryTree.insert(25);
+        binaryTree.insert(30);
+        binaryTree.insert(21);
+        assertEquals("8, 12, 10, 21, 30, 25, 20", binaryTree.traversePostOrder());
     }
 
     @DisplayName("traverseInOrder - " +
@@ -130,7 +194,7 @@ class BinaryTreeTest {
             "Should return that Item")
     @Test
     void traverseInOrder_treeHasOneItem_returnThatItem() {
-        assertEquals("20", bts.traverseInOrder());
+        assertEquals("20", binaryTree.traverseInOrder());
     }
 
     @DisplayName("traverseIntOrder - " +
@@ -138,13 +202,13 @@ class BinaryTreeTest {
             "Should return Items in-order")
     @Test
     void traverseInOrder_treeMoreThanHasOneItem_returnItemsInOrder() {
-        bts.insert(10);
-        bts.insert(12);
-        bts.insert(8);
-        bts.insert(25);
-        bts.insert(30);
-        bts.insert(21);
-        assertEquals("8, 10, 12, 20, 21, 25, 30", bts.traverseInOrder());
+        binaryTree.insert(10);
+        binaryTree.insert(12);
+        binaryTree.insert(8);
+        binaryTree.insert(25);
+        binaryTree.insert(30);
+        binaryTree.insert(21);
+        assertEquals("8, 10, 12, 20, 21, 25, 30", binaryTree.traverseInOrder());
     }
 
     @DisplayName("height - " +
@@ -152,9 +216,9 @@ class BinaryTreeTest {
             "Should return (-1)")
     @Test
     void height_rootIsNull_returnNegativeOne() {
-        bts = new BinaryTree<>(null);
+        binaryTree = new BinaryTree<>(null);
 
-        assertEquals(-1, bts.height());
+        assertEquals(-1, binaryTree.height());
     }
 
     @DisplayName("height - " +
@@ -162,7 +226,7 @@ class BinaryTreeTest {
             "Should return 0")
     @Test
     void height_treeHasOneItem_returnZero() {
-        assertEquals(0, bts.height());
+        assertEquals(0, binaryTree.height());
     }
 
     @DisplayName("height - " +
@@ -170,12 +234,12 @@ class BinaryTreeTest {
             "Should return height")
     @Test
     void height_treeHasMoreThanOneItem_returnHeight() {
-        bts.insert(10);
-        bts.insert(12);
-        bts.insert(8);
-        bts.insert(4);
-        bts.insert(2);
+        binaryTree.insert(10);
+        binaryTree.insert(12);
+        binaryTree.insert(8);
+        binaryTree.insert(4);
+        binaryTree.insert(2);
 
-        assertEquals(4, bts.height());
+        assertEquals(4, binaryTree.height());
     }
 }
