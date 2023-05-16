@@ -311,4 +311,161 @@ class BinaryTreeTest {
 
         assertEquals(4, binaryTree.height());
     }
+
+    @DisplayName("min - " +
+            "When tree is empty - " +
+            "Should throw IllegalStateException")
+    @Test
+    void min_treeIsEmpty_throwIllegalState() {
+        binaryTree = new BinaryTree<>(null);
+
+        assertThrows(IllegalStateException.class, () -> binaryTree.min());
+    }
+
+    @DisplayName("min - " +
+            "When tree has one item - " +
+            "Should return that item")
+    @Test
+    void min_treeHasOneItem_returnThatItem() {
+        assertEquals(20, binaryTree.min());
+    }
+
+    @DisplayName("min - " +
+            "When tree has more than one item - " +
+            "Should return minimum item")
+    @Test
+    void min_treeHasMoreThanOneItem_returnMinItem() {
+        binaryTree.insert(10);
+        binaryTree.insert(12);
+        binaryTree.insert(8);
+        binaryTree.insert(25);
+        binaryTree.insert(30);
+        binaryTree.insert(21);
+        binaryTree.insert(0);
+        binaryTree.insert(-1);
+
+        assertEquals(-1, binaryTree.min());
+    }
+
+    @DisplayName("equalsTree - " +
+            "When other tree is null - " +
+            "Should throw IllegalArgumentException")
+    @Test
+    void equalsTree_otherTreeIsNull_throwIllegalArgument() {
+        assertThrows(IllegalArgumentException.class, () -> binaryTree.equalsTree(null));
+    }
+
+    @DisplayName("equalsTree - " +
+            "When trees are empty - " +
+            "Should return true")
+    @Test
+    void equalsTree_treesAreEmpty_returnTrue() {
+        binaryTree = new BinaryTree<>(null);
+        BinaryTree<Integer> binaryTree2 = new BinaryTree<>(null);
+
+        assertTrue(binaryTree.equalsTree(binaryTree2));
+    }
+
+    @DisplayName("equalsTree - " +
+            "When one of the trees is empty - " +
+            "Should return false")
+    @Test
+    void equalsTree_oneOfTheTreesIsEmpty_returnFalse() {
+        BinaryTree<Integer> binaryTree2 = new BinaryTree<>(null);
+
+        assertFalse(binaryTree.equalsTree(binaryTree2));
+
+        binaryTree = new BinaryTree<>(null);
+        binaryTree2 = new BinaryTree<>(20);
+        assertFalse(binaryTree.equalsTree(binaryTree2));
+    }
+
+    @DisplayName("equalsTree - " +
+            "When two trees with one identical item - " +
+            "Should return true")
+    @Test
+    void equalsTree_twoTreesWithOneIdenticalItem_returnTrue() {
+        BinaryTree<Integer> binaryTree2 = new BinaryTree<>(20);
+
+        assertTrue(binaryTree.equalsTree(binaryTree2));
+    }
+
+    @DisplayName("equalsTree - " +
+            "When two trees with one non-identical item - " +
+            "Should return false")
+    @Test
+    void equalsTree_twoTreesWithOneNonIdenticalItem_returnFalse() {
+        BinaryTree<Integer> binaryTree2 = new BinaryTree<>(30);
+
+        assertFalse(binaryTree.equalsTree(binaryTree2));
+    }
+
+    @DisplayName("equalsTree - " +
+            "When comparing two identical trees - " +
+            "Should return true")
+    @Test
+    void equalsTree_twoIdenticalTrees_returnTrue() {
+        binaryTree.insert(10);
+        binaryTree.insert(8);
+        binaryTree.insert(12);
+        binaryTree.insert(30);
+        binaryTree.insert(28);
+        binaryTree.insert(32);
+
+        BinaryTree<Integer> binaryTree2 = new BinaryTree<>(20);
+        binaryTree2.insert(10);
+        binaryTree2.insert(8);
+        binaryTree2.insert(12);
+        binaryTree2.insert(30);
+        binaryTree2.insert(28);
+        binaryTree2.insert(32);
+
+        assertTrue(binaryTree.equalsTree(binaryTree2));
+    }
+
+    @DisplayName("equalsTree - " +
+            "When comparing two trees with different structures - " +
+            "Should return false")
+    @Test
+    void equalsTree_twoTreesWithDifferentStructures_returnFalse() {
+        binaryTree.insert(10);
+        binaryTree.insert(8);
+        binaryTree.insert(12);
+        binaryTree.insert(30);
+        binaryTree.insert(28);
+        binaryTree.insert(32);
+
+        BinaryTree<Integer> binaryTree2 = new BinaryTree<>(20);
+        binaryTree2.insert(8);
+        binaryTree2.insert(10);
+        binaryTree2.insert(12);
+        binaryTree2.insert(30);
+        binaryTree2.insert(28);
+        binaryTree2.insert(32);
+
+        assertFalse(binaryTree.equalsTree(binaryTree2));
+    }
+
+    @DisplayName("equalsTree - " +
+            "When comparing two trees with different values - " +
+            "Should return false")
+    @Test
+    void equalsTree_twoTreesWithDifferentValues_returnFalse() {
+        binaryTree.insert(10);
+        binaryTree.insert(8);
+        binaryTree.insert(12);
+        binaryTree.insert(30);
+        binaryTree.insert(28);
+        binaryTree.insert(32);
+
+        BinaryTree<Integer> binaryTree2 = new BinaryTree<>(20);
+        binaryTree2.insert(9);
+        binaryTree2.insert(8);
+        binaryTree2.insert(12);
+        binaryTree2.insert(30);
+        binaryTree2.insert(28);
+        binaryTree2.insert(32);
+
+        assertFalse(binaryTree.equalsTree(binaryTree2));
+    }
 }
