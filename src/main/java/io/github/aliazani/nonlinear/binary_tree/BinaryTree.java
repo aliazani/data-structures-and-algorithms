@@ -204,6 +204,27 @@ public class BinaryTree<T extends Comparable<T>> {
         return minValue;
     }
 
+    public T max() {
+        if (isEmpty(root)) throw new IllegalStateException();
+        return findMaximum(root);
+    }
+
+    private T findMaximum(Node<T> node) {
+        if (isLeaf(node)) return node.getValue();
+
+        T leftMax = (!isEmpty(node.getLeftChild())) ? findMaximum(node.getLeftChild()) : null;
+        T rightMax = (!isEmpty(node.getRightChild())) ? findMaximum(node.getRightChild()) : null;
+
+        T maxValue = leftMax;
+        if (rightMax != null &&
+                (maxValue == null || rightMax.compareTo(maxValue) > 0)) maxValue = rightMax;
+
+        if (maxValue == null
+                || node.getValue().compareTo(maxValue) > 0) maxValue = node.getValue();
+
+        return maxValue;
+    }
+
     public boolean equalsTree(BinaryTree<T> other) {
         if (other == null) throw new IllegalArgumentException();
         return equals(root, other.root);
@@ -217,6 +238,25 @@ public class BinaryTree<T extends Comparable<T>> {
                     && equals(firstTreeRoot.getRightChild(), secondTreeRoot.getRightChild());
 
         return false;
+    }
+
+    public boolean isBinarySearchTree() {
+        return isBinarySearchTree(root, null, null);
+    }
+
+    private boolean isBinarySearchTree(Node<T> node, T min, T max) {
+        if (isEmpty(node)) return true;
+        if ((min != null && node.getValue().compareTo(min) <= 0)
+                || (max != null && node.getValue().compareTo(max) >= 0)) return false;
+
+        return isBinarySearchTree(node.getLeftChild(), min, node.getValue()) &&
+                isBinarySearchTree(node.getRightChild(), node.getValue(), max);
+    }
+
+    public void swapRoot() {
+        Node<T> temp = root.getLeftChild();
+        root.setLeftChild(root.getRightChild());
+        root.setRightChild(temp);
     }
 
     //    public boolean isBalanced() {
@@ -251,26 +291,6 @@ public class BinaryTree<T extends Comparable<T>> {
 //
 //        return contains(item, root.leftChild) || contains(item, root.rightChild);
 //    }
-//
-//    public void swapRoot() {
-//        var temp = root.leftChild;
-//        root.leftChild = root.rightChild;
-//        root.rightChild = temp;
-//    }
-//
-//    public boolean isBinarySearchTree(T min, T max) {
-//        return isBinarySearchTree(root, min, max);
-//    }
-//
-//    private boolean isBinarySearchTree(Node<T> root, T min, T max) {
-//        if (isEmpty(root))
-//            return true;
-//        if (root.value.compareTo(min) <= 0 || root.value.compareTo(max) >= 0)
-//            return false;
-//
-//        return isBinarySearchTree(root.leftChild, min, root.value) &&
-//                isBinarySearchTree(root.rightChild, root.value, max);
-//    }
 
     //
 //    public void printNodesAtDistance(int distance) {
@@ -295,22 +315,6 @@ public class BinaryTree<T extends Comparable<T>> {
 //
 //
 //
-//    public T maximum() {
-//        return maximum(root);
-//    }
-//
-//    private T maximum(Node<T> root) {
-//        if (isLeaf(root))
-//            return root.value;
-//
-//        T maxValue = null;
-//        var left = maximum(root.leftChild);
-//        var right = maximum(root.rightChild);
-//        maxValue = (right.compareTo(left) > 0) ? right : left;
-//        maxValue = root.value.compareTo(maxValue) > 0 ? root.value : maxValue;
-//
-//        return maxValue;
-//    }
 //
 //    public int size() {
 //        return size;

@@ -347,6 +347,41 @@ class BinaryTreeTest {
         assertEquals(-1, binaryTree.min());
     }
 
+    @DisplayName("max - " +
+            "When tree is empty - " +
+            "Should throw IllegalStateException")
+    @Test
+    void max_treeIsEmpty_throwIllegalState() {
+        binaryTree = new BinaryTree<>(null);
+
+        assertThrows(IllegalStateException.class, () -> binaryTree.max());
+    }
+
+    @DisplayName("max - " +
+            "When tree has one item - " +
+            "Should return that item")
+    @Test
+    void max_treeHasOneItem_returnThatItem() {
+        assertEquals(20, binaryTree.max());
+    }
+
+    @DisplayName("max - " +
+            "When tree has more than one item - " +
+            "Should return maximum item")
+    @Test
+    void max_treeHasMoreThanOneItem_returnMaxItem() {
+        binaryTree.insert(10);
+        binaryTree.insert(12);
+        binaryTree.insert(8);
+        binaryTree.insert(25);
+        binaryTree.insert(30);
+        binaryTree.insert(21);
+        binaryTree.insert(0);
+        binaryTree.insert(-1);
+
+        assertEquals(30, binaryTree.max());
+    }
+
     @DisplayName("equalsTree - " +
             "When other tree is null - " +
             "Should throw IllegalArgumentException")
@@ -467,5 +502,68 @@ class BinaryTreeTest {
         binaryTree2.insert(32);
 
         assertFalse(binaryTree.equalsTree(binaryTree2));
+    }
+
+    @DisplayName("isBinarySearchTree - " +
+            "When root is null - " +
+            "Should return true")
+    @Test
+    void isBinarySearchTree_rootIsNull_returnTrue() {
+        binaryTree = new BinaryTree<>(null);
+
+        assertTrue(binaryTree.isBinarySearchTree());
+    }
+
+    @DisplayName("isBinarySearchTree - " +
+            "When tree has one item - " +
+            "Should return true")
+    @Test
+    void isBinarySearchTree_treeHasOneItem_returnTrue() {
+        assertTrue(binaryTree.isBinarySearchTree());
+    }
+
+    @DisplayName("isBinarySearchTree - " +
+            "When tree with valid order of items - " +
+            "Should return true")
+    @Test
+    void isBinarySearchTree_validOrder_returnTrue() {
+        binaryTree.insert(10);
+        binaryTree.insert(8);
+        binaryTree.insert(12);
+        binaryTree.insert(30);
+        binaryTree.insert(28);
+        binaryTree.insert(32);
+
+        assertTrue(binaryTree.isBinarySearchTree());
+    }
+
+    @DisplayName("isBinarySearchTree - " +
+            "When tree items in ascending order - " +
+            "Should return true")
+    @Test
+    void isBinarySearchTree_itemsWithAscendingOrder_returnTrue() {
+        binaryTree.insert(30);
+        binaryTree.insert(35);
+        binaryTree.insert(40);
+        binaryTree.insert(45);
+        binaryTree.insert(50);
+
+        assertTrue(binaryTree.isBinarySearchTree());
+    }
+
+    @DisplayName("isBinarySearchTree - " +
+            "When tree with invalid order of items - " +
+            "Should return false")
+    @Test
+    void isBinarySearchTree_invalidOrder_returnFalse() {
+        binaryTree.insert(10);
+        binaryTree.insert(8);
+        binaryTree.insert(12);
+        binaryTree.insert(30);
+        binaryTree.insert(28);
+        binaryTree.insert(32);
+        binaryTree.swapRoot();
+
+        assertFalse(binaryTree.isBinarySearchTree());
     }
 }
