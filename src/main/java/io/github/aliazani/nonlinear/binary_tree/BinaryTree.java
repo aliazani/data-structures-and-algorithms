@@ -45,6 +45,38 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
+    public void remove(T value) {
+        root = removeRecursive(root, value);
+        size--;
+    }
+
+    private Node<T> removeRecursive(Node<T> node, T value) {
+        if (isEmpty(node)) throw new IllegalStateException();
+
+        int comparison = value.compareTo(node.getValue());
+        if (comparison < 0) node.setLeftChild(removeRecursive(node.getLeftChild(), value));
+        else if (comparison > 0) node.setRightChild(removeRecursive(node.getRightChild(), value));
+        else {
+            if (isLeaf(node)) node = null;
+            else if (node.getLeftChild() == null) node = node.getRightChild();
+            else if (node.getRightChild() == null) node = node.getLeftChild();
+                // Scenario 3: Node<T has two children
+            else {
+                Node<T> successor = findSuccessor(node.getRightChild());
+                node.setValue(successor.getValue());
+                node.setRightChild(removeRecursive(node.getRightChild(), successor.getValue()));
+            }
+        }
+        return node;
+    }
+
+    private Node<T> findSuccessor(Node<T> node) {
+        while (node.getLeftChild() != null) node = node.getLeftChild();
+
+        return node;
+    }
+
+
     public boolean contains(T value) {
         if (value == null) throw new IllegalArgumentException("value can not be null");
 
@@ -331,30 +363,30 @@ public class BinaryTree<T extends Comparable<T>> {
         return root.toString();
     }
 
-//    public void print() {
-//        print2DUtil(root, 0);
-//    }
-//
-//    private void print2DUtil(Node<T> root, int space) {
-//        // Base case
-//        if (root == null)
-//            return;
-//
-//        // Increase distance between levels
-//        space += 5;
-//
-//
-//        // Process right child first
-//        print2DUtil(root.getRightChild(), space);
-//
-//        // Print current node after space
-//        // count
-//        System.out.print("\n");
-//        for (int i = 5; i < space; i++)
-//            System.out.print(" ");
-//        System.out.print(root.getValue() + "\n");
-//
-//        // Process left child
-//        print2DUtil(root.getLeftChild(), space);
-//    }
+    public void print() {
+        print2DUtil(root, 0);
+    }
+
+    private void print2DUtil(Node<T> root, int space) {
+        // Base case
+        if (root == null)
+            return;
+
+        // Increase distance between levels
+        space += 5;
+
+
+        // Process right child first
+        print2DUtil(root.getRightChild(), space);
+
+        // Print current node after space
+        // count
+        System.out.print("\n");
+        for (int i = 5; i < space; i++)
+            System.out.print(" ");
+        System.out.print(root.getValue() + "\n");
+
+        // Process left child
+        print2DUtil(root.getLeftChild(), space);
+    }
 }

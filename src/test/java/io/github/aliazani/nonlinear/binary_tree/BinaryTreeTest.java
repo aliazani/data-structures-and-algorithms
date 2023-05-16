@@ -54,6 +54,75 @@ class BinaryTreeTest {
         assertThrows(IllegalArgumentException.class, () -> binaryTree.insert(null));
     }
 
+    @DisplayName("remove - " +
+            "When root is null - " +
+            "Should IllegalStateException")
+    @Test
+    void remove_rootIsNull_throwIllegalState() {
+        binaryTree = new BinaryTree<>(null);
+        assertThrows(IllegalStateException.class, () -> binaryTree.remove(10));
+    }
+
+    @DisplayName("remove - " +
+            "When removing leaf node - " +
+            "Should remove leaf node")
+    @Test
+    void remove_leafNode_removeLeafNode() {
+        binaryTree.insert(10);
+        binaryTree.insert(5);
+        binaryTree.insert(12);
+
+        binaryTree.remove(5);
+
+        assertEquals("(Value: 20," +
+                        " RightChild: null," +
+                        " LeftChild: (Value: 10, RightChild: (Value: 12, RightChild: null, LeftChild: null), LeftChild: null))"
+                , binaryTree.toString());
+    }
+
+    @DisplayName("remove - " +
+            "When removing node with one child - " +
+            "Should hoist child node")
+    @Test
+    void remove_nodeWithOneChild_hoistChildNode() {
+        binaryTree.insert(10);
+        binaryTree.insert(12);
+
+        binaryTree.remove(10);
+
+        assertEquals("(Value: 20," +
+                        " RightChild: null," +
+                        " LeftChild: (Value: 12, RightChild: null, LeftChild: null))"
+                , binaryTree.toString());
+    }
+
+    @DisplayName("remove - " +
+            "When removing node with more than one child - " +
+            "Should replace it with smallest value in the right subtree")
+    @Test
+    void remove_nodeWithMoreThanOneChild_replaceItWithSmallestValueInRightSubtree() {
+        binaryTree.insert(10);
+        binaryTree.insert(12);
+        binaryTree.insert(5);
+        binaryTree.insert(30);
+        binaryTree.insert(25);
+        binaryTree.insert(22);
+        binaryTree.insert(28);
+        binaryTree.insert(26);
+
+        binaryTree.remove(25);
+
+
+        assertEquals("(Value: 20, " +
+                        "RightChild: (Value: 30, RightChild: null, " +
+                        "LeftChild: (Value: 26, RightChild: (Value: 28, RightChild: null, LeftChild: null), " +
+                        "LeftChild: (Value: 22, RightChild: null, LeftChild: null))), " +
+                        "LeftChild: (Value: 10, " +
+                        "RightChild: (Value: 12, RightChild: null, LeftChild: null), " +
+                        "LeftChild: (Value: 5, RightChild: null, LeftChild: null)))"
+                , binaryTree.toString());
+    }
+
     @DisplayName("contains - " +
             "When value is in the tree - " +
             "Should return true")
@@ -61,7 +130,7 @@ class BinaryTreeTest {
     void contains_valueIsInTheTree_returnTrue() {
         binaryTree.insert(10);
 
-       assertTrue(binaryTree.contains(20));
+        assertTrue(binaryTree.contains(20));
         assertTrue(binaryTree.contains(10));
     }
 
