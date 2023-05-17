@@ -1,19 +1,19 @@
 package io.github.aliazani.nonlinear.binary_tree;
 
-import lombok.extern.slf4j.Slf4j;
-
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
-@Slf4j
 public class BinaryTree<T extends Comparable<T>> {
     private Node<T> root;
     private int size;
-//    private int countLeaves;
 
     public BinaryTree(T root) {
-        this.root = new Node<>(root, null);
-        size++;
+        if (root != null) {
+            this.root = new Node<>(root, null);
+            size++;
+        }
     }
 
     public void insert(T value) {
@@ -99,9 +99,9 @@ public class BinaryTree<T extends Comparable<T>> {
         if (isEmpty(node)) return false;
 
         int comparison = value.compareTo(node.getValue());
-        if (comparison < 0) return containsRecursive(node.getLeftChild(), value);
-        else if (comparison > 0) return containsRecursive(node.getRightChild(), value);
-        else return true;
+        if (comparison == 0) return true;
+
+        return containsRecursive(node.getLeftChild(), value) || containsRecursive(root.getRightChild(), value);
     }
 
     public String traverseLevelOrder() {
@@ -233,7 +233,7 @@ public class BinaryTree<T extends Comparable<T>> {
     private boolean equals(Node<T> firstTreeRoot, Node<T> secondTreeRoot) {
         if (isEmpty(firstTreeRoot) && isEmpty(secondTreeRoot)) return true;
         if (!isEmpty(firstTreeRoot) && !isEmpty(secondTreeRoot))
-            return firstTreeRoot.getValue().compareTo(secondTreeRoot.getValue()) == 0
+            return firstTreeRoot.getValue().equals(secondTreeRoot.getValue())
                     && equals(firstTreeRoot.getLeftChild(), secondTreeRoot.getLeftChild())
                     && equals(firstTreeRoot.getRightChild(), secondTreeRoot.getRightChild());
 
@@ -253,109 +253,116 @@ public class BinaryTree<T extends Comparable<T>> {
                 isBinarySearchTree(node.getRightChild(), node.getValue(), max);
     }
 
-    public void swapRoot() {
+    public void swapRootChildren() {
         Node<T> temp = root.getLeftChild();
         root.setLeftChild(root.getRightChild());
         root.setRightChild(temp);
     }
 
-    //    public boolean isBalanced() {
-//        var current = root;
-//        while (!isLeaf(current)) {
-//            if (Math.abs(height(current.leftChild) - height(current.rightChild)) > 1)
-//                return false;
-//            current = current.leftChild;
-//        }
-//        current = root;
-//        while (!isLeaf(current)) {
-//            if (Math.abs(height(current.leftChild) - height(current.rightChild)) > 1)
-//                return false;
-//            current = current.rightChild;
-//        }
-//        return true;
-//    }
-//
-//    public boolean isPerfect() {
-//        return (2 * (height(this.root) + 1) - 1) == this.size;
-//    }
-//
-//    public boolean contains(T item) {
-//        return contains(item, root);
-//    }
-//
-//    private boolean contains(T item, Node<T> root) {
-//        if (root == null)
-//            return false;
-//        else if (root.value.compareTo(item) == 0)
-//            return true;
-//
-//        return contains(item, root.leftChild) || contains(item, root.rightChild);
-//    }
+    public String nodesAtDistance(int distance) {
+        if (distance < 0) throw new IllegalArgumentException();
 
-    //
-//    public void printNodesAtDistance(int distance) {
-//        printNodesAtDistance(root, distance);
-//    }
-//
-//    private void printNodesAtDistance(Node<T> root, int distance) {
-//        if (isEmpty(root))
-//            return;
-//        if (distance == 0)
-//            System.out.println(root.value);
-//        else {
-//            printNodesAtDistance(root.leftChild, distance - 1);
-//            printNodesAtDistance(root.rightChild, distance - 1);
-//        }
-//    }
-//
-//    public void traverseLevelOrder() {
-//        for (int i = 0; i <= height(root); i++)
-//            printNodesAtDistance(i);
-//    }
-//
-//
-//
-//
-//    public int size() {
-//        return size;
-//    }
+        StringBuilder strBuilder = new StringBuilder();
+        nodesAtDistance(root, distance, strBuilder);
+        if (strBuilder.length() >= 2)
+            strBuilder.setLength(strBuilder.length() - 2);
 
-    //
-//    public int countLeaves() {
-//        return countLeaves(root);
-//    }
-//
-//    private int countLeaves(Node<T> root) {
-//        if (isLeaf(root)) {
-//            return countLeaves++;
-//        }
-//        countLeaves(root.leftChild);
-//        countLeaves(root.rightChild);
-//        return countLeaves;
-//    }
+        return strBuilder.toString();
+    }
 
-//    public void printTree(T[][] M, Node<T> root, int col, int row, int height) {
-//        if (root == null)
-//            return;
-//        M[row][col] = root.getValue();
-//        printTree(M, root.getLeftChild(), col - (int) Math.pow(2, height - 2), row + 1, height - 1);
-//        printTree(M, root.getRightChild(), col + (int) Math.pow(2, height - 2), row + 1, height - 1);
-//    }
-//    public void TreePrinter() {
-//        int h = height(root);
-//        int col = getcol(h);
-//        T[][] M = (T[][]) new Comparable[h][col];
-//        printTree(M, root, col / 2, 0, h);
-//        for (int i = 0; i < h; i++) {
-//            for (int j = 0; j < col; j++) {
-//                if (M[i][j] == 0)
-//                    System.out.print("  ");
-//                else
-//                    System.out.print(M[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
-//    }
+    private void nodesAtDistance(Node<T> node, int distance, StringBuilder strBuilder) {
+        if (isEmpty(node)) return;
+        if (distance == 0) strBuilder.append(node.getValue()).append(", ");
+        else {
+            nodesAtDistance(node.getLeftChild(), distance - 1, strBuilder);
+            nodesAtDistance(node.getRightChild(), distance - 1, strBuilder);
+        }
+    }
+
+    public boolean isBalanced() {
+        return isBalanced(root);
+    }
+
+    private boolean isBalanced(Node<T> node) {
+        if (isEmpty(node)) return true;
+
+        int balanceFactor = height(node.getLeftChild()) - height(node.getRightChild());
+
+        return Math.abs(balanceFactor) <= 1 &&
+                isBalanced(node.getLeftChild()) &&
+                isBalanced(node.getRightChild());
+    }
+
+    public boolean isPerfect() {
+        return size() == (Math.pow(2, height() + 1) - 1);
+    }
+
+    public int size() {
+        return size(root);
+    }
+
+    private int size(Node<T> node) {
+        if (isEmpty(node)) return 0;
+
+        if (isLeaf(node)) return 1;
+
+        return 1 + size(node.getLeftChild()) + size(node.getRightChild());
+    }
+
+    public int size2() {
+        return size;
+    }
+
+    public int countLeaves() {
+        return countLeaves(root);
+    }
+
+    private int countLeaves(Node<T> node) {
+        if (isEmpty(node)) return 0;
+
+        if (isLeaf(node)) return 1;
+
+        return countLeaves(node.getLeftChild()) + countLeaves(node.getRightChild());
+    }
+
+
+    public boolean areSibling(T first, T second) {
+        return areSibling(root, first, second);
+    }
+
+    private boolean areSibling(Node<T> node, T first, T second) {
+        if (isEmpty(node)) return false;
+
+        boolean areSibling = false;
+        if (!isEmpty(node.getLeftChild()) && !isEmpty(node.getRightChild()))
+            areSibling = (node.getLeftChild().getValue().equals(first) && node.getRightChild().getValue().equals(second))
+                    || (node.getRightChild().getValue().equals(first) && node.getLeftChild().getValue().equals(second));
+
+        return areSibling ||
+                areSibling(node.getLeftChild(), first, second) ||
+                areSibling(node.getRightChild(), first, second);
+    }
+
+    public List<T> getAncestors(T value) {
+        List<T> ancestors = new ArrayList<>();
+        getAncestors(root, value, ancestors);
+
+        return ancestors;
+    }
+
+    private boolean getAncestors(Node<T> node, T value, List<T> list) {
+        if (isEmpty(node)) return false;
+
+        if (node.getValue().equals(value)) return true;
+
+        if (getAncestors(node.getLeftChild(), value, list) ||
+                getAncestors(node.getRightChild(), value, list)) {
+            list.add(node.getValue());
+            return true;
+        }
+
+        return false;
+    }
 
     private boolean isEmpty(Node<T> node) {
         return node == null || node.getValue() == null;
@@ -366,35 +373,29 @@ public class BinaryTree<T extends Comparable<T>> {
                 && node.getLeftChild() == null;
     }
 
+    public String representTree() {
+        StringBuilder stringBuilder = new StringBuilder();
+        buildTreeString(root, 0, stringBuilder);
+
+        return stringBuilder.toString();
+    }
+
+    private void buildTreeString(Node<T> node, int currentIndentation, StringBuilder stringBuilder) {
+        if (isEmpty(node)) return;
+
+        int childIndentation = currentIndentation + 5;
+
+        buildTreeString(node.getRightChild(), childIndentation, stringBuilder);
+
+        stringBuilder.append("\n");
+        stringBuilder.append(" ".repeat(Math.max(0, currentIndentation)));
+        stringBuilder.append(node.getValue());
+
+        buildTreeString(node.getLeftChild(), childIndentation, stringBuilder);
+    }
+
     @Override
     public String toString() {
         return root.toString();
-    }
-
-    public void print() {
-        print2DUtil(root, 0);
-    }
-
-    private void print2DUtil(Node<T> root, int space) {
-        // Base case
-        if (root == null)
-            return;
-
-        // Increase distance between levels
-        space += 5;
-
-
-        // Process right child first
-        print2DUtil(root.getRightChild(), space);
-
-        // Print current node after space
-        // count
-        System.out.print("\n");
-        for (int i = 5; i < space; i++)
-            System.out.print(" ");
-        System.out.print(root.getValue() + "\n");
-
-        // Process left child
-        print2DUtil(root.getLeftChild(), space);
     }
 }

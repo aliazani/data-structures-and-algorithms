@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -562,8 +565,471 @@ class BinaryTreeTest {
         binaryTree.insert(30);
         binaryTree.insert(28);
         binaryTree.insert(32);
-        binaryTree.swapRoot();
+        binaryTree.swapRootChildren();
 
         assertFalse(binaryTree.isBinarySearchTree());
     }
+
+    @DisplayName("nodesAtDistance - " +
+            "When tree empty - " +
+            "Should return empty string")
+    @Test
+    void nodesAtDistance_treeIsEmpty_returnEmptyString() {
+        binaryTree = new BinaryTree<>(null);
+
+        assertEquals("", binaryTree.nodesAtDistance(0));
+    }
+
+    @DisplayName("nodesAtDistance - " +
+            "When tree has one item - " +
+            "Should return that item at distance 0")
+    @Test
+    void nodesAtDistance_treeHasOneItem_returnThatItemAtDistanceZero() {
+        assertEquals("20", binaryTree.nodesAtDistance(0));
+        assertEquals("", binaryTree.nodesAtDistance(1));
+    }
+
+    @DisplayName("nodesAtDistance - " +
+            "When tree has more than one item - " +
+            "Should return items at the given distance")
+    @Test
+    void nodesAtDistance_treeHasMoreThanOneItem_returnItemsAtTheGivenDistance() {
+        binaryTree.insert(10);
+        binaryTree.insert(8);
+        binaryTree.insert(12);
+        binaryTree.insert(30);
+        binaryTree.insert(28);
+        binaryTree.insert(32);
+
+        assertEquals("20", binaryTree.nodesAtDistance(0));
+        assertEquals("10, 30", binaryTree.nodesAtDistance(1));
+        assertEquals("8, 12, 28, 32", binaryTree.nodesAtDistance(2));
+    }
+
+    @DisplayName("nodesAtDistance - " +
+            "When distance is invalid - " +
+            "Should throw IllegalArgumentException")
+    @Test
+    void nodesAtDistance_distanceIsInvalid_trowIllegalArgument() {
+        binaryTree.insert(10);
+        binaryTree.insert(30);
+
+        assertThrows(IllegalArgumentException.class, () -> binaryTree.nodesAtDistance(-1));
+    }
+
+    @DisplayName("isBalanced - " +
+            "When tree is empty - " +
+            "Should return true")
+    @Test
+    void isBalanced_treeIsEmpty_returnTrue() {
+        binaryTree = new BinaryTree<>(null);
+
+        assertTrue(binaryTree.isBalanced());
+    }
+
+    @DisplayName("isBalanced - " +
+            "When tree has a single node - " +
+            "Should return true")
+    @Test
+    void isBalanced_treeHasSingleNode_returnTrue() {
+        assertTrue(binaryTree.isBalanced());
+    }
+
+    @DisplayName("isBalanced - " +
+            "When tree is balanced - " +
+            "Should return true")
+    @Test
+    void isBalanced_treeIsBalanced_returnTrue() {
+        binaryTree.insert(5);
+        binaryTree.insert(15);
+        binaryTree.insert(3);
+        binaryTree.insert(7);
+        binaryTree.insert(30);
+        binaryTree.insert(25);
+        binaryTree.insert(35);
+
+        assertTrue(binaryTree.isBalanced());
+    }
+
+    @DisplayName("isBalanced - When tree is not balanced - Should return false")
+    @Test
+    void isBalanced_treeIsNotBalanced_returnFalse() {
+        binaryTree.insert(10);
+        binaryTree.insert(5);
+        binaryTree.insert(15);
+        binaryTree.insert(3);
+        binaryTree.insert(7);
+        binaryTree.insert(12);
+        binaryTree.insert(18);
+
+        assertFalse(binaryTree.isBalanced());
+    }
+
+    @DisplayName("isBalanced - " +
+            "When tree has only left subtree - " +
+            "Should return false")
+    @Test
+    void isBalanced_treeHasOnlyLeftSubtree_returnFalse() {
+        binaryTree.insert(10);
+        binaryTree.insert(5);
+        binaryTree.insert(3);
+        binaryTree.insert(2);
+
+        assertFalse(binaryTree.isBalanced());
+    }
+
+    @DisplayName("isBalanced - " +
+            "When tree has only right subtree - " +
+            "Should return false")
+    @Test
+    void isBalanced_treeHasOnlyRightSubtree_returnFalse() {
+        binaryTree.insert(25);
+        binaryTree.insert(30);
+        binaryTree.insert(35);
+        binaryTree.insert(40);
+
+        assertFalse(binaryTree.isBalanced());
+    }
+
+    @DisplayName("isPerfect - " +
+            "When tree is empty - " +
+            "Should return true")
+    @Test
+    void isPerfect_treeIsEmpty_returnTrue() {
+        binaryTree = new BinaryTree<>(null);
+
+        assertTrue(binaryTree.isPerfect());
+    }
+
+    @DisplayName("isPerfect - " +
+            "When tree has a single node - " +
+            "Should return true")
+    @Test
+    void isPerfect_treeHasSingleNode_returnTrue() {
+        assertTrue(binaryTree.isPerfect());
+    }
+
+    @DisplayName("isPerfect - " +
+            "When tree is perfect - " +
+            "Should return true")
+    @Test
+    void isPerfect_treeIsPerfect_returnTrue() {
+        binaryTree.insert(10);
+        binaryTree.insert(5);
+        binaryTree.insert(15);
+        binaryTree.insert(3);
+        binaryTree.insert(7);
+        binaryTree.insert(12);
+        binaryTree.insert(18);
+        binaryTree.insert(30);
+        binaryTree.insert(25);
+        binaryTree.insert(22);
+        binaryTree.insert(26);
+        binaryTree.insert(35);
+        binaryTree.insert(34);
+        binaryTree.insert(36);
+
+        assertTrue(binaryTree.isPerfect());
+    }
+
+    @DisplayName("isPerfect - " +
+            "When tree is not perfect - " +
+            "Should return false")
+    @Test
+    void isPerfect_treeIsNotPerfect_returnFalse() {
+        binaryTree.insert(5);
+        binaryTree.insert(15);
+        binaryTree.insert(3);
+        binaryTree.insert(7);
+        binaryTree.insert(12);
+
+        assertFalse(binaryTree.isPerfect());
+    }
+
+    @DisplayName("isPerfect - " +
+            "When tree has only left subtree - " +
+            "Should return false")
+    @Test
+    void isPerfect_treeHasOnlyLeftSubtree_returnFalse() {
+        binaryTree.insert(10);
+        binaryTree.insert(5);
+        binaryTree.insert(3);
+
+        assertFalse(binaryTree.isPerfect());
+    }
+
+    @DisplayName("isPerfect - " +
+            "When tree has only right subtree - " +
+            "Should return false")
+    @Test
+    void isPerfect_treeHasOnlyRightSubtree_returnFalse() {
+        binaryTree.insert(30);
+        binaryTree.insert(35);
+        binaryTree.insert(40);
+
+        assertFalse(binaryTree.isPerfect());
+    }
+
+    @DisplayName("size - " +
+            "When tree is empty - " +
+            "Should return 0")
+    @Test
+    void size_treeIsEmpty_returnZero() {
+        binaryTree = new BinaryTree<>(null);
+
+        assertEquals(0, binaryTree.size());
+    }
+
+    @DisplayName("size - " +
+            "When tree has a single node - " +
+            "Should return 1")
+    @Test
+    void size_treeHasSingleNode_returnOne() {
+        assertEquals(1, binaryTree.size());
+    }
+
+    @DisplayName("size - " +
+            "When tree has multiple nodes - " +
+            "Should return the correct size")
+    @Test
+    void size_treeHasMultipleNodes_returnCorrectSize() {
+        binaryTree.insert(10);
+        binaryTree.insert(5);
+        binaryTree.insert(15);
+        binaryTree.insert(3);
+        binaryTree.insert(7);
+        binaryTree.insert(12);
+        binaryTree.insert(18);
+
+        binaryTree.remove(10);
+        binaryTree.remove(3);
+
+        binaryTree.insert(1);
+
+        assertEquals(7, binaryTree.size());
+    }
+
+
+    @DisplayName("size2 - " +
+            "When tree is empty - " +
+            "Should return 0")
+    @Test
+    void size2_treeIsEmpty_returnZero() {
+        binaryTree = new BinaryTree<>(null);
+
+        assertEquals(0, binaryTree.size2());
+    }
+
+    @DisplayName("size2 - " +
+            "When tree has a single node - " +
+            "Should return 1")
+    @Test
+    void size2_treeHasSingleNode_returnOne() {
+        assertEquals(1, binaryTree.size2());
+    }
+
+    @DisplayName("size2 - " +
+            "When tree has multiple nodes - " +
+            "Should return the correct size")
+    @Test
+    void size2_treeHasMultipleNodes_returnCorrectSize() {
+        binaryTree.insert(10);
+        binaryTree.insert(5);
+        binaryTree.insert(15);
+        binaryTree.insert(3);
+        binaryTree.insert(7);
+        binaryTree.insert(12);
+        binaryTree.insert(18);
+
+        binaryTree.remove(10);
+        binaryTree.remove(3);
+
+        binaryTree.insert(1);
+
+        assertEquals(7, binaryTree.size2());
+    }
+
+    @DisplayName("countLeaves - " +
+            "When tree is empty - " +
+            "Should return 0")
+    @Test
+    void countLeaves_treeIsEmpty_returnZero() {
+        binaryTree = new BinaryTree<>(null);
+
+        assertEquals(0, binaryTree.countLeaves());
+    }
+
+    @DisplayName("countLeaves - " +
+            "When tree has a single leaf node - " +
+            "Should return 1")
+    @Test
+    void countLeaves_treeHasSingleLeafNode_returnOne() {
+        assertEquals(1, binaryTree.countLeaves());
+    }
+
+    @DisplayName("countLeaves - " +
+            "When tree has multiple leaf nodes - " +
+            "Should return the correct count")
+    @Test
+    void countLeaves_treeHasMultipleLeafNodes_returnCorrectCount() {
+        binaryTree.insert(10);
+        binaryTree.insert(5);
+        binaryTree.insert(15);
+        binaryTree.insert(3);
+        binaryTree.insert(7);
+        binaryTree.insert(12);
+        binaryTree.insert(18);
+        binaryTree.insert(30);
+        binaryTree.insert(25);
+        binaryTree.insert(35);
+
+        assertEquals(6, binaryTree.countLeaves());
+    }
+
+    @DisplayName("areSibling - " +
+            "When siblings exist - " +
+            "Should return true")
+    @Test
+    void areSibling_siblingsExist_returnTrue() {
+        binaryTree.insert(10);
+        binaryTree.insert(5);
+        binaryTree.insert(15);
+        binaryTree.insert(3);
+        binaryTree.insert(7);
+
+        assertTrue(binaryTree.areSibling(15, 5));
+        assertTrue(binaryTree.areSibling(5, 15));
+    }
+
+    @DisplayName("areSibling - " +
+            "When siblings don't exist - " +
+            "Should return false")
+    @Test
+    void areSibling_siblingsDoNotExist_returnFalse() {
+        binaryTree.insert(10);
+        binaryTree.insert(5);
+        binaryTree.insert(15);
+        binaryTree.insert(3);
+        binaryTree.insert(7);
+
+        assertFalse(binaryTree.areSibling(5, 3));
+        assertFalse(binaryTree.areSibling(15, 7));
+    }
+
+    @DisplayName("areSibling - " +
+            "When one or both values don't exist in the tree - " +
+            "Should return false")
+    @Test
+    void areSibling_valuesDoNotExist_returnFalse() {
+        binaryTree.insert(10);
+        binaryTree.insert(5);
+        binaryTree.insert(15);
+        binaryTree.insert(3);
+        binaryTree.insert(7);
+
+        assertFalse(binaryTree.areSibling(5, 25));
+        assertFalse(binaryTree.areSibling(25, 5));
+        assertFalse(binaryTree.areSibling(25, 30));
+    }
+
+    @DisplayName("areSibling - " +
+            "When tree is empty - " +
+            "Should return false")
+    @Test
+    void areSibling_treeIsEmpty_returnFalse() {
+        binaryTree = new BinaryTree<>(null);
+
+        assertFalse(binaryTree.areSibling(5, 10));
+    }
+
+    @DisplayName("getAncestors - " +
+            "When tree is empty - " +
+            "Should return an empty list")
+    @Test
+    void getAncestors_emptyTree_shouldReturnEmptyList() {
+        binaryTree = new BinaryTree<>(null);
+        List<Integer> ancestors = binaryTree.getAncestors(10);
+
+        assertTrue(ancestors.isEmpty());
+    }
+
+    @DisplayName("getAncestors - " +
+            "When tree has a single node - " +
+            "Should return an empty list")
+    @Test
+    void getAncestors_singleNodeTree_shouldReturnEmptyList() {
+        List<Integer> ancestors = binaryTree.getAncestors(20);
+
+        assertTrue(ancestors.isEmpty());
+    }
+
+    @DisplayName("getAncestors - " +
+            "When tree has multiple nodes - " +
+            "Should return ancestors")
+    @Test
+    void getAncestors_multipleNodesTree_shouldReturnAncestors() {
+        binaryTree.insert(15);
+        binaryTree.insert(3);
+        binaryTree.insert(7);
+        binaryTree.insert(25);
+        binaryTree.insert(23);
+
+        List<Integer> ancestors = binaryTree.getAncestors(7);
+        List<Integer> expectedAncestors = Arrays.asList(3, 15, 20);
+        assertEquals(expectedAncestors, ancestors);
+    }
+
+    @DisplayName("getAncestors - " +
+            "When value is not present in the tree - " +
+            "Should return an empty list")
+    @Test
+    void getAncestors_valueNotPresent_shouldReturnEmptyList() {
+        binaryTree.insert(5);
+        binaryTree.insert(15);
+
+        List<Integer> ancestors = binaryTree.getAncestors(8);
+        assertTrue(ancestors.isEmpty());
+    }
+
+    @DisplayName("representTree - " +
+            "When tree is empty - " +
+            "Should return empty string")
+    @Test
+    void representTree_emptyTree_shouldReturnEmptyString() {
+        binaryTree = new BinaryTree<>(null);
+
+        assertEquals("", binaryTree.representTree());
+    }
+
+    @DisplayName("representTree - " +
+            "When tree has one node - " +
+            "Should return single node string")
+    @Test
+    void representTree_singleNodeTree_shouldReturnSingleNodeString() {
+        assertEquals("\n20", binaryTree.representTree());
+    }
+
+    @DisplayName("representTree - " +
+            "When tree has multiple nodes - " +
+            "Should return representative string")
+    @Test
+    void representTree_multipleNodesTree_shouldReturnRepresentativeString() {
+        binaryTree.insert(10);
+        binaryTree.insert(5);
+        binaryTree.insert(15);
+        binaryTree.insert(30);
+        binaryTree.insert(25);
+        binaryTree.insert(35);
+
+        assertEquals("""
+                          
+                          35
+                     30
+                          25
+                20
+                          15
+                     10
+                          5""", binaryTree.representTree());
+    }
+
 }
