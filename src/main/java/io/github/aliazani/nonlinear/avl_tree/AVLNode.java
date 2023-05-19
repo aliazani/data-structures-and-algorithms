@@ -2,7 +2,6 @@ package io.github.aliazani.nonlinear.avl_tree;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.text.MessageFormat;
 
@@ -22,7 +21,7 @@ public class AVLNode<T> {
 
     @Override
     public String toString() {
-        return MessageFormat.format("(value: {0} [rightChild: {1}], [leftChild: {2}])",
+        return MessageFormat.format("(value: {0}, [rightChild: {1}], [leftChild: {2}])",
                 value, rightChild, leftChild);
     }
 }
