@@ -7,13 +7,13 @@ import java.text.MessageFormat;
 
 @Getter
 @Setter
-public class Node<T> {
+public class BinaryTreeNode<T> {
     private T value;
-    private Node<T> parent;
-    private Node<T> leftChild;
-    private Node<T> rightChild;
+    private BinaryTreeNode<T> parent;
+    private BinaryTreeNode<T> leftChild;
+    private BinaryTreeNode<T> rightChild;
 
-    public Node(T value, Node<T> parent) {
+    public BinaryTreeNode(T value, BinaryTreeNode<T> parent) {
         this.value = value;
         this.parent = parent;
     }

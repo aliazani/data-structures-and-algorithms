@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Queue;
 
 public class BinaryTree<T extends Comparable<T>> {
-    private Node<T> root;
+    private BinaryTreeNode<T> root;
     private int size;
 
     public BinaryTree(T root) {
         if (root != null) {
-            this.root = new Node<>(root, null);
+            this.root = new BinaryTreeNode<>(root, null);
             size++;
         }
     }
@@ -20,23 +20,23 @@ public class BinaryTree<T extends Comparable<T>> {
         if (value == null) throw new IllegalArgumentException("Cannot assign null value to a node.");
 
         if (isEmpty(root)) {
-            root = new Node<>(value, null);
+            root = new BinaryTreeNode<>(value, null);
             size++;
             return;
         }
 
-        Node<T> current = root;
+        BinaryTreeNode<T> current = root;
         while (true) {
             int comparison = value.compareTo(current.getValue());
             if (comparison == 0) throw new IllegalStateException("Binary Tree cannot have duplicate values.");
 
-            Node<T> nextChild = comparison < 0 ?
+            BinaryTreeNode<T> nextChild = comparison < 0 ?
                     current.getLeftChild() :
                     current.getRightChild();
             if (isEmpty(nextChild)) {
-                Node<T> newNode = new Node<>(value, current);
-                if (comparison < 0) current.setLeftChild(newNode);
-                else current.setRightChild(newNode);
+                BinaryTreeNode<T> newBinaryTreeNode = new BinaryTreeNode<>(value, current);
+                if (comparison < 0) current.setLeftChild(newBinaryTreeNode);
+                else current.setRightChild(newBinaryTreeNode);
                 size++;
 
                 return;
@@ -50,36 +50,36 @@ public class BinaryTree<T extends Comparable<T>> {
         size--;
     }
 
-    private Node<T> removeRecursive(Node<T> node, T value) {
-        if (isEmpty(node)) throw new IllegalStateException();
+    private BinaryTreeNode<T> removeRecursive(BinaryTreeNode<T> binaryTreeNode, T value) {
+        if (isEmpty(binaryTreeNode)) throw new IllegalStateException();
 
-        int comparison = value.compareTo(node.getValue());
-        if (comparison < 0) node.setLeftChild(removeRecursive(node.getLeftChild(), value));
-        else if (comparison > 0) node.setRightChild(removeRecursive(node.getRightChild(), value));
+        int comparison = value.compareTo(binaryTreeNode.getValue());
+        if (comparison < 0) binaryTreeNode.setLeftChild(removeRecursive(binaryTreeNode.getLeftChild(), value));
+        else if (comparison > 0) binaryTreeNode.setRightChild(removeRecursive(binaryTreeNode.getRightChild(), value));
         else {
-            if (isLeaf(node)) node = null;
-            else if (isEmpty(node.getLeftChild())) node = node.getRightChild();
-            else if (isEmpty(node.getRightChild())) node = node.getLeftChild();
+            if (isLeaf(binaryTreeNode)) binaryTreeNode = null;
+            else if (isEmpty(binaryTreeNode.getLeftChild())) binaryTreeNode = binaryTreeNode.getRightChild();
+            else if (isEmpty(binaryTreeNode.getRightChild())) binaryTreeNode = binaryTreeNode.getLeftChild();
             else {
-                Node<T> successor = findSuccessor(node.getRightChild());
-                node.setValue(successor.getValue());
-                node.setRightChild(removeRecursive(node.getRightChild(), successor.getValue()));
+                BinaryTreeNode<T> successor = findSuccessor(binaryTreeNode.getRightChild());
+                binaryTreeNode.setValue(successor.getValue());
+                binaryTreeNode.setRightChild(removeRecursive(binaryTreeNode.getRightChild(), successor.getValue()));
             }
         }
-        return node;
+        return binaryTreeNode;
     }
 
-    private Node<T> findSuccessor(Node<T> node) {
-        while (!isEmpty(node.getLeftChild())) node = node.getLeftChild();
+    private BinaryTreeNode<T> findSuccessor(BinaryTreeNode<T> binaryTreeNode) {
+        while (!isEmpty(binaryTreeNode.getLeftChild())) binaryTreeNode = binaryTreeNode.getLeftChild();
 
-        return node;
+        return binaryTreeNode;
     }
 
 
     public boolean contains(T value) {
         if (value == null) throw new IllegalArgumentException("value can not be null");
 
-        Node<T> current = root;
+        BinaryTreeNode<T> current = root;
         while (!isEmpty(current)) {
             int comparison = value.compareTo(current.getValue());
             if (comparison < 0) current = current.getLeftChild();
@@ -95,24 +95,24 @@ public class BinaryTree<T extends Comparable<T>> {
         return containsRecursive(root, value);
     }
 
-    private boolean containsRecursive(Node<T> node, T value) {
-        if (isEmpty(node)) return false;
+    private boolean containsRecursive(BinaryTreeNode<T> binaryTreeNode, T value) {
+        if (isEmpty(binaryTreeNode)) return false;
 
-        int comparison = value.compareTo(node.getValue());
+        int comparison = value.compareTo(binaryTreeNode.getValue());
         if (comparison == 0) return true;
 
-        return containsRecursive(node.getLeftChild(), value) || containsRecursive(root.getRightChild(), value);
+        return containsRecursive(binaryTreeNode.getLeftChild(), value) || containsRecursive(root.getRightChild(), value);
     }
 
     public String traverseLevelOrder() {
         if (isEmpty(root)) return "";
 
         StringBuilder strBuilder = new StringBuilder();
-        Queue<Node<T>> queue = new LinkedList<>();
+        Queue<BinaryTreeNode<T>> queue = new LinkedList<>();
         queue.offer(root);
 
         while (!queue.isEmpty()) {
-            Node<T> current = queue.poll();
+            BinaryTreeNode<T> current = queue.poll();
             strBuilder.append(current.getValue()).append(", ");
 
             if (!isEmpty(current.getLeftChild())) queue.offer(current.getLeftChild());
@@ -131,7 +131,7 @@ public class BinaryTree<T extends Comparable<T>> {
         return strBuilder.toString();
     }
 
-    private void traversePreOrder(Node<T> root, StringBuilder strBuilder) {
+    private void traversePreOrder(BinaryTreeNode<T> root, StringBuilder strBuilder) {
         if (isEmpty(root))
             return;
         strBuilder.append(root.getValue()).append(", ");
@@ -147,7 +147,7 @@ public class BinaryTree<T extends Comparable<T>> {
         return strBuilder.toString();
     }
 
-    private void traversePostOrder(Node<T> root, StringBuilder strBuilder) {
+    private void traversePostOrder(BinaryTreeNode<T> root, StringBuilder strBuilder) {
         if (isEmpty(root))
             return;
         traversePostOrder(root.getLeftChild(), strBuilder);
@@ -163,7 +163,7 @@ public class BinaryTree<T extends Comparable<T>> {
         return strBuilder.toString();
     }
 
-    private void traverseInOrder(Node<T> root, StringBuilder strBuilder) {
+    private void traverseInOrder(BinaryTreeNode<T> root, StringBuilder strBuilder) {
         if (isEmpty(root))
             return;
         traverseInOrder(root.getLeftChild(), strBuilder);
@@ -175,7 +175,7 @@ public class BinaryTree<T extends Comparable<T>> {
         return height(root);
     }
 
-    private int height(Node<T> root) {
+    private int height(BinaryTreeNode<T> root) {
         if (isEmpty(root)) return -1;
         if (isLeaf(root)) return 0;
         return 1 + Math.max(
@@ -188,18 +188,18 @@ public class BinaryTree<T extends Comparable<T>> {
         return findMinimum(root);
     }
 
-    private T findMinimum(Node<T> node) {
-        if (isLeaf(node)) return node.getValue();
+    private T findMinimum(BinaryTreeNode<T> binaryTreeNode) {
+        if (isLeaf(binaryTreeNode)) return binaryTreeNode.getValue();
 
-        T leftMin = (!isEmpty(node.getLeftChild())) ? findMinimum(node.getLeftChild()) : null;
-        T rightMin = (!isEmpty(node.getRightChild())) ? findMinimum(node.getRightChild()) : null;
+        T leftMin = (!isEmpty(binaryTreeNode.getLeftChild())) ? findMinimum(binaryTreeNode.getLeftChild()) : null;
+        T rightMin = (!isEmpty(binaryTreeNode.getRightChild())) ? findMinimum(binaryTreeNode.getRightChild()) : null;
 
         T minValue = leftMin;
         if (rightMin != null &&
                 (minValue == null || rightMin.compareTo(minValue) < 0)) minValue = rightMin;
 
         if (minValue == null
-                || node.getValue().compareTo(minValue) < 0) minValue = node.getValue();
+                || binaryTreeNode.getValue().compareTo(minValue) < 0) minValue = binaryTreeNode.getValue();
 
         return minValue;
     }
@@ -209,18 +209,18 @@ public class BinaryTree<T extends Comparable<T>> {
         return findMaximum(root);
     }
 
-    private T findMaximum(Node<T> node) {
-        if (isLeaf(node)) return node.getValue();
+    private T findMaximum(BinaryTreeNode<T> binaryTreeNode) {
+        if (isLeaf(binaryTreeNode)) return binaryTreeNode.getValue();
 
-        T leftMax = (!isEmpty(node.getLeftChild())) ? findMaximum(node.getLeftChild()) : null;
-        T rightMax = (!isEmpty(node.getRightChild())) ? findMaximum(node.getRightChild()) : null;
+        T leftMax = (!isEmpty(binaryTreeNode.getLeftChild())) ? findMaximum(binaryTreeNode.getLeftChild()) : null;
+        T rightMax = (!isEmpty(binaryTreeNode.getRightChild())) ? findMaximum(binaryTreeNode.getRightChild()) : null;
 
         T maxValue = leftMax;
         if (rightMax != null &&
                 (maxValue == null || rightMax.compareTo(maxValue) > 0)) maxValue = rightMax;
 
         if (maxValue == null
-                || node.getValue().compareTo(maxValue) > 0) maxValue = node.getValue();
+                || binaryTreeNode.getValue().compareTo(maxValue) > 0) maxValue = binaryTreeNode.getValue();
 
         return maxValue;
     }
@@ -230,7 +230,7 @@ public class BinaryTree<T extends Comparable<T>> {
         return equals(root, other.root);
     }
 
-    private boolean equals(Node<T> firstTreeRoot, Node<T> secondTreeRoot) {
+    private boolean equals(BinaryTreeNode<T> firstTreeRoot, BinaryTreeNode<T> secondTreeRoot) {
         if (isEmpty(firstTreeRoot) && isEmpty(secondTreeRoot)) return true;
         if (!isEmpty(firstTreeRoot) && !isEmpty(secondTreeRoot))
             return firstTreeRoot.getValue().equals(secondTreeRoot.getValue())
@@ -244,17 +244,17 @@ public class BinaryTree<T extends Comparable<T>> {
         return isBinarySearchTree(root, null, null);
     }
 
-    private boolean isBinarySearchTree(Node<T> node, T min, T max) {
-        if (isEmpty(node)) return true;
-        if ((min != null && node.getValue().compareTo(min) <= 0)
-                || (max != null && node.getValue().compareTo(max) >= 0)) return false;
+    private boolean isBinarySearchTree(BinaryTreeNode<T> binaryTreeNode, T min, T max) {
+        if (isEmpty(binaryTreeNode)) return true;
+        if ((min != null && binaryTreeNode.getValue().compareTo(min) <= 0)
+                || (max != null && binaryTreeNode.getValue().compareTo(max) >= 0)) return false;
 
-        return isBinarySearchTree(node.getLeftChild(), min, node.getValue()) &&
-                isBinarySearchTree(node.getRightChild(), node.getValue(), max);
+        return isBinarySearchTree(binaryTreeNode.getLeftChild(), min, binaryTreeNode.getValue()) &&
+                isBinarySearchTree(binaryTreeNode.getRightChild(), binaryTreeNode.getValue(), max);
     }
 
     public void swapRootChildren() {
-        Node<T> temp = root.getLeftChild();
+        BinaryTreeNode<T> temp = root.getLeftChild();
         root.setLeftChild(root.getRightChild());
         root.setRightChild(temp);
     }
@@ -270,12 +270,12 @@ public class BinaryTree<T extends Comparable<T>> {
         return strBuilder.toString();
     }
 
-    private void nodesAtDistance(Node<T> node, int distance, StringBuilder strBuilder) {
-        if (isEmpty(node)) return;
-        if (distance == 0) strBuilder.append(node.getValue()).append(", ");
+    private void nodesAtDistance(BinaryTreeNode<T> binaryTreeNode, int distance, StringBuilder strBuilder) {
+        if (isEmpty(binaryTreeNode)) return;
+        if (distance == 0) strBuilder.append(binaryTreeNode.getValue()).append(", ");
         else {
-            nodesAtDistance(node.getLeftChild(), distance - 1, strBuilder);
-            nodesAtDistance(node.getRightChild(), distance - 1, strBuilder);
+            nodesAtDistance(binaryTreeNode.getLeftChild(), distance - 1, strBuilder);
+            nodesAtDistance(binaryTreeNode.getRightChild(), distance - 1, strBuilder);
         }
     }
 
@@ -283,14 +283,14 @@ public class BinaryTree<T extends Comparable<T>> {
         return isBalanced(root);
     }
 
-    private boolean isBalanced(Node<T> node) {
-        if (isEmpty(node)) return true;
+    private boolean isBalanced(BinaryTreeNode<T> binaryTreeNode) {
+        if (isEmpty(binaryTreeNode)) return true;
 
-        int balanceFactor = height(node.getLeftChild()) - height(node.getRightChild());
+        int balanceFactor = height(binaryTreeNode.getLeftChild()) - height(binaryTreeNode.getRightChild());
 
         return Math.abs(balanceFactor) <= 1 &&
-                isBalanced(node.getLeftChild()) &&
-                isBalanced(node.getRightChild());
+                isBalanced(binaryTreeNode.getLeftChild()) &&
+                isBalanced(binaryTreeNode.getRightChild());
     }
 
     public boolean isPerfect() {
@@ -301,12 +301,12 @@ public class BinaryTree<T extends Comparable<T>> {
         return size(root);
     }
 
-    private int size(Node<T> node) {
-        if (isEmpty(node)) return 0;
+    private int size(BinaryTreeNode<T> binaryTreeNode) {
+        if (isEmpty(binaryTreeNode)) return 0;
 
-        if (isLeaf(node)) return 1;
+        if (isLeaf(binaryTreeNode)) return 1;
 
-        return 1 + size(node.getLeftChild()) + size(node.getRightChild());
+        return 1 + size(binaryTreeNode.getLeftChild()) + size(binaryTreeNode.getRightChild());
     }
 
     public int size2() {
@@ -317,12 +317,12 @@ public class BinaryTree<T extends Comparable<T>> {
         return countLeaves(root);
     }
 
-    private int countLeaves(Node<T> node) {
-        if (isEmpty(node)) return 0;
+    private int countLeaves(BinaryTreeNode<T> binaryTreeNode) {
+        if (isEmpty(binaryTreeNode)) return 0;
 
-        if (isLeaf(node)) return 1;
+        if (isLeaf(binaryTreeNode)) return 1;
 
-        return countLeaves(node.getLeftChild()) + countLeaves(node.getRightChild());
+        return countLeaves(binaryTreeNode.getLeftChild()) + countLeaves(binaryTreeNode.getRightChild());
     }
 
 
@@ -330,17 +330,17 @@ public class BinaryTree<T extends Comparable<T>> {
         return areSibling(root, first, second);
     }
 
-    private boolean areSibling(Node<T> node, T first, T second) {
-        if (isEmpty(node)) return false;
+    private boolean areSibling(BinaryTreeNode<T> binaryTreeNode, T first, T second) {
+        if (isEmpty(binaryTreeNode)) return false;
 
         boolean areSibling = false;
-        if (!isEmpty(node.getLeftChild()) && !isEmpty(node.getRightChild()))
-            areSibling = (node.getLeftChild().getValue().equals(first) && node.getRightChild().getValue().equals(second))
-                    || (node.getRightChild().getValue().equals(first) && node.getLeftChild().getValue().equals(second));
+        if (!isEmpty(binaryTreeNode.getLeftChild()) && !isEmpty(binaryTreeNode.getRightChild()))
+            areSibling = (binaryTreeNode.getLeftChild().getValue().equals(first) && binaryTreeNode.getRightChild().getValue().equals(second))
+                    || (binaryTreeNode.getRightChild().getValue().equals(first) && binaryTreeNode.getLeftChild().getValue().equals(second));
 
         return areSibling ||
-                areSibling(node.getLeftChild(), first, second) ||
-                areSibling(node.getRightChild(), first, second);
+                areSibling(binaryTreeNode.getLeftChild(), first, second) ||
+                areSibling(binaryTreeNode.getRightChild(), first, second);
     }
 
     public List<T> getAncestors(T value) {
@@ -350,27 +350,27 @@ public class BinaryTree<T extends Comparable<T>> {
         return ancestors;
     }
 
-    private boolean getAncestors(Node<T> node, T value, List<T> list) {
-        if (isEmpty(node)) return false;
+    private boolean getAncestors(BinaryTreeNode<T> binaryTreeNode, T value, List<T> list) {
+        if (isEmpty(binaryTreeNode)) return false;
 
-        if (node.getValue().equals(value)) return true;
+        if (binaryTreeNode.getValue().equals(value)) return true;
 
-        if (getAncestors(node.getLeftChild(), value, list) ||
-                getAncestors(node.getRightChild(), value, list)) {
-            list.add(node.getValue());
+        if (getAncestors(binaryTreeNode.getLeftChild(), value, list) ||
+                getAncestors(binaryTreeNode.getRightChild(), value, list)) {
+            list.add(binaryTreeNode.getValue());
             return true;
         }
 
         return false;
     }
 
-    private boolean isEmpty(Node<T> node) {
-        return node == null || node.getValue() == null;
+    private boolean isEmpty(BinaryTreeNode<T> binaryTreeNode) {
+        return binaryTreeNode == null || binaryTreeNode.getValue() == null;
     }
 
-    private boolean isLeaf(Node<T> node) {
-        return node.getRightChild() == null
-                && node.getLeftChild() == null;
+    private boolean isLeaf(BinaryTreeNode<T> binaryTreeNode) {
+        return binaryTreeNode.getRightChild() == null
+                && binaryTreeNode.getLeftChild() == null;
     }
 
     public String representTree() {
@@ -380,18 +380,18 @@ public class BinaryTree<T extends Comparable<T>> {
         return stringBuilder.toString();
     }
 
-    private void buildTreeString(Node<T> node, int currentIndentation, StringBuilder stringBuilder) {
-        if (isEmpty(node)) return;
+    private void buildTreeString(BinaryTreeNode<T> binaryTreeNode, int currentIndentation, StringBuilder stringBuilder) {
+        if (isEmpty(binaryTreeNode)) return;
 
         int childIndentation = currentIndentation + 5;
 
-        buildTreeString(node.getRightChild(), childIndentation, stringBuilder);
+        buildTreeString(binaryTreeNode.getRightChild(), childIndentation, stringBuilder);
 
         stringBuilder.append("\n");
         stringBuilder.append(" ".repeat(Math.max(0, currentIndentation)));
-        stringBuilder.append(node.getValue());
+        stringBuilder.append(binaryTreeNode.getValue());
 
-        buildTreeString(node.getLeftChild(), childIndentation, stringBuilder);
+        buildTreeString(binaryTreeNode.getLeftChild(), childIndentation, stringBuilder);
     }
 
     @Override
