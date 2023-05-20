@@ -5,10 +5,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * A binary tree is a tree data structure in which each node has at most two children, referred to as the left child
+ * and the right child.
+ *
+ * @param <T> the type of elements stored in the binary tree
+ */
 public class BinaryTree<T extends Comparable<T>> {
     private BinaryTreeNode<T> root;
     private int size;
 
+    /**
+     * Constructs a binary tree with the specified root value.
+     *
+     * @param root the value of the root node
+     */
     public BinaryTree(T root) {
         if (root != null) {
             this.root = new BinaryTreeNode<>(root, null);
@@ -16,6 +27,13 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * Inserts a value into the binary tree.
+     *
+     * @param value the value to be inserted
+     * @throws IllegalArgumentException if the value is null
+     * @throws IllegalStateException    if the binary tree already contains the value (duplicate values are not allowed)
+     */
     public void insert(T value) {
         if (value == null) throw new IllegalArgumentException("Cannot assign null value to a node.");
 
@@ -45,6 +63,12 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * Removes a value from the binary tree.
+     *
+     * @param value the value to be removed
+     * @throws IllegalStateException if the binary tree does not contain the value
+     */
     public void remove(T value) {
         root = removeRecursive(root, value);
         size--;
@@ -75,7 +99,13 @@ public class BinaryTree<T extends Comparable<T>> {
         return binaryTreeNode;
     }
 
-
+    /**
+     * Checks if the binary tree contains the specified value.
+     *
+     * @param value the value to be checked
+     * @return true if the value is found, false otherwise
+     * @throws IllegalArgumentException if the value is null
+     */
     public boolean contains(T value) {
         if (value == null) throw new IllegalArgumentException("value can not be null");
 
@@ -89,6 +119,13 @@ public class BinaryTree<T extends Comparable<T>> {
         return false;
     }
 
+    /**
+     * Checks if the binary tree contains the specified value recursively.
+     *
+     * @param value the value to be checked
+     * @return true if the value is found, false otherwise
+     * @throws IllegalArgumentException if the value is null
+     */
     public boolean contains2(T value) {
         if (value == null) throw new IllegalArgumentException("value can not be null");
 
@@ -104,6 +141,11 @@ public class BinaryTree<T extends Comparable<T>> {
         return containsRecursive(binaryTreeNode.getLeftChild(), value) || containsRecursive(root.getRightChild(), value);
     }
 
+    /**
+     * Traverses the binary tree in level order (breadth-first search) and returns the values of the nodes.
+     *
+     * @return a string representation of the values in level order
+     */
     public String traverseLevelOrder() {
         if (isEmpty(root)) return "";
 
@@ -123,6 +165,11 @@ public class BinaryTree<T extends Comparable<T>> {
         return strBuilder.toString();
     }
 
+    /**
+     * Traverses the binary tree in pre-order and returns the values of the nodes.
+     *
+     * @return a string representation of the values in pre-order
+     */
     public String traversePreOrder() {
         StringBuilder strBuilder = new StringBuilder();
         traversePreOrder(root, strBuilder);
@@ -139,6 +186,11 @@ public class BinaryTree<T extends Comparable<T>> {
         traversePreOrder(root.getRightChild(), strBuilder);
     }
 
+    /**
+     * Traverses the binary tree in post-order and returns the values of the nodes.
+     *
+     * @return a string representation of the values in post-order
+     */
     public String traversePostOrder() {
         StringBuilder strBuilder = new StringBuilder();
         traversePostOrder(root, strBuilder);
@@ -155,6 +207,12 @@ public class BinaryTree<T extends Comparable<T>> {
         strBuilder.append(root.getValue()).append(", ");
     }
 
+
+    /**
+     * Traverses the binary tree in in-order and returns the values of the nodes.
+     *
+     * @return a string representation of the values in in-order
+     */
     public String traverseInOrder() {
         StringBuilder strBuilder = new StringBuilder();
         traverseInOrder(root, strBuilder);
@@ -171,6 +229,11 @@ public class BinaryTree<T extends Comparable<T>> {
         traverseInOrder(root.getRightChild(), strBuilder);
     }
 
+    /**
+     * Calculates the height of the binary tree.
+     *
+     * @return the height of the binary tree
+     */
     public int height() {
         return height(root);
     }
@@ -183,6 +246,12 @@ public class BinaryTree<T extends Comparable<T>> {
                 height(root.getRightChild()));
     }
 
+    /**
+     * Finds the minimum value in the binary tree.
+     *
+     * @return the minimum value in the binary tree
+     * @throws IllegalStateException if the binary tree is empty
+     */
     public T min() {
         if (isEmpty(root)) throw new IllegalStateException();
         return findMinimum(root);
@@ -204,6 +273,12 @@ public class BinaryTree<T extends Comparable<T>> {
         return minValue;
     }
 
+    /**
+     * Finds the maximum value in the binary tree.
+     *
+     * @return the maximum value in the binary tree
+     * @throws IllegalStateException if the binary tree is empty
+     */
     public T max() {
         if (isEmpty(root)) throw new IllegalStateException();
         return findMaximum(root);
@@ -225,6 +300,14 @@ public class BinaryTree<T extends Comparable<T>> {
         return maxValue;
     }
 
+
+    /**
+     * Checks if the binary tree is equal to another binary tree.
+     *
+     * @param other the other binary tree to compare
+     * @return true if the two binary trees are equal, false otherwise
+     * @throws IllegalArgumentException if the other binary tree is null
+     */
     public boolean equalsTree(BinaryTree<T> other) {
         if (other == null) throw new IllegalArgumentException();
         return equals(root, other.root);
@@ -240,6 +323,11 @@ public class BinaryTree<T extends Comparable<T>> {
         return false;
     }
 
+    /**
+     * Checks if the binary tree is a binary search tree.
+     *
+     * @return true if the binary tree is a binary search tree, false otherwise
+     */
     public boolean isBinarySearchTree() {
         return isBinarySearchTree(root, null, null);
     }
@@ -253,12 +341,22 @@ public class BinaryTree<T extends Comparable<T>> {
                 isBinarySearchTree(binaryTreeNode.getRightChild(), binaryTreeNode.getValue(), max);
     }
 
+    /**
+     * Swaps the left and right children of the root node in the binary tree.
+     */
     public void swapRootChildren() {
         BinaryTreeNode<T> temp = root.getLeftChild();
         root.setLeftChild(root.getRightChild());
         root.setRightChild(temp);
     }
 
+    /**
+     * Returns the values of the nodes at a given distance from the root.
+     *
+     * @param distance the distance from the root
+     * @return a string representation of the values at the given distance
+     * @throws IllegalArgumentException if the distance is negative
+     */
     public String nodesAtDistance(int distance) {
         if (distance < 0) throw new IllegalArgumentException();
 
@@ -279,6 +377,11 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * Checks if the binary tree is balanced.
+     *
+     * @return true if the binary tree is balanced, false otherwise
+     */
     public boolean isBalanced() {
         return isBalanced(root);
     }
@@ -293,10 +396,20 @@ public class BinaryTree<T extends Comparable<T>> {
                 isBalanced(binaryTreeNode.getRightChild());
     }
 
+    /**
+     * Checks if the binary tree is perfect.
+     *
+     * @return true if the binary tree is perfect, false otherwise
+     */
     public boolean isPerfect() {
         return size() == (Math.pow(2, height() + 1) - 1);
     }
 
+    /**
+     * Returns the number of nodes in the binary tree.
+     *
+     * @return the number of nodes in the binary tree
+     */
     public int size() {
         return size(root);
     }
@@ -309,10 +422,20 @@ public class BinaryTree<T extends Comparable<T>> {
         return 1 + size(binaryTreeNode.getLeftChild()) + size(binaryTreeNode.getRightChild());
     }
 
+    /**
+     * Returns the number of nodes in the binary tree.
+     *
+     * @return the number of nodes in the binary tree
+     */
     public int size2() {
         return size;
     }
 
+    /**
+     * Counts the number of leaf nodes in the binary tree.
+     *
+     * @return the number of leaf nodes in the binary tree
+     */
     public int countLeaves() {
         return countLeaves(root);
     }
@@ -326,6 +449,13 @@ public class BinaryTree<T extends Comparable<T>> {
     }
 
 
+    /**
+     * Checks if two nodes in the binary tree are siblings.
+     *
+     * @param first  the value of the first node
+     * @param second the value of the second node
+     * @return true if the nodes are siblings, false otherwise
+     */
     public boolean areSibling(T first, T second) {
         return areSibling(root, first, second);
     }
@@ -343,6 +473,12 @@ public class BinaryTree<T extends Comparable<T>> {
                 areSibling(binaryTreeNode.getRightChild(), first, second);
     }
 
+    /**
+     * Returns a list of values representing the ancestors of a node in the binary tree.
+     *
+     * @param value the value of the node
+     * @return a list of ancestor values
+     */
     public List<T> getAncestors(T value) {
         List<T> ancestors = new ArrayList<>();
         getAncestors(root, value, ancestors);
@@ -373,6 +509,11 @@ public class BinaryTree<T extends Comparable<T>> {
                 && binaryTreeNode.getLeftChild() == null;
     }
 
+    /**
+     * Returns a string representation of the binary tree.
+     *
+     * @return a string representation of the binary tree
+     */
     public String representTree() {
         StringBuilder stringBuilder = new StringBuilder();
         buildTreeString(root, 0, stringBuilder);
