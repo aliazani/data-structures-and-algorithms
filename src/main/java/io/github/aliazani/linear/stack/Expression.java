@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * Represents an expression and provides methods to check if the brackets in the expression are balanced.
+ */
 @RequiredArgsConstructor
 public class Expression {
     private final String input;
@@ -13,6 +16,11 @@ public class Expression {
     private final List<Character> rightBrackets = Arrays.asList('}', '>', ']', ')');
     private final Stack<Character> stack = new Stack<>();
 
+    /**
+     * Checks if the brackets in the expression are balanced.
+     *
+     * @return true if the brackets are balanced, false otherwise
+     */
     public boolean isBalanced() {
         for (char ch : input.toCharArray())
             if (isOpeningBracket(ch)) stack.push(ch);
