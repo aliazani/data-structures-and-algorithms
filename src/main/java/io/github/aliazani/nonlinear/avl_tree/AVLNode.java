@@ -9,14 +9,12 @@ import java.text.MessageFormat;
 @Setter
 public class AVLNode<T> {
     private final T value;
-    private AVLNode<T> parent;
     private int height;
     private AVLNode<T> rightChild;
     private AVLNode<T> leftChild;
 
-    public AVLNode(T value, AVLNode<T> parent) {
+    public AVLNode(T value) {
         this.value = value;
-        this.parent = parent;
     }
 
     @Override

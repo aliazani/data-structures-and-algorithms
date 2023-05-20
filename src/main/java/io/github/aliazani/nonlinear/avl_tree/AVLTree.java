@@ -4,9 +4,9 @@ public class AVLTree<T extends Comparable<T>> {
     private AVLNode<T> root;
     private int size;
 
-    public AVLTree(T root) {
-        if (root != null) {
-            this.root = new AVLNode<>(root, null);
+    public AVLTree(T value) {
+        if (value != null) {
+            this.root = new AVLNode<>(value);
             size++;
         }
     }
@@ -18,18 +18,18 @@ public class AVLTree<T extends Comparable<T>> {
     public void insert(T value) {
         if (value == null) throw new IllegalArgumentException("Cannot assign null value to a node.");
 
-        root = insert(null, root, value);
+        root = insert(root, value);
         size++;
     }
 
-    private AVLNode<T> insert(AVLNode<T> parent, AVLNode<T> current, T value) {
-        if (current == null) return new AVLNode<>(value, parent);
+    private AVLNode<T> insert(AVLNode<T> current, T value) {
+        if (current == null) return new AVLNode<>(value);
 
         int comparison = value.compareTo(current.getValue());
         if (comparison == 0) throw new IllegalStateException("AVL Tree cannot have duplicate values.");
 
-        if (comparison < 0) current.setLeftChild(insert(current, current.getLeftChild(), value));
-        else current.setRightChild(insert(current, current.getRightChild(), value));
+        if (comparison < 0) current.setLeftChild(insert(current.getLeftChild(), value));
+        else current.setRightChild(insert(current.getRightChild(), value));
 
         setHeight(current);
 
@@ -72,11 +72,9 @@ public class AVLTree<T extends Comparable<T>> {
     private AVLNode<T> leftRotation(AVLNode<T> root) {
         AVLNode<T> newRoot = root.getRightChild();
 
+        root.setRightChild(newRoot.getLeftChild());
+        newRoot.setLeftChild(root.getLeftChild());
         newRoot.setLeftChild(root);
-        if (newRoot.getLeftChild() != null) root.setRightChild(newRoot.getLeftChild());
-
-        root.setParent(newRoot);
-        newRoot.getLeftChild().setParent(root);
 
         setHeight(root);
         setHeight(newRoot);
@@ -90,9 +88,6 @@ public class AVLTree<T extends Comparable<T>> {
         root.setLeftChild(newRoot.getRightChild());
         newRoot.setRightChild(root);
 
-        root.setParent(newRoot);
-        if (newRoot.getRightChild() != null) newRoot.getRightChild().setParent(root);
-
         setHeight(root);
         setHeight(newRoot);
 
@@ -102,5 +97,26 @@ public class AVLTree<T extends Comparable<T>> {
     @Override
     public String toString() {
         return root.toString();
+    }
+
+    public String representTree() {
+        StringBuilder stringBuilder = new StringBuilder();
+        buildTreeString(root, 0, stringBuilder);
+
+        return stringBuilder.toString();
+    }
+
+    private void buildTreeString(AVLNode<T> node, int currentIndentation, StringBuilder stringBuilder) {
+        if (node == null || node.getValue() == null) return;
+
+        int childIndentation = currentIndentation + 5;
+
+        buildTreeString(node.getRightChild(), childIndentation, stringBuilder);
+
+        stringBuilder.append("\n");
+        stringBuilder.append(" ".repeat(Math.max(0, currentIndentation)));
+        stringBuilder.append(node.getValue());
+
+        buildTreeString(node.getLeftChild(), childIndentation, stringBuilder);
     }
 }
