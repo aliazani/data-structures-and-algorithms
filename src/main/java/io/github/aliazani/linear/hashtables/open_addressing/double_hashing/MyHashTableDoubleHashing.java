@@ -7,16 +7,30 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+/**
+ * Implementation of a hash table using open addressing and double hashing collision resolution strategy.
+ *
+ * @param <K> the type of keys stored in the hash table
+ * @param <V> the type of values stored in the hash table
+ */
 public class MyHashTableDoubleHashing<K extends Comparable<K>, V extends Comparable<V>> implements MyHashTable<K, V> {
     private final Entry<K, V>[] entries;
     private final int prime;
     private int size;
 
+    /**
+     * Constructs a hash table with the specified size.
+     *
+     * @param size the size of the hash table
+     */
     public MyHashTableDoubleHashing(int size) {
         entries = (Entry<K, V>[]) new Entry[size];
         prime = findLargestPrime(entries.length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void put(K key, V value) {
         int index = getIndexOfNonEmptyEntry(key);
@@ -32,6 +46,9 @@ public class MyHashTableDoubleHashing<K extends Comparable<K>, V extends Compara
         size++;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public V get(K key) {
         int index = getIndexOfNonEmptyEntry(key);
@@ -41,6 +58,9 @@ public class MyHashTableDoubleHashing<K extends Comparable<K>, V extends Compara
         return entries[index].getValue();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void remove(K key) {
         int index = getIndexOfNonEmptyEntry(key);
@@ -51,11 +71,17 @@ public class MyHashTableDoubleHashing<K extends Comparable<K>, V extends Compara
         size--;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int size() {
         return size;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isEmpty() {
         return size == 0;

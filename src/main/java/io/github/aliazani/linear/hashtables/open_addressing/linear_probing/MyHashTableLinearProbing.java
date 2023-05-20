@@ -7,6 +7,14 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+/**
+ * Implementation of a hash table using linear probing for collision resolution.
+ * <p>
+ * This implementation handles collisions by probing the next available slot in a linear manner.
+ *
+ * @param <K> the type of keys stored in the hash table
+ * @param <V> the type of values stored in the hash table
+ */
 public class MyHashTableLinearProbing<K extends Comparable<K>, V extends Comparable<V>> implements MyHashTable<K, V> {
     private final Entry<K, V>[] entries;
     private int size;
@@ -15,6 +23,9 @@ public class MyHashTableLinearProbing<K extends Comparable<K>, V extends Compara
         entries = (Entry<K, V>[]) new Entry[size];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void put(K key, V value) {
         int index = getIndexOfNonEmptyEntry(key);
@@ -30,6 +41,9 @@ public class MyHashTableLinearProbing<K extends Comparable<K>, V extends Compara
         size++;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public V get(K key) {
         int index = getIndexOfNonEmptyEntry(key);
@@ -39,6 +53,9 @@ public class MyHashTableLinearProbing<K extends Comparable<K>, V extends Compara
         return entries[index].getValue();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void remove(K key) {
         int index = getIndexOfNonEmptyEntry(key);
@@ -49,11 +66,17 @@ public class MyHashTableLinearProbing<K extends Comparable<K>, V extends Compara
         size--;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int size() {
         return size;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isEmpty() {
         return size == 0;
