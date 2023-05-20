@@ -73,7 +73,6 @@ public class AVLTree<T extends Comparable<T>> {
         AVLNode<T> newRoot = root.getRightChild();
 
         root.setRightChild(newRoot.getLeftChild());
-        newRoot.setLeftChild(root.getLeftChild());
         newRoot.setLeftChild(root);
 
         setHeight(root);
