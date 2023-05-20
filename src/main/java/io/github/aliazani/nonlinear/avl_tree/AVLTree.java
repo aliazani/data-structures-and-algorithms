@@ -93,11 +93,6 @@ public class AVLTree<T extends Comparable<T>> {
         return newRoot;
     }
 
-    @Override
-    public String toString() {
-        return root.toString();
-    }
-
     public String representTree() {
         StringBuilder stringBuilder = new StringBuilder();
         buildTreeString(root, 0, stringBuilder);
@@ -117,5 +112,10 @@ public class AVLTree<T extends Comparable<T>> {
         stringBuilder.append(node.getValue());
 
         buildTreeString(node.getLeftChild(), childIndentation, stringBuilder);
+    }
+
+    @Override
+    public String toString() {
+        return root.toString();
     }
 }
