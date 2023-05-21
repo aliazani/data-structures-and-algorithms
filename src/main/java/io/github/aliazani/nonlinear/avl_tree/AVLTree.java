@@ -1,9 +1,19 @@
 package io.github.aliazani.nonlinear.avl_tree;
 
+/**
+ * Represents an AVL tree, a self-balancing binary search tree.
+ *
+ * @param <T> the type of elements stored in the AVL tree, must implement the Comparable interface
+ */
 public class AVLTree<T extends Comparable<T>> {
     private AVLNode<T> root;
     private int size;
 
+    /**
+     * Constructs a new AVLTree with the specified value as the root.
+     *
+     * @param value the value to be assigned as the root of the AVL tree
+     */
     public AVLTree(T value) {
         if (value != null) {
             this.root = new AVLNode<>(value);
@@ -11,10 +21,22 @@ public class AVLTree<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * Returns the number of elements in the AVL tree.
+     *
+     * @return the number of elements in the AVL tree
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Inserts a value into the AVL tree.
+     *
+     * @param value the value to be inserted into the AVL tree
+     * @throws IllegalArgumentException if the value is null
+     * @throws IllegalStateException    if the AVL tree already contains the value
+     */
     public void insert(T value) {
         if (value == null) throw new IllegalArgumentException("Cannot assign null value to a node.");
 
@@ -93,6 +115,11 @@ public class AVLTree<T extends Comparable<T>> {
         return newRoot;
     }
 
+    /**
+     * Returns a string representation of the AVL tree.
+     *
+     * @return a string representation of the AVL tree
+     */
     public String representTree() {
         StringBuilder stringBuilder = new StringBuilder();
         buildTreeString(root, 0, stringBuilder);
@@ -114,6 +141,11 @@ public class AVLTree<T extends Comparable<T>> {
         buildTreeString(node.getLeftChild(), childIndentation, stringBuilder);
     }
 
+    /**
+     * Returns a string representation of the AVLTree.
+     *
+     * @return a string representation of the AVLTree
+     */
     @Override
     public String toString() {
         return root.toString();
