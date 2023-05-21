@@ -2,6 +2,7 @@ package io.github.aliazani.linear.queue;
 
 import io.github.aliazani.linear.queue.array_queue.ArrayQueue;
 import io.github.aliazani.linear.queue.priority_queue.with_array.PriorityQueueWithArray;
+import io.github.aliazani.linear.queue.priority_queue.with_heap.PriorityQueueWithHeap;
 import io.github.aliazani.linear.queue.stack_queue.StackQueue;
 import lombok.extern.slf4j.Slf4j;
 
@@ -126,15 +127,30 @@ public class QueueDemo {
 
     public static void showMyPriorityQueue() {
         log.warn("PriorityQueue my implementation: ");
-        PriorityQueueWithArray<Integer> priorityQueue = new PriorityQueueWithArray<>(Integer.class, 6);
-        priorityQueue.enqueue(0);
-        priorityQueue.enqueue(10);
-        priorityQueue.enqueue(8);
-        priorityQueue.enqueue(2);
-        priorityQueue.enqueue(11);
-        priorityQueue.enqueue(1);
-        log.info(priorityQueue.toString());
-        log.info(MessageFormat.format("PriorityQueue of Integer removes an item: {0}", priorityQueue.dequeue()));
-        log.info(MessageFormat.format("PriorityQueue of Integer after removing an item: {0}", priorityQueue));
+        log.warn("PriorityQueue with array: ");
+        PriorityQueueWithArray<Integer> priorityQueueWithArray = new PriorityQueueWithArray<>(Integer.class, 6);
+        priorityQueueWithArray.enqueue(0);
+        priorityQueueWithArray.enqueue(10);
+        priorityQueueWithArray.enqueue(8);
+        priorityQueueWithArray.enqueue(2);
+        priorityQueueWithArray.enqueue(11);
+        priorityQueueWithArray.enqueue(1);
+        log.info(priorityQueueWithArray.toString());
+        log.info(MessageFormat.format("PriorityQueue of Integer removes an item: {0}", priorityQueueWithArray.dequeue()));
+        log.info(MessageFormat.format("PriorityQueue of Integer after removing an item: {0}", priorityQueueWithArray));
+
+        log.warn("PriorityQueue with heap: ");
+        PriorityQueueWithHeap<Integer> priorityQueueWithHeap = new PriorityQueueWithHeap<>(10);
+        priorityQueueWithHeap.enqueue(10);
+        priorityQueueWithHeap.enqueue(8);
+        priorityQueueWithHeap.enqueue(4);
+        priorityQueueWithHeap.enqueue(12);
+        priorityQueueWithHeap.enqueue(18);
+        priorityQueueWithHeap.enqueue(20);
+        priorityQueueWithHeap.enqueue(2);
+        priorityQueueWithHeap.enqueue(15);
+        log.info(priorityQueueWithHeap.toString());
+        log.info(MessageFormat.format("PriorityQueue of Integer removes an item: {0}", priorityQueueWithHeap.dequeue()));
+        log.info(MessageFormat.format("PriorityQueue of Integer after removing an item: {0}", priorityQueueWithHeap));
     }
 }
