@@ -68,7 +68,7 @@ public class MaxHeap<T extends Comparable<T>> implements MyHeap<T> {
         int index = 0;
         while (index <= size && !isValidParent(index)) {
             int largerChildIndex = largerChildIndexOf(index);
-            swap(index, largerChildIndexOf(index));
+            swap(index, largerChildIndex);
             index = largerChildIndex;
         }
     }
