@@ -113,6 +113,14 @@ public class MaxHeap<T extends Comparable<T>> implements MyHeap<T> {
                 : getRightChildIndex(index);
     }
 
+    @Override
+    public T get(int index) {
+        if (isEmpty()) throw new IllegalStateException();
+        if (index >= size || index < 0) throw new IllegalArgumentException();
+
+        return items[index];
+    }
+
     public boolean isMaxHeap(T[] array) {
         int index = array.length - 1;
 
@@ -127,6 +135,11 @@ public class MaxHeap<T extends Comparable<T>> implements MyHeap<T> {
         if (isEmpty()) throw new IllegalStateException();
 
         return items[0];
+    }
+
+    @Override
+    public int size() {
+        return size;
     }
 
     @Override

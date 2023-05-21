@@ -5,7 +5,11 @@ public interface MyHeap<T extends Comparable<T>> {
 
     T remove();
 
+    T get(int index);
+
     boolean isFull();
 
     boolean isEmpty();
+
+    int size();
 }

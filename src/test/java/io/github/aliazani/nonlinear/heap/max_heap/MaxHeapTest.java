@@ -192,6 +192,49 @@ class MaxHeapTest {
         assertTrue(maxHeap.isEmpty());
     }
 
+    @DisplayName("get - " +
+            "When the heap is empty - " +
+            "Should throw IllegalStateException")
+    @Test
+    void get_heapIsEmpty_throwIllegalState() {
+        assertThrows(IllegalStateException.class, () -> maxHeap.get(0));
+    }
+
+    @DisplayName("get - " +
+            "When the index is out of range (greater than or equal to size) - " +
+            "Should throw IllegalArgumentException")
+    @Test
+    void get_indexOutOfRange_throwIllegalArgumentException() {
+        maxHeap.insert(50);
+        maxHeap.insert(30);
+
+        assertThrows(IllegalArgumentException.class, () -> maxHeap.get(2));
+    }
+
+    @DisplayName("get - " +
+            "When the index is negative - " +
+            "Should throw IllegalArgumentException")
+    @Test
+    void get_negativeIndex_throwIllegalArgumentException() {
+        maxHeap.insert(50);
+        maxHeap.insert(30);
+
+        assertThrows(IllegalArgumentException.class, () -> maxHeap.get(-1));
+    }
+
+    @DisplayName("get - " +
+            "When the index is valid - " +
+            "Should return the element at the specified index")
+    @Test
+    void get_validIndex_returnElementAtIndex() {
+        maxHeap.insert(50);
+        maxHeap.insert(30);
+        maxHeap.insert(70);
+        maxHeap.insert(20);
+
+        assertEquals(50, maxHeap.get(2));
+    }
+
     @DisplayName("isMaxHeap - " +
             "When the array represents a max heap - " +
             "Should return true")
@@ -246,6 +289,33 @@ class MaxHeapTest {
     @Test
     void max_heapEmpty_throwIllegalState() {
         assertThrows(IllegalStateException.class, () -> maxHeap.max());
+    }
+
+    @DisplayName("size - " +
+            "When the heap is empty - " +
+            "Should return 0")
+    @Test
+    void size_heapIsEmpty_returnZero() {
+        assertEquals(0, maxHeap.size());
+    }
+
+    @DisplayName("size - " +
+            "When the heap is not empty - " +
+            "Should return the number of elements in the heap")
+    @Test
+    void size_heapIsNotEmpty_returnNumberOfElements() {
+        maxHeap.insert(30);
+        maxHeap.insert(70);
+        maxHeap.insert(20);
+        maxHeap.insert(25);
+        maxHeap.insert(40);
+        maxHeap.remove();
+        maxHeap.remove();
+        maxHeap.remove();
+        maxHeap.insert(45);
+        maxHeap.insert(50);
+
+        assertEquals(4, maxHeap.size());
     }
 
     @DisplayName("toString - " +
