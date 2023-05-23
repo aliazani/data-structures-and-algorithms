@@ -1,9 +1,10 @@
 package io.github.aliazani.nonlinear.trie.using_arrays;
 
 import io.github.aliazani.nonlinear.trie.MyTrie;
+import io.github.aliazani.nonlinear.trie.MyTrieNode;
 
 public class TrieUsingArray<T extends Comparable<T>> implements MyTrie<T> {
-    private final TrieNodeUsingArray<T> root;
+    private final MyTrieNode<T> root;
 
     public TrieUsingArray(int sizeOfChildren) {
         root = new TrieNodeUsingArray<>(null, sizeOfChildren);
@@ -13,12 +14,12 @@ public class TrieUsingArray<T extends Comparable<T>> implements MyTrie<T> {
     public void insert(T[] items) {
         if (items == null) throw new IllegalArgumentException();
 
-        TrieNodeUsingArray<T> current = root;
+        MyTrieNode<T> current = root;
         for (T item : items) {
             if (item == null) throw new IllegalStateException();
             if (!current.hasChild(item))
                 current.addChild(item);
-            current = (TrieNodeUsingArray<T>) current.getChild(item);
+            current = current.getChild(item);
         }
 
         current.setEndOfWord(true);

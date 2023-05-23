@@ -2,12 +2,13 @@ package io.github.aliazani.nonlinear.trie.using_arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import io.github.aliazani.nonlinear.trie.MyTrieNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class TrieNodeUsingArrayTest {
-    private TrieNodeUsingArray<Integer> trieNode;
+    private MyTrieNode<Integer> trieNode;
 
     @BeforeEach
     void setUp() {
@@ -128,7 +129,7 @@ class TrieNodeUsingArrayTest {
             "When the node has no children - " +
             "Should return string representation without children")
     void toString_nodeHasNoChildren_returnsStringWithoutChildren() {
-        trieNode.setValue(5);
+        trieNode = new TrieNodeUsingArray<>(5, 26);
 
         String expected = "(value=5, children=[null, null, null, null, null, null, null," +
                 " null, null, null, null, null, null, null, null, null, null, null, null, " +

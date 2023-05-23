@@ -1,5 +1,6 @@
 package io.github.aliazani.nonlinear.trie.using_arrays;
 
+import io.github.aliazani.nonlinear.trie.MyTrie;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TrieUsingArrayTest {
-    private TrieUsingArray<Character> trie;
+    private MyTrie<Character> trie;
 
     @BeforeEach
     void setUp() {

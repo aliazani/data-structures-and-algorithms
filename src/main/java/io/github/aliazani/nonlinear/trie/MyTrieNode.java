@@ -8,7 +8,15 @@ public interface MyTrieNode<T extends Comparable<T>> {
 
     MyTrieNode<T> getChild(T item);
 
+    MyTrieNode<T>[] getChildren();
+
     boolean hasChild(T item);
 
     boolean hasChildren();
+
+    T getValue();
+
+    boolean isEndOfWord();
+
+    void setEndOfWord(boolean isEndOfWord);
 }

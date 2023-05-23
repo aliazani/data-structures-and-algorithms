@@ -11,10 +11,10 @@ import java.util.Objects;
 @Getter
 @Setter
 public class TrieNodeUsingArray<T extends Comparable<T>> implements MyTrieNode<T> {
-    private T value;
-    private TrieNodeUsingArray<T>[] children;
+    private final T value;
+    private final TrieNodeUsingArray<T>[] children;
+    private final int sizeOfChildren;
     private boolean isEndOfWord;
-    private int sizeOfChildren;
 
     public TrieNodeUsingArray(T value, int sizeOfChildren) {
         this.value = value;
