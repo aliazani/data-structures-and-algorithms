@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -386,5 +387,207 @@ class TrieUsingHashMapTest {
                 .toList();
 
         assertEquals(List.of("[a, p, p]", "[a, p, p, l, e]", "[a, c, i, d]", "[e, g, g]"), result);
+    }
+
+    @Test
+    @DisplayName("countWords - " +
+            "When Trie is empty - " +
+            "Should return 0")
+    void countWords_emptyTrie_returnsZero() {
+        assertEquals(0, trie.countWords());
+    }
+
+    @Test
+    @DisplayName("countWords - " +
+            "When Trie has one word - " +
+            "Should return 1")
+    void countWords_singleWord_returnsOne() {
+        trie.insert(new Character[]{'a', 'p', 'p'});
+        assertEquals(1, trie.countWords());
+    }
+
+    @Test
+    @DisplayName("countWords - " +
+            "When Trie has multiple words - " +
+            "Should return the correct count")
+    void countWords_multipleWords_returnsCorrectCount() {
+        trie.insert(new Character[]{'a', 'p', 'p'});
+        trie.insert(new Character[]{'c', 'a', 't'});
+        trie.insert(new Character[]{'e', 'g', 'g'});
+        assertEquals(3, trie.countWords());
+    }
+
+    @Test
+    @DisplayName("countWords - " +
+            "When Trie has duplicate words - " +
+            "Should return the correct count")
+    void countWords_duplicateWords_returnsCorrectCount() {
+        trie.insert(new Character[]{'a', 'p', 'p'});
+        trie.insert(new Character[]{'a', 'p', 'p'});
+        trie.insert(new Character[]{'a', 'p', 'p'});
+        assertEquals(1, trie.countWords());
+    }
+
+    @Test
+    @DisplayName("countWords - " +
+            "When Trie has words with common prefixes - " +
+            "Should return the correct count")
+    void countWords_commonPrefixes_returnsCorrectCount() {
+        trie.insert(new Character[]{'a', 'p', 'p'});
+        trie.insert(new Character[]{'a', 'p', 'p', 'l', 'e'});
+        trie.insert(new Character[]{'a', 'p', 'a', 'r', 't'});
+        assertEquals(3, trie.countWords());
+    }
+
+    @Test
+    @DisplayName("longestCommonPrefix - " +
+            "When array is null - " +
+            "Should return null")
+    void testLongestCommonPrefix_NullArray_ReturnNull() {
+        assertNull(trie.longestCommonPrefix(null));
+    }
+
+    @Test
+    @DisplayName("longestCommonPrefix - " +
+            "When array is empty - " +
+            "Should return empty prefix")
+    void testLongestCommonPrefix_EmptyArray_ReturnEmptyPrefix() {
+        assertEquals(0, trie.longestCommonPrefix(new Character[0][0]).size());
+    }
+
+    @Test
+    @DisplayName("longestCommonPrefix - " +
+            "When array has single word - " +
+            "Should return the word as prefix")
+    void testLongestCommonPrefix_SingleWordArray_ReturnWordAsPrefix() {
+        String result = trie.longestCommonPrefix(new Character[][]{{'a', 'p', 'p'}}).stream()
+                .map(Object::toString)
+                .collect(Collectors.joining());
+
+        assertEquals("app", result);
+    }
+
+    @Test
+    @DisplayName("longestCommonPrefix - " +
+            "When array has multiple words with common prefix - " +
+            "Should return the common prefix")
+    void testLongestCommonPrefix_MultipleWordsWithCommonPrefix_ReturnCommonPrefix() {
+        String result = trie.longestCommonPrefix(new Character[][]{{'c', 'a', 'r', 'd'}, {'c', 'a', 'r', 'e'},
+                        {'c', 'a', 'r', 'e', 'f', 'u', 'l', 'l'}})
+                .stream()
+                .map(Object::toString)
+                .collect(Collectors.joining());
+
+        assertEquals("car", result);
+    }
+
+    @Test
+    @DisplayName("longestCommonPrefix - " +
+            "When array has no common prefix - " +
+            "Should return an empty prefix")
+    void testLongestCommonPrefix_NoCommonPrefix_ReturnEmptyPrefix() {
+        String result = trie.longestCommonPrefix(new Character[][]{{'e', 'g', 'g'}, {'a', 'c', 'i', 'd'},
+                        {'r', 'a', 'i', 'n'}})
+                .stream()
+                .map(Object::toString)
+                .collect(Collectors.joining());
+
+        assertEquals("", result);
+    }
+
+    @Test
+    @DisplayName("toString - " +
+            "When Trie is empty - " +
+            "Should return an empty string")
+    void toString_emptyTrie_returnsEmptyString() {
+        assertEquals("(value=null, children={})", trie.toString());
+    }
+
+    @Test
+    @DisplayName("toString - " +
+            "When Trie has a single word - " +
+            "Should return the word in string format")
+    void toString_singleWord_returnsWordString() {
+        trie.insert(new Character[]{'a', 'p', 'p', 'l', 'e'});
+
+        assertEquals("(value=null, " +
+                        "children={a=(value=a, " +
+                        "children={p=(value=p, " +
+                        "children={p=(value=p, " +
+                        "children={l=(value=l, " +
+                        "children={e=(value=e, children={})})})})})})"
+                , trie.toString());
+    }
+
+    @Test
+    @DisplayName("toString - " +
+            "When Trie has multiple words - " +
+            "Should return the Trie structure in string format")
+    void toString_multipleWords_returnsTrieString() {
+        trie.insert(new Character[]{'a', 'p', 'p', 'l', 'e'});
+        trie.insert(new Character[]{'b', 'a', 'n', 'a', 'n', 'a'});
+        trie.insert(new Character[]{'c', 'h', 'e', 'r', 'r', 'y'});
+
+        assertEquals("(value=null, " +
+                "children={a=(value=a, " +
+                "children={p=(value=p, " +
+                "children={p=(value=p, " +
+                "children={l=(value=l, " +
+                "children={e=(value=e, children={})})})})}), " +
+                "b=(value=b, " +
+                "children={a=(value=a, " +
+                "children={n=(value=n, " +
+                "children={a=(value=a, " +
+                "children={n=(value=n, " +
+                "children={a=(value=a, children={})})})})})}), " +
+                "c=(value=c, " +
+                "children={h=(value=h, " +
+                "children={e=(value=e, " +
+                "children={r=(value=r, " +
+                "children={r=(value=r, " +
+                "children={y=(value=y, children={})})})})})})})", trie.toString());
+    }
+
+    @Test
+    @DisplayName("toString - " +
+            "When Trie has duplicate words - " +
+            "Should return the Trie structure in string format")
+    void toString_duplicateWords_returnsTrieString() {
+        trie.insert(new Character[]{'a', 'p', 'p', 'l', 'e'});
+        trie.insert(new Character[]{'a', 'p', 'p', 'l', 'e'});
+        trie.insert(new Character[]{'a', 'p', 'p', 'l', 'e'});
+        trie.insert(new Character[]{'a', 'p', 'p', 'l', 'e'});
+
+        assertEquals("(value=null, " +
+                        "children={a=(value=a, " +
+                        "children={p=(value=p, " +
+                        "children={p=(value=p, " +
+                        "children={l=(value=l, " +
+                        "children={e=(value=e, children={})})})})})})"
+                , trie.toString());
+    }
+
+    @Test
+    @DisplayName("toString - " +
+            "When Trie has words with common prefixes - " +
+            "Should return the Trie structure in string format")
+    void toString_commonPrefixes_returnsTrieString() {
+        trie.insert(new Character[]{'a', 'p', 'p', 'l', 'e'});
+        trie.insert(new Character[]{'a', 'p', 'p'});
+        trie.insert(new Character[]{'a', 'p', 'p', 'l', 'i', 'c', 'a', 't', 'i', 'o', 'n'});
+
+        assertEquals("(value=null, " +
+                "children={a=(value=a, " +
+                "children={p=(value=p, " +
+                "children={p=(value=p, " +
+                "children={l=(value=l, " +
+                "children={e=(value=e, children={}), " +
+                "i=(value=i, " +
+                "children={c=(value=c, " +
+                "children={a=(value=a, " +
+                "children={t=(value=t, " +
+                "children={i=(value=i, " +
+                "children={o=(value=o, " +
+                "children={n=(value=n, children={})})})})})})})})})})})})", trie.toString());
     }
 }

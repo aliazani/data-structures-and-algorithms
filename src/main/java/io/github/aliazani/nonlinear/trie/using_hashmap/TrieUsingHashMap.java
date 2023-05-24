@@ -135,6 +135,48 @@ public class TrieUsingHashMap<T extends Comparable<T>> implements MyTrie<T> {
         }
     }
 
+    public int countWords() {
+        return countWords(root);
+    }
+
+    private int countWords(MyTrieNode<T> root) {
+        int total = 0;
+        if (root.isEndOfWord()) total++;
+
+        for (MyTrieNode<T> child : root.getChildren()) total += countWords(child);
+        return total;
+    }
+
+    public List<T> longestCommonPrefix(T[][] array) {
+        if (array == null) return null;
+
+        TrieUsingHashMap<T> trie = new TrieUsingHashMap<>();
+        for (T[] item : array) trie.insert(item);
+
+        int maxPrefixLength = (getShortest(array) == null) ? 0 : getShortest(array).length;
+        List<T> prefix = new ArrayList<>();
+        MyTrieNode<T> currentNode = trie.root;
+
+        while (prefix.size() < maxPrefixLength) {
+            MyTrieNode<T>[] children = currentNode.getChildren();
+            if (children.length != 1) break;
+            currentNode = children[0];
+            prefix.add(currentNode.getValue());
+        }
+
+        return prefix;
+    }
+
+    private T[] getShortest(T[][] array) {
+        if (array == null || array.length == 0) return null;
+
+        T[] shortest = array[0];
+        for (int i = 1; i < array.length; i++)
+            if (array[i].length < shortest.length) shortest = array[i];
+
+        return shortest;
+    }
+
     @Override
     public String toString() {
         return root.toString();
