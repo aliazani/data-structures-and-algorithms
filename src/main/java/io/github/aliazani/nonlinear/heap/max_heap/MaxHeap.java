@@ -6,14 +6,30 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * A class representing a Max Heap data structure.
+ *
+ * @param <T> the type of elements stored in the Max Heap, must implement Comparable interface
+ */
 public class MaxHeap<T extends Comparable<T>> implements MyHeap<T> {
     private final T[] items;
     private int size;
 
+    /**
+     * Constructs a MaxHeap with the specified size.
+     *
+     * @param size the maximum size of the Max Heap
+     */
     public MaxHeap(int size) {
         items = (T[]) new Comparable[size];
     }
 
+    /**
+     * Inserts an element into the Max Heap.
+     *
+     * @param item the item to be inserted
+     * @throws IllegalStateException if the Max Heap is full
+     */
     @Override
     public void insert(T item) {
         if (isFull()) throw new IllegalStateException("Heap is full!!");
@@ -22,6 +38,11 @@ public class MaxHeap<T extends Comparable<T>> implements MyHeap<T> {
         bubbleUp();
     }
 
+    /**
+     * Checks if the Max Heap is full.
+     *
+     * @return true if the Max Heap is full, false otherwise
+     */
     @Override
     public boolean isFull() {
         return items.length == size;
@@ -46,6 +67,12 @@ public class MaxHeap<T extends Comparable<T>> implements MyHeap<T> {
         items[second] = temp;
     }
 
+    /**
+     * Removes and returns the root element of the Max Heap.
+     *
+     * @return the root element of the Max Heap
+     * @throws IllegalStateException if the Max Heap is empty
+     */
     @Override
     public T remove() {
         if (isEmpty()) throw new IllegalStateException();
@@ -59,6 +86,11 @@ public class MaxHeap<T extends Comparable<T>> implements MyHeap<T> {
         return root;
     }
 
+    /**
+     * Checks if the Max Heap is empty.
+     *
+     * @return true if the Max Heap is empty, false otherwise
+     */
     @Override
     public boolean isEmpty() {
         return (size == 0);
@@ -113,6 +145,14 @@ public class MaxHeap<T extends Comparable<T>> implements MyHeap<T> {
                 : getRightChildIndex(index);
     }
 
+    /**
+     * Returns the index-th element in the Max Heap.
+     *
+     * @param index the index of the element
+     * @return the index-th element in the Max Heap
+     * @throws IllegalStateException    if the Max Heap is empty
+     * @throws IllegalArgumentException if the index is out of bounds
+     */
     @Override
     public T get(int index) {
         if (isEmpty()) throw new IllegalStateException();
@@ -121,6 +161,12 @@ public class MaxHeap<T extends Comparable<T>> implements MyHeap<T> {
         return items[index];
     }
 
+    /**
+     * Checks if the given array is a valid Max Heap.
+     *
+     * @param array the array to be checked
+     * @return true if the array represents a valid Max Heap, false otherwise
+     */
     public boolean isMaxHeap(T[] array) {
         int index = array.length - 1;
 
@@ -131,17 +177,33 @@ public class MaxHeap<T extends Comparable<T>> implements MyHeap<T> {
         return true;
     }
 
+    /**
+     * Returns the maximum element (root) of the Max Heap.
+     *
+     * @return the maximum element of the Max Heap
+     * @throws IllegalStateException if the Max Heap is empty
+     */
     public T max() {
         if (isEmpty()) throw new IllegalStateException();
 
         return items[0];
     }
 
+    /**
+     * Returns the number of elements in the Max Heap.
+     *
+     * @return the number of elements in the Max Heap
+     */
     @Override
     public int size() {
         return size;
     }
 
+    /**
+     * Returns a string representation of the Max Heap.
+     *
+     * @return a string representation of the Max Heap
+     */
     @Override
     public String toString() {
         return Arrays.stream(items)
