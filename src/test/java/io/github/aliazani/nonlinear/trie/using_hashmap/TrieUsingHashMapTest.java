@@ -40,7 +40,6 @@ class TrieUsingHashMapTest {
         trie.insert(new Character[]{'a', 'p', 'p', 'l', 'e'});
         trie.insert(new Character[]{'a', 'c', 'i', 'd'});
 
-        System.out.println(trie);
         assertEquals("(value=null," +
                         " children={a=(value=a," +
                         " children={p=(value=p," +

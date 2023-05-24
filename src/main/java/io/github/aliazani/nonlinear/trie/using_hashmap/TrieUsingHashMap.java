@@ -114,6 +114,7 @@ public class TrieUsingHashMap<T extends Comparable<T>> implements MyTrie<T> {
     }
 
     private MyTrieNode<T> findLastNodeOf(T[] prefix) {
+        if (prefix == null) return null;
         MyTrieNode<T> current = root;
         for (T item : prefix) {
             MyTrieNode<T> child = current.getChild(item);
