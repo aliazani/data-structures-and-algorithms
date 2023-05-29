@@ -12,7 +12,7 @@ import java.text.MessageFormat;
  */
 @Getter
 @Setter
-public class AVLNode<T> {
+class AVLNode<T> {
     private final T value;
     private int height;
     private AVLNode<T> rightChild;

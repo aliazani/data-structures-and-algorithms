@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class TrieNodeUsingArray<T extends Comparable<T>> implements MyTrieNode<T> {
+class TrieNodeUsingArray<T extends Comparable<T>> implements MyTrieNode<T> {
     private final T value;
     private final TrieNodeUsingArray<T>[] children;
     private final int sizeOfChildren;

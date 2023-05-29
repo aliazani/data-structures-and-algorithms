@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class DoublyLinkedListNode<N> implements LinkedListNode<N> {
+class DoublyLinkedListNode<N> implements LinkedListNode<N> {
     private final N value;
     private DoublyLinkedListNode<N> next;
     private DoublyLinkedListNode<N> prev;

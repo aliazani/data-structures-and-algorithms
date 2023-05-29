@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class GraphNode<T extends Comparable<T>> {
+class GraphNode<T extends Comparable<T>> {
     private T value;
 
     @Override

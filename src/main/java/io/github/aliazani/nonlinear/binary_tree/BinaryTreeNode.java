@@ -12,7 +12,7 @@ import java.text.MessageFormat;
  */
 @Getter
 @Setter
-public class BinaryTreeNode<T> {
+class BinaryTreeNode<T> {
     private T value;
     private BinaryTreeNode<T> parent;
     private BinaryTreeNode<T> leftChild;

@@ -3,7 +3,7 @@ package io.github.aliazani.nonlinear.trie.using_arrays;
 import io.github.aliazani.nonlinear.trie.MyTrie;
 import io.github.aliazani.nonlinear.trie.MyTrieNode;
 
-public class TrieUsingArray<T extends Comparable<T>> implements MyTrie<T> {
+class TrieUsingArray<T extends Comparable<T>> implements MyTrie<T> {
     private final MyTrieNode<T> root;
 
     public TrieUsingArray(int sizeOfChildren) {
