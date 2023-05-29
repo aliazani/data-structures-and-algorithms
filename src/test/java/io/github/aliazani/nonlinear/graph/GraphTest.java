@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -375,6 +376,110 @@ class GraphTest {
     @Test
     void traverseBreadthFirst_traversingNonExistingVertex_throwIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> graph.traverseBreadthFirst(10));
+    }
+
+
+    @DisplayName("topologicalSort - " +
+            "When sorting a graph with no cycles - " +
+            "Should return the correct topological order")
+    @Test
+    void topologicalSort_graphWithNoCycles_returnCorrectTopologicalOrder() {
+        graph.addVertex(1);
+        graph.addVertex(2);
+        graph.addVertex(3);
+        graph.addVertex(4);
+        graph.addEdge(1, 2);
+        graph.addEdge(1, 3);
+        graph.addEdge(2, 4);
+        graph.addEdge(3, 4);
+
+        assertEquals(Arrays.asList(1, 3, 2, 4), graph.topologicalSort());
+    }
+
+    @DisplayName("topologicalSort - " +
+            "When sorting a graph with cycles - " +
+            "Should throw IllegalStateException")
+    @Test
+    void topologicalSort_graphWithCycles_throwIllegalStateException() {
+        graph.addVertex(1);
+        graph.addVertex(2);
+        graph.addVertex(3);
+        graph.addVertex(4);
+        graph.addEdge(1, 2);
+        graph.addEdge(2, 3);
+        graph.addEdge(3, 1);
+        graph.addEdge(4, 2);
+
+        assertThrows(IllegalStateException.class, () -> graph.topologicalSort());
+    }
+
+    @DisplayName("topologicalSort - " +
+            "When sorting a graph with a single vertex - " +
+            "Should return the single vertex as the result")
+    @Test
+    void topologicalSort_singleVertexGraph_returnSingleVertex() {
+        graph.addVertex(1);
+
+        assertEquals(List.of(1), graph.topologicalSort());
+    }
+
+    @DisplayName("topologicalSort - " +
+            "When sorting an empty graph - " +
+            "Should return an empty list")
+    @Test
+    void topologicalSort_emptyGraph_returnEmptyList() {
+        assertEquals(List.of(), graph.topologicalSort());
+    }
+
+    @DisplayName("hasCycle - " +
+            "When graph has a cycle - " +
+            "Should return true")
+    @Test
+    void hasCycle_graphWithCycle_returnTrue() {
+        graph.addVertex(1);
+        graph.addVertex(2);
+        graph.addVertex(3);
+        graph.addVertex(4);
+        graph.addEdge(1, 2);
+        graph.addEdge(2, 3);
+        graph.addEdge(3, 1);
+
+        assertTrue(graph.hasCycle());
+    }
+
+    @DisplayName("hasCycle - " +
+            "When graph has no cycle - " +
+            "Should return false")
+    @Test
+    void hasCycle_graphWithoutCycle_returnFalse() {
+        graph.addVertex(1);
+        graph.addVertex(2);
+        graph.addVertex(3);
+        graph.addVertex(4);
+        graph.addEdge(1, 2);
+        graph.addEdge(1, 3);
+        graph.addEdge(2, 4);
+        graph.addEdge(3, 4);
+
+        assertFalse(graph.hasCycle());
+    }
+
+    @DisplayName("hasCycle - " +
+            "When graph is empty - " +
+            "Should return false")
+    @Test
+    void hasCycle_emptyGraph_returnFalse() {
+        assertFalse(graph.hasCycle());
+    }
+
+    @DisplayName("hasCycle - " +
+            "When graph has a single vertex - " +
+            "Should return false")
+    @Test
+    void hasCycle_singleVertexGraph_returnFalse() {
+        graph.addVertex(1);
+
+        assertFalse(graph.hasCycle());
     }
 
     @DisplayName("toString - " +

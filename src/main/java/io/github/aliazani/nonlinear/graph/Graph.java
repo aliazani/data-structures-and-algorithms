@@ -74,15 +74,13 @@ public class Graph<T extends Comparable<T>> {
         return strBuilder.toString();
     }
 
-    private String traverseDepthFirst(GraphNode<T> node, Set<GraphNode<T>> visited, StringBuilder strBuilder) {
+    private void traverseDepthFirst(GraphNode<T> node, Set<GraphNode<T>> visited, StringBuilder strBuilder) {
         strBuilder.append(node.getValue()).append(", ");
         visited.add(node);
 
         adjacencyList.get(node).stream()
                 .filter(n -> !visited.contains(n))
                 .forEach(n -> traverseDepthFirst(n, visited, strBuilder));
-
-        return strBuilder.toString();
     }
 
     public String traverseDepthFirst2(T vertex) {
@@ -138,6 +136,49 @@ public class Graph<T extends Comparable<T>> {
         strBuilder.setLength(strBuilder.length() - 2);
 
         return strBuilder.toString();
+    }
+
+    public List<T> topologicalSort() {
+        if (hasCycle()) throw new IllegalStateException();
+        Deque<GraphNode<T>> stack = new ArrayDeque<>();
+        Set<GraphNode<T>> visited = new HashSet<>();
+        vertices.values()
+                .forEach(n -> topologicalSort(n, visited, stack));
+
+        return stack.stream().map(n -> stack.pop().getValue()).toList();
+    }
+
+    private void topologicalSort(GraphNode<T> node, Set<GraphNode<T>> visited,
+                                 Deque<GraphNode<T>> stack) {
+        if (visited.contains(node)) return;
+        visited.add(node);
+
+        adjacencyList.get(node)
+                .forEach(neighbour -> topologicalSort(neighbour, visited, stack));
+
+        stack.push(node);
+    }
+
+    public boolean hasCycle() {
+        Set<GraphNode<T>> all = new HashSet<>(vertices.values());
+        Set<GraphNode<T>> visiting = new HashSet<>();
+        Set<GraphNode<T>> visited = new HashSet<>();
+
+        return all.stream()
+                .anyMatch(node -> hasCycle(node, visiting, visited));
+    }
+
+    private boolean hasCycle(GraphNode<T> node, Set<GraphNode<T>> visiting, Set<GraphNode<T>> visited) {
+        visiting.add(node);
+
+        boolean hasCycle = adjacencyList.get(node).stream()
+                .anyMatch(neighbour -> visiting.contains(neighbour)
+                        || (!visited.contains(neighbour) && hasCycle(neighbour, visiting, visited)));
+
+        visiting.remove(node);
+        visited.add(node);
+
+        return hasCycle;
     }
 
     @Override
