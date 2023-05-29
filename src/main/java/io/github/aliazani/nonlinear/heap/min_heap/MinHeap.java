@@ -49,8 +49,8 @@ public class MinHeap<T extends Comparable<T>, E extends Comparable<E>> {
         int index = size - 1;
 
         while (index > 0
-                && items[index].getKey()
-                .compareTo(items[getParentIndex(index)].getKey()) < 0) {
+                && items[index].key()
+                .compareTo(items[getParentIndex(index)].key()) < 0) {
             swap(index, getParentIndex(index));
             index = getParentIndex(index);
         }
@@ -108,10 +108,10 @@ public class MinHeap<T extends Comparable<T>, E extends Comparable<E>> {
     private boolean isValidParent(int index) {
         if (!hasLeftChild(index)) return true;
 
-        boolean isValid = items[index].getKey()
-                .compareTo(items[getLeftChildIndex(index)].getKey()) <= 0;
-        if (hasRightChild(index)) isValid &= items[index].getKey()
-                .compareTo(items[getRightChildIndex(index)].getKey()) <= 0;
+        boolean isValid = items[index].key()
+                .compareTo(items[getLeftChildIndex(index)].key()) <= 0;
+        if (hasRightChild(index)) isValid &= items[index].key()
+                .compareTo(items[getRightChildIndex(index)].key()) <= 0;
 
         return isValid;
     }
@@ -119,8 +119,8 @@ public class MinHeap<T extends Comparable<T>, E extends Comparable<E>> {
     private int getSmallerChild(int index) {
         if (!hasRightChild(index)) return getLeftChildIndex(index);
         else
-            return (items[getLeftChildIndex(index)].getKey()
-                    .compareTo(items[getRightChildIndex(index)].getKey()) < 0)
+            return (items[getLeftChildIndex(index)].key()
+                    .compareTo(items[getRightChildIndex(index)].key()) < 0)
                     ? getLeftChildIndex(index)
                     : getRightChildIndex(index);
     }

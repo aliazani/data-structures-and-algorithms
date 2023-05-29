@@ -14,11 +14,11 @@ public class MinPriorityQueue<T extends Comparable<T>, E extends Comparable<E>> 
     }
 
     public E dequeue() {
-        return minHeap.remove().getValue();
+        return minHeap.remove().value();
     }
 
     public E peek() {
-        return minHeap.get(0).getValue();
+        return minHeap.get(0).value();
     }
 
     public boolean isEmpty() {
