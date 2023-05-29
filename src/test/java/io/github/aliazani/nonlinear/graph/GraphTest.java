@@ -486,7 +486,7 @@ class GraphTest {
             "When the graph is empty - " +
             "Should return an empty string")
     @Test
-    void toString_emptyGraph_returnsEmptyString() {
+    void toString_emptyGraph_returnEmptyString() {
         assertEquals("", graph.toString());
     }
 
@@ -494,7 +494,7 @@ class GraphTest {
             "When the graph has one vertex without neighbors - " +
             "Should return the correct string representation")
     @Test
-    void toString_graphWithOneVertexWithoutNeighbors_returnsCorrectStringRepresentation() {
+    void toString_graphWithOneVertexWithoutNeighbors_returnCorrectStringRepresentation() {
         graph.addVertex(10);
 
         assertEquals("10: []", graph.toString());
@@ -504,7 +504,7 @@ class GraphTest {
             "When the graph has multiple vertices without neighbors - " +
             "Should return the correct string representation")
     @Test
-    void toString_graphWithMultipleVerticesWithoutNeighbors_returnsCorrectStringRepresentation() {
+    void toString_graphWithMultipleVerticesWithoutNeighbors_returnCorrectStringRepresentation() {
         graph.addVertex(10);
         graph.addVertex(20);
         graph.addVertex(30);
@@ -519,7 +519,7 @@ class GraphTest {
             "When the graph has vertices with neighbors - " +
             "Should return the correct string representation")
     @Test
-    void toString_graphWithVerticesAndNeighbors_returnsCorrectStringRepresentation() {
+    void toString_graphWithVerticesAndNeighbors_returnCorrectStringRepresentation() {
         graph.addVertex(10);
         graph.addVertex(20);
         graph.addVertex(30);
