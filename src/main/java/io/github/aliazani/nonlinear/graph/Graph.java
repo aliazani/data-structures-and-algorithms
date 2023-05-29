@@ -63,6 +63,83 @@ public class Graph<T extends Comparable<T>> {
         return adjacencyList.get(fromNode).contains(toNode);
     }
 
+    public String traverseDepthFirst(T vertex) {
+        GraphNode<T> node = vertices.get(vertex);
+        if (node == null) throw new IllegalArgumentException();
+
+        StringBuilder strBuilder = new StringBuilder();
+        traverseDepthFirst(node, new HashSet<>(), strBuilder);
+        strBuilder.setLength(strBuilder.length() - 2);
+
+        return strBuilder.toString();
+    }
+
+    private String traverseDepthFirst(GraphNode<T> node, Set<GraphNode<T>> visited, StringBuilder strBuilder) {
+        strBuilder.append(node.getValue()).append(", ");
+        visited.add(node);
+
+        adjacencyList.get(node).stream()
+                .filter(n -> !visited.contains(n))
+                .forEach(n -> traverseDepthFirst(n, visited, strBuilder));
+
+        return strBuilder.toString();
+    }
+
+    public String traverseDepthFirst2(T vertex) {
+        GraphNode<T> node = vertices.get(vertex);
+        if (node == null) throw new IllegalArgumentException();
+
+        Set<GraphNode<T>> visited = new HashSet<>();
+        StringBuilder strBuilder = new StringBuilder();
+        Deque<GraphNode<T>> stack = new ArrayDeque<>();
+        stack.push(node);
+
+        while (!stack.isEmpty()) {
+            GraphNode<T> current = stack.pop();
+            if (visited.contains(current)) continue;
+
+            visited.add(current);
+            strBuilder.append(current.getValue()).append(", ");
+
+            List<GraphNode<T>> unvisitedNeighbors = adjacencyList.get(current).stream()
+                    .filter(n -> !visited.contains(n))
+                    .toList();
+
+            stack.addAll(unvisitedNeighbors);
+        }
+        strBuilder.setLength(strBuilder.length() - 2);
+
+        return strBuilder.toString();
+    }
+
+    public String traverseBreadthFirst(T vertex) {
+        GraphNode<T> node = vertices.get(vertex);
+        if (node == null) throw new IllegalArgumentException();
+
+        StringBuilder strBuilder = new StringBuilder();
+        Set<GraphNode<T>> visited = new HashSet<>();
+        Queue<GraphNode<T>> queue = new ArrayDeque<>();
+        queue.offer(node);
+
+
+        while (!queue.isEmpty()) {
+            GraphNode<T> current = queue.poll();
+            if (visited.contains(current)) continue;
+
+            visited.add(current);
+            strBuilder.append(current.getValue()).append(", ");
+
+            List<GraphNode<T>> unvisitedNeighbors = adjacencyList.get(current).stream()
+                    .filter(n -> !visited.contains(n))
+                    .toList();
+
+            queue.addAll(unvisitedNeighbors);
+        }
+        strBuilder.setLength(strBuilder.length() - 2);
+
+        return strBuilder.toString();
+    }
+
     @Override
     public String toString() {
         return adjacencyList.entrySet().stream()

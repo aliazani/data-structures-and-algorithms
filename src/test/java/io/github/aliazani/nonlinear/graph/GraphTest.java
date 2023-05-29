@@ -181,6 +181,202 @@ class GraphTest {
         assertFalse(graph.queryEdge(10, 20));
     }
 
+    @DisplayName("traverseDepthFirst - " +
+            "When traversing a graph with a single vertex - " +
+            "Should return the correct traversal order")
+    @Test
+    void traverseDepthFirst_singleVertexGraph_returnCorrectTraversalOrder() {
+        graph.addVertex(10);
+
+        assertEquals("10", graph.traverseDepthFirst(10));
+    }
+
+    @DisplayName("traverseDepthFirst - " +
+            "When traversing a linear graph - " +
+            "Should return the correct traversal order")
+    @Test
+    void traverseDepthFirst_linearGraph_returnCorrectTraversalOrder() {
+        graph.addVertex(10);
+        graph.addVertex(20);
+        graph.addVertex(30);
+        graph.addEdge(10, 20);
+        graph.addEdge(20, 30);
+
+        assertEquals("10, 20, 30", graph.traverseDepthFirst(10));
+    }
+
+    @DisplayName("traverseDepthFirst - " +
+            "When traversing a graph with a cycle - " +
+            "Should return the correct traversal order")
+    @Test
+    void traverseDepthFirst_graphWithCycle_returnCorrectTraversalOrder() {
+        graph.addVertex(10);
+        graph.addVertex(20);
+        graph.addVertex(30);
+        graph.addEdge(10, 20);
+        graph.addEdge(20, 30);
+        graph.addEdge(30, 10);
+
+        assertEquals("10, 20, 30", graph.traverseDepthFirst(10));
+    }
+
+    @DisplayName("traverseDepthFirst - " +
+            "When traversing a disconnected graph - " +
+            "Should return the correct traversal order")
+    @Test
+    void traverseDepthFirst_disconnectedGraph_returnCorrectTraversalOrder() {
+        graph.addVertex(10);
+        graph.addVertex(20);
+        graph.addVertex(30);
+        graph.addVertex(40);
+
+        assertEquals("10", graph.traverseDepthFirst(10));
+        assertEquals("20", graph.traverseDepthFirst(20));
+        assertEquals("30", graph.traverseDepthFirst(30));
+        assertEquals("40", graph.traverseDepthFirst(40));
+    }
+
+    @DisplayName("traverseDepthFirst - " +
+            "When traversing a non-existing vertex - " +
+            "Should throw IllegalArgumentException")
+    @Test
+    void traverseDepthFirst_traversingNonExistingVertex_throwIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> graph.traverseDepthFirst(10));
+    }
+
+
+    @DisplayName("traverseDepthFirst2 - " +
+            "When traversing a graph with a single vertex - " +
+            "Should return the correct traversal order")
+    @Test
+    void traverseDepthFirst2_singleVertexGraph_returnCorrectTraversalOrder() {
+        graph.addVertex(10);
+
+        assertEquals("10", graph.traverseDepthFirst2(10));
+    }
+
+    @DisplayName("traverseDepthFirst2 - " +
+            "When traversing a linear graph - " +
+            "Should return the correct traversal order")
+    @Test
+    void traverseDepthFirst2_linearGraph_returnCorrectTraversalOrder() {
+        graph.addVertex(10);
+        graph.addVertex(20);
+        graph.addVertex(30);
+        graph.addEdge(10, 20);
+        graph.addEdge(20, 30);
+
+        assertEquals("10, 20, 30", graph.traverseDepthFirst2(10));
+    }
+
+    @DisplayName("traverseDepthFirst2 - " +
+            "When traversing a graph with a cycle - " +
+            "Should return the correct traversal order")
+    @Test
+    void traverseDepthFirst2_graphWithCycle_returnCorrectTraversalOrder() {
+        graph.addVertex(10);
+        graph.addVertex(20);
+        graph.addVertex(30);
+        graph.addEdge(10, 20);
+        graph.addEdge(20, 30);
+        graph.addEdge(30, 10);
+
+        assertEquals("10, 20, 30", graph.traverseDepthFirst2(10));
+    }
+
+    @DisplayName("traverseDepthFirst2 - " +
+            "When traversing a disconnected graph - " +
+            "Should return the correct traversal order")
+    @Test
+    void traverseDepthFirst2_disconnectedGraph_returnCorrectTraversalOrder() {
+        graph.addVertex(10);
+        graph.addVertex(20);
+        graph.addVertex(30);
+        graph.addVertex(40);
+
+        assertEquals("10", graph.traverseDepthFirst2(10));
+        assertEquals("20", graph.traverseDepthFirst2(20));
+        assertEquals("30", graph.traverseDepthFirst2(30));
+        assertEquals("40", graph.traverseDepthFirst2(40));
+    }
+
+    @DisplayName("traverseDepthFirst2 - " +
+            "When traversing a non-existing vertex - " +
+            "Should throw IllegalArgumentException")
+    @Test
+    void traverseDepthFirst2_traversingNonExistingVertex_throwIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> graph.traverseDepthFirst2(10));
+    }
+
+    @DisplayName("traverseBreadthFirst - " +
+            "When traversing a graph with a single vertex - " +
+            "Should return the correct traversal order")
+    @Test
+    void traverseBreadthFirst_singleVertexGraph_returnCorrectTraversalOrder() {
+        graph.addVertex(10);
+
+        assertEquals("10", graph.traverseBreadthFirst(10));
+    }
+
+    @DisplayName("traverseBreadthFirst - " +
+            "When traversing a linear graph - " +
+            "Should return the correct traversal order")
+    @Test
+    void traverseBreadthFirst_linearGraph_returnCorrectTraversalOrder() {
+        graph.addVertex(10);
+        graph.addVertex(20);
+        graph.addVertex(30);
+        graph.addEdge(10, 20);
+        graph.addEdge(20, 30);
+
+        assertEquals("10, 20, 30", graph.traverseBreadthFirst(10));
+    }
+
+    @DisplayName("traverseBreadthFirst - " +
+            "When traversing a graph with a cycle - " +
+            "Should return the correct traversal order")
+    @Test
+    void traverseBreadthFirst_graphWithCycle_returnCorrectTraversalOrder() {
+        graph.addVertex(10);
+        graph.addVertex(20);
+        graph.addVertex(30);
+        graph.addVertex(40);
+        graph.addVertex(50);
+        graph.addVertex(60);
+        graph.addEdge(10, 20);
+        graph.addEdge(10, 30);
+        graph.addEdge(20, 60);
+        graph.addEdge(30, 40);
+        graph.addEdge(40, 50);
+        graph.addEdge(50, 10);
+
+        assertEquals("10, 20, 30, 60, 40, 50", graph.traverseBreadthFirst(10));
+    }
+
+    @DisplayName("traverseBreadthFirst - " +
+            "When traversing a disconnected graph - " +
+            "Should return the correct traversal order")
+    @Test
+    void traverseBreadthFirst_disconnectedGraph_returnCorrectTraversalOrder() {
+        graph.addVertex(10);
+        graph.addVertex(20);
+        graph.addVertex(30);
+        graph.addVertex(40);
+
+        assertEquals("10", graph.traverseBreadthFirst(10));
+        assertEquals("20", graph.traverseBreadthFirst(20));
+        assertEquals("30", graph.traverseBreadthFirst(30));
+        assertEquals("40", graph.traverseBreadthFirst(40));
+    }
+
+    @DisplayName("traverseBreadthFirst - " +
+            "When traversing a non-existing vertex - " +
+            "Should throw IllegalArgumentException")
+    @Test
+    void traverseBreadthFirst_traversingNonExistingVertex_throwIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> graph.traverseBreadthFirst(10));
+    }
+
     @DisplayName("toString - " +
             "When the graph is empty - " +
             "Should return an empty string")
