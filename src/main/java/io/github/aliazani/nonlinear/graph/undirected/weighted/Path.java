@@ -14,6 +14,7 @@ public class Path<T extends Comparable<T>> {
     }
 
     public void addNode(T node) {
+        if (node == null)  throw new IllegalArgumentException();
         nodes.add(node);
     }
 
