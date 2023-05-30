@@ -1,11 +1,11 @@
-package io.github.aliazani.nonlinear.graph;
+package io.github.aliazani.nonlinear.graph.directed;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-class GraphNode<T extends Comparable<T>> {
+class DirectedGraphNode<T extends Comparable<T>> {
     private T value;
 
     @Override

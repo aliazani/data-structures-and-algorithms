@@ -1,4 +1,4 @@
-package io.github.aliazani.nonlinear.graph;
+package io.github.aliazani.nonlinear.graph.directed;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,12 +10,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Graph")
-class GraphTest {
-    private Graph<Integer> graph;
+class DirectedGraphTest {
+    private DirectedGraph<Integer> directedGraph;
 
     @BeforeEach
     void setUp() {
-        graph = new Graph<>();
+        directedGraph = new DirectedGraph<>();
     }
 
     @DisplayName("addVertex - " +
@@ -23,9 +23,9 @@ class GraphTest {
             "Should add the vertex to the graph")
     @Test
     void addVertex_adjacencyListIsEmpty_addVertexToGraph() {
-        graph.addVertex(10);
+        directedGraph.addVertex(10);
 
-        assertEquals("10: []", graph.toString());
+        assertEquals("10: []", directedGraph.toString());
     }
 
     @DisplayName("addVertex - " +
@@ -33,12 +33,12 @@ class GraphTest {
             "Should add the vertex to the graph")
     @Test
     void addVertex_adjacencyListIsNotEmpty_addVertexToGraph() {
-        graph.addVertex(10);
-        graph.addVertex(20);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
 
         assertEquals("""
                 10: []
-                20: []""", graph.toString());
+                20: []""", directedGraph.toString());
     }
 
     @DisplayName("addVertex - " +
@@ -46,7 +46,7 @@ class GraphTest {
             "Should throw IllegalArgumentException")
     @Test
     void addVertex_addingNullVertex_throwIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> graph.addVertex(null));
+        assertThrows(IllegalArgumentException.class, () -> directedGraph.addVertex(null));
     }
 
     @DisplayName("removeVertex - " +
@@ -54,10 +54,10 @@ class GraphTest {
             "Should remove the vertex from the graph")
     @Test
     void removeVertex_removingFromAdjacencyListWithOneVertex_removeVertexFromGraph() {
-        graph.addVertex(10);
+        directedGraph.addVertex(10);
 
-        assertEquals(10, graph.removeVertex(10));
-        assertEquals("", graph.toString());
+        assertEquals(10, directedGraph.removeVertex(10));
+        assertEquals("", directedGraph.toString());
     }
 
     @DisplayName("removeVertex - " +
@@ -65,16 +65,16 @@ class GraphTest {
             "Should remove the vertex from the graph")
     @Test
     void removeVertex_removingFromAdjacencyListWithMoreThanOneVertex_removeVertexFromGraph() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
-        graph.addEdge(20, 10);
-        graph.addEdge(30, 10);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
+        directedGraph.addEdge(20, 10);
+        directedGraph.addEdge(30, 10);
 
-        assertEquals(10, graph.removeVertex(10));
+        assertEquals(10, directedGraph.removeVertex(10));
         assertEquals("""
                 20: []
-                30: []""", graph.toString());
+                30: []""", directedGraph.toString());
     }
 
     @DisplayName("removeVertex - " +
@@ -82,7 +82,7 @@ class GraphTest {
             "Should throw IllegalArgumentException")
     @Test
     void removeVertex_removingNonExistingVertex_throwIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> graph.removeVertex(10));
+        assertThrows(IllegalArgumentException.class, () -> directedGraph.removeVertex(10));
     }
 
     @DisplayName("addEdge - " +
@@ -90,13 +90,13 @@ class GraphTest {
             "Should add the edge to the graph")
     @Test
     void addEdge_isCalled_addEdgeToGraph() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addEdge(10, 20);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addEdge(10, 20);
 
         assertEquals("""
                 10: [20]
-                20: []""", graph.toString());
+                20: []""", directedGraph.toString());
     }
 
     @DisplayName("addEdge - " +
@@ -104,10 +104,10 @@ class GraphTest {
             "Should throw IllegalArgumentException")
     @Test
     void addEdge_addingEdgeWithNonExistingVertex_throwIllegalArgumentException() {
-        graph.addVertex(10);
+        directedGraph.addVertex(10);
 
-        assertThrows(IllegalArgumentException.class, () -> graph.addEdge(10, 20));
-        assertThrows(IllegalArgumentException.class, () -> graph.addEdge(20, 10));
+        assertThrows(IllegalArgumentException.class, () -> directedGraph.addEdge(10, 20));
+        assertThrows(IllegalArgumentException.class, () -> directedGraph.addEdge(20, 10));
     }
 
     @DisplayName("removeEdge - " +
@@ -115,15 +115,15 @@ class GraphTest {
             "Should remove the edge from the graph")
     @Test
     void removeEdge_isCalled_removeExistingEdgeFromGraph() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addEdge(10, 20);
-        graph.addEdge(20, 10);
-        graph.removeEdge(10, 20);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addEdge(10, 20);
+        directedGraph.addEdge(20, 10);
+        directedGraph.removeEdge(10, 20);
 
         assertEquals("""
                 10: []
-                20: [10]""", graph.toString());
+                20: [10]""", directedGraph.toString());
     }
 
     @DisplayName("removeEdge - " +
@@ -131,10 +131,10 @@ class GraphTest {
             "Should not modify the graph")
     @Test
     void removeEdge_removingNonExistingEdge_doNotModifyGraph() {
-        graph.addVertex(10);
-        graph.addVertex(20);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
 
-        assertDoesNotThrow(() -> graph.removeEdge(10, 20));
+        assertDoesNotThrow(() -> directedGraph.removeEdge(10, 20));
     }
 
     @DisplayName("findNeighbors - " +
@@ -142,13 +142,13 @@ class GraphTest {
             "Should return the correct list of neighbors")
     @Test
     void findNeighbors_vertexIsValid_returnCorrectListOfNeighbors() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
-        graph.addEdge(10, 20);
-        graph.addEdge(10, 30);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
+        directedGraph.addEdge(10, 20);
+        directedGraph.addEdge(10, 30);
 
-        assertEquals(List.of(20, 30), graph.findNeighbors(10));
+        assertEquals(List.of(20, 30), directedGraph.findNeighbors(10));
     }
 
     @DisplayName("findNeighbors - " +
@@ -156,7 +156,7 @@ class GraphTest {
             "Should throw IllegalArgumentException")
     @Test
     void findNeighbors_findingNeighborsOfNonExistingVertex_throwIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> graph.findNeighbors(10));
+        assertThrows(IllegalArgumentException.class, () -> directedGraph.findNeighbors(10));
     }
 
     @DisplayName("queryEdge - " +
@@ -164,11 +164,11 @@ class GraphTest {
             "Should return true")
     @Test
     void queryEdge_queriesExistingEdge_returnTrue() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addEdge(10, 20);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addEdge(10, 20);
 
-        assertTrue(graph.queryEdge(10, 20));
+        assertTrue(directedGraph.queryEdge(10, 20));
     }
 
     @DisplayName("queryEdge - " +
@@ -176,10 +176,10 @@ class GraphTest {
             "Should return false")
     @Test
     void queryEdge_queriesNonExistingEdge_returnFalse() {
-        graph.addVertex(10);
-        graph.addVertex(20);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
 
-        assertFalse(graph.queryEdge(10, 20));
+        assertFalse(directedGraph.queryEdge(10, 20));
     }
 
     @DisplayName("traverseDepthFirst - " +
@@ -187,9 +187,9 @@ class GraphTest {
             "Should return the correct traversal order")
     @Test
     void traverseDepthFirst_singleVertexGraph_returnCorrectTraversalOrder() {
-        graph.addVertex(10);
+        directedGraph.addVertex(10);
 
-        assertEquals("10", graph.traverseDepthFirst(10));
+        assertEquals("10", directedGraph.traverseDepthFirst(10));
     }
 
     @DisplayName("traverseDepthFirst - " +
@@ -197,13 +197,13 @@ class GraphTest {
             "Should return the correct traversal order")
     @Test
     void traverseDepthFirst_linearGraph_returnCorrectTraversalOrder() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
-        graph.addEdge(10, 20);
-        graph.addEdge(20, 30);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
+        directedGraph.addEdge(10, 20);
+        directedGraph.addEdge(20, 30);
 
-        assertEquals("10, 20, 30", graph.traverseDepthFirst(10));
+        assertEquals("10, 20, 30", directedGraph.traverseDepthFirst(10));
     }
 
     @DisplayName("traverseDepthFirst - " +
@@ -211,14 +211,14 @@ class GraphTest {
             "Should return the correct traversal order")
     @Test
     void traverseDepthFirst_graphWithCycle_returnCorrectTraversalOrder() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
-        graph.addEdge(10, 20);
-        graph.addEdge(20, 30);
-        graph.addEdge(30, 10);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
+        directedGraph.addEdge(10, 20);
+        directedGraph.addEdge(20, 30);
+        directedGraph.addEdge(30, 10);
 
-        assertEquals("10, 20, 30", graph.traverseDepthFirst(10));
+        assertEquals("10, 20, 30", directedGraph.traverseDepthFirst(10));
     }
 
     @DisplayName("traverseDepthFirst - " +
@@ -226,15 +226,15 @@ class GraphTest {
             "Should return the correct traversal order")
     @Test
     void traverseDepthFirst_disconnectedGraph_returnCorrectTraversalOrder() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
-        graph.addVertex(40);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
+        directedGraph.addVertex(40);
 
-        assertEquals("10", graph.traverseDepthFirst(10));
-        assertEquals("20", graph.traverseDepthFirst(20));
-        assertEquals("30", graph.traverseDepthFirst(30));
-        assertEquals("40", graph.traverseDepthFirst(40));
+        assertEquals("10", directedGraph.traverseDepthFirst(10));
+        assertEquals("20", directedGraph.traverseDepthFirst(20));
+        assertEquals("30", directedGraph.traverseDepthFirst(30));
+        assertEquals("40", directedGraph.traverseDepthFirst(40));
     }
 
     @DisplayName("traverseDepthFirst - " +
@@ -242,7 +242,7 @@ class GraphTest {
             "Should throw IllegalArgumentException")
     @Test
     void traverseDepthFirst_traversingNonExistingVertex_throwIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> graph.traverseDepthFirst(10));
+        assertThrows(IllegalArgumentException.class, () -> directedGraph.traverseDepthFirst(10));
     }
 
 
@@ -251,9 +251,9 @@ class GraphTest {
             "Should return the correct traversal order")
     @Test
     void traverseDepthFirst2_singleVertexGraph_returnCorrectTraversalOrder() {
-        graph.addVertex(10);
+        directedGraph.addVertex(10);
 
-        assertEquals("10", graph.traverseDepthFirst2(10));
+        assertEquals("10", directedGraph.traverseDepthFirst2(10));
     }
 
     @DisplayName("traverseDepthFirst2 - " +
@@ -261,13 +261,13 @@ class GraphTest {
             "Should return the correct traversal order")
     @Test
     void traverseDepthFirst2_linearGraph_returnCorrectTraversalOrder() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
-        graph.addEdge(10, 20);
-        graph.addEdge(20, 30);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
+        directedGraph.addEdge(10, 20);
+        directedGraph.addEdge(20, 30);
 
-        assertEquals("10, 20, 30", graph.traverseDepthFirst2(10));
+        assertEquals("10, 20, 30", directedGraph.traverseDepthFirst2(10));
     }
 
     @DisplayName("traverseDepthFirst2 - " +
@@ -275,14 +275,14 @@ class GraphTest {
             "Should return the correct traversal order")
     @Test
     void traverseDepthFirst2_graphWithCycle_returnCorrectTraversalOrder() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
-        graph.addEdge(10, 20);
-        graph.addEdge(20, 30);
-        graph.addEdge(30, 10);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
+        directedGraph.addEdge(10, 20);
+        directedGraph.addEdge(20, 30);
+        directedGraph.addEdge(30, 10);
 
-        assertEquals("10, 20, 30", graph.traverseDepthFirst2(10));
+        assertEquals("10, 20, 30", directedGraph.traverseDepthFirst2(10));
     }
 
     @DisplayName("traverseDepthFirst2 - " +
@@ -290,15 +290,15 @@ class GraphTest {
             "Should return the correct traversal order")
     @Test
     void traverseDepthFirst2_disconnectedGraph_returnCorrectTraversalOrder() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
-        graph.addVertex(40);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
+        directedGraph.addVertex(40);
 
-        assertEquals("10", graph.traverseDepthFirst2(10));
-        assertEquals("20", graph.traverseDepthFirst2(20));
-        assertEquals("30", graph.traverseDepthFirst2(30));
-        assertEquals("40", graph.traverseDepthFirst2(40));
+        assertEquals("10", directedGraph.traverseDepthFirst2(10));
+        assertEquals("20", directedGraph.traverseDepthFirst2(20));
+        assertEquals("30", directedGraph.traverseDepthFirst2(30));
+        assertEquals("40", directedGraph.traverseDepthFirst2(40));
     }
 
     @DisplayName("traverseDepthFirst2 - " +
@@ -306,7 +306,7 @@ class GraphTest {
             "Should throw IllegalArgumentException")
     @Test
     void traverseDepthFirst2_traversingNonExistingVertex_throwIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> graph.traverseDepthFirst2(10));
+        assertThrows(IllegalArgumentException.class, () -> directedGraph.traverseDepthFirst2(10));
     }
 
     @DisplayName("traverseBreadthFirst - " +
@@ -314,9 +314,9 @@ class GraphTest {
             "Should return the correct traversal order")
     @Test
     void traverseBreadthFirst_singleVertexGraph_returnCorrectTraversalOrder() {
-        graph.addVertex(10);
+        directedGraph.addVertex(10);
 
-        assertEquals("10", graph.traverseBreadthFirst(10));
+        assertEquals("10", directedGraph.traverseBreadthFirst(10));
     }
 
     @DisplayName("traverseBreadthFirst - " +
@@ -324,13 +324,13 @@ class GraphTest {
             "Should return the correct traversal order")
     @Test
     void traverseBreadthFirst_linearGraph_returnCorrectTraversalOrder() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
-        graph.addEdge(10, 20);
-        graph.addEdge(20, 30);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
+        directedGraph.addEdge(10, 20);
+        directedGraph.addEdge(20, 30);
 
-        assertEquals("10, 20, 30", graph.traverseBreadthFirst(10));
+        assertEquals("10, 20, 30", directedGraph.traverseBreadthFirst(10));
     }
 
     @DisplayName("traverseBreadthFirst - " +
@@ -338,20 +338,20 @@ class GraphTest {
             "Should return the correct traversal order")
     @Test
     void traverseBreadthFirst_graphWithCycle_returnCorrectTraversalOrder() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
-        graph.addVertex(40);
-        graph.addVertex(50);
-        graph.addVertex(60);
-        graph.addEdge(10, 20);
-        graph.addEdge(10, 30);
-        graph.addEdge(20, 60);
-        graph.addEdge(30, 40);
-        graph.addEdge(40, 50);
-        graph.addEdge(50, 10);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
+        directedGraph.addVertex(40);
+        directedGraph.addVertex(50);
+        directedGraph.addVertex(60);
+        directedGraph.addEdge(10, 20);
+        directedGraph.addEdge(10, 30);
+        directedGraph.addEdge(20, 60);
+        directedGraph.addEdge(30, 40);
+        directedGraph.addEdge(40, 50);
+        directedGraph.addEdge(50, 10);
 
-        assertEquals("10, 20, 30, 60, 40, 50", graph.traverseBreadthFirst(10));
+        assertEquals("10, 20, 30, 60, 40, 50", directedGraph.traverseBreadthFirst(10));
     }
 
     @DisplayName("traverseBreadthFirst - " +
@@ -359,15 +359,15 @@ class GraphTest {
             "Should return the correct traversal order")
     @Test
     void traverseBreadthFirst_disconnectedGraph_returnCorrectTraversalOrder() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
-        graph.addVertex(40);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
+        directedGraph.addVertex(40);
 
-        assertEquals("10", graph.traverseBreadthFirst(10));
-        assertEquals("20", graph.traverseBreadthFirst(20));
-        assertEquals("30", graph.traverseBreadthFirst(30));
-        assertEquals("40", graph.traverseBreadthFirst(40));
+        assertEquals("10", directedGraph.traverseBreadthFirst(10));
+        assertEquals("20", directedGraph.traverseBreadthFirst(20));
+        assertEquals("30", directedGraph.traverseBreadthFirst(30));
+        assertEquals("40", directedGraph.traverseBreadthFirst(40));
     }
 
     @DisplayName("traverseBreadthFirst - " +
@@ -375,7 +375,7 @@ class GraphTest {
             "Should throw IllegalArgumentException")
     @Test
     void traverseBreadthFirst_traversingNonExistingVertex_throwIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> graph.traverseBreadthFirst(10));
+        assertThrows(IllegalArgumentException.class, () -> directedGraph.traverseBreadthFirst(10));
     }
 
 
@@ -384,16 +384,16 @@ class GraphTest {
             "Should return the correct topological order")
     @Test
     void topologicalSort_graphWithNoCycles_returnCorrectTopologicalOrder() {
-        graph.addVertex(1);
-        graph.addVertex(2);
-        graph.addVertex(3);
-        graph.addVertex(4);
-        graph.addEdge(1, 2);
-        graph.addEdge(1, 3);
-        graph.addEdge(2, 4);
-        graph.addEdge(3, 4);
+        directedGraph.addVertex(1);
+        directedGraph.addVertex(2);
+        directedGraph.addVertex(3);
+        directedGraph.addVertex(4);
+        directedGraph.addEdge(1, 2);
+        directedGraph.addEdge(1, 3);
+        directedGraph.addEdge(2, 4);
+        directedGraph.addEdge(3, 4);
 
-        assertEquals(Arrays.asList(1, 3, 2, 4), graph.topologicalSort());
+        assertEquals(Arrays.asList(1, 3, 2, 4), directedGraph.topologicalSort());
     }
 
     @DisplayName("topologicalSort - " +
@@ -401,16 +401,16 @@ class GraphTest {
             "Should throw IllegalStateException")
     @Test
     void topologicalSort_graphWithCycles_throwIllegalStateException() {
-        graph.addVertex(1);
-        graph.addVertex(2);
-        graph.addVertex(3);
-        graph.addVertex(4);
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 3);
-        graph.addEdge(3, 1);
-        graph.addEdge(4, 2);
+        directedGraph.addVertex(1);
+        directedGraph.addVertex(2);
+        directedGraph.addVertex(3);
+        directedGraph.addVertex(4);
+        directedGraph.addEdge(1, 2);
+        directedGraph.addEdge(2, 3);
+        directedGraph.addEdge(3, 1);
+        directedGraph.addEdge(4, 2);
 
-        assertThrows(IllegalStateException.class, () -> graph.topologicalSort());
+        assertThrows(IllegalStateException.class, () -> directedGraph.topologicalSort());
     }
 
     @DisplayName("topologicalSort - " +
@@ -418,9 +418,9 @@ class GraphTest {
             "Should return the single vertex as the result")
     @Test
     void topologicalSort_singleVertexGraph_returnSingleVertex() {
-        graph.addVertex(1);
+        directedGraph.addVertex(1);
 
-        assertEquals(List.of(1), graph.topologicalSort());
+        assertEquals(List.of(1), directedGraph.topologicalSort());
     }
 
     @DisplayName("topologicalSort - " +
@@ -428,7 +428,7 @@ class GraphTest {
             "Should return an empty list")
     @Test
     void topologicalSort_emptyGraph_returnEmptyList() {
-        assertEquals(List.of(), graph.topologicalSort());
+        assertEquals(List.of(), directedGraph.topologicalSort());
     }
 
     @DisplayName("hasCycle - " +
@@ -436,15 +436,15 @@ class GraphTest {
             "Should return true")
     @Test
     void hasCycle_graphWithCycle_returnTrue() {
-        graph.addVertex(1);
-        graph.addVertex(2);
-        graph.addVertex(3);
-        graph.addVertex(4);
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 3);
-        graph.addEdge(3, 1);
+        directedGraph.addVertex(1);
+        directedGraph.addVertex(2);
+        directedGraph.addVertex(3);
+        directedGraph.addVertex(4);
+        directedGraph.addEdge(1, 2);
+        directedGraph.addEdge(2, 3);
+        directedGraph.addEdge(3, 1);
 
-        assertTrue(graph.hasCycle());
+        assertTrue(directedGraph.hasCycle());
     }
 
     @DisplayName("hasCycle - " +
@@ -452,16 +452,16 @@ class GraphTest {
             "Should return false")
     @Test
     void hasCycle_graphWithoutCycle_returnFalse() {
-        graph.addVertex(1);
-        graph.addVertex(2);
-        graph.addVertex(3);
-        graph.addVertex(4);
-        graph.addEdge(1, 2);
-        graph.addEdge(1, 3);
-        graph.addEdge(2, 4);
-        graph.addEdge(3, 4);
+        directedGraph.addVertex(1);
+        directedGraph.addVertex(2);
+        directedGraph.addVertex(3);
+        directedGraph.addVertex(4);
+        directedGraph.addEdge(1, 2);
+        directedGraph.addEdge(1, 3);
+        directedGraph.addEdge(2, 4);
+        directedGraph.addEdge(3, 4);
 
-        assertFalse(graph.hasCycle());
+        assertFalse(directedGraph.hasCycle());
     }
 
     @DisplayName("hasCycle - " +
@@ -469,7 +469,7 @@ class GraphTest {
             "Should return false")
     @Test
     void hasCycle_emptyGraph_returnFalse() {
-        assertFalse(graph.hasCycle());
+        assertFalse(directedGraph.hasCycle());
     }
 
     @DisplayName("hasCycle - " +
@@ -477,9 +477,9 @@ class GraphTest {
             "Should return false")
     @Test
     void hasCycle_singleVertexGraph_returnFalse() {
-        graph.addVertex(1);
+        directedGraph.addVertex(1);
 
-        assertFalse(graph.hasCycle());
+        assertFalse(directedGraph.hasCycle());
     }
 
     @DisplayName("toString - " +
@@ -487,7 +487,7 @@ class GraphTest {
             "Should return an empty string")
     @Test
     void toString_emptyGraph_returnEmptyString() {
-        assertEquals("", graph.toString());
+        assertEquals("", directedGraph.toString());
     }
 
     @DisplayName("toString - " +
@@ -495,9 +495,9 @@ class GraphTest {
             "Should return the correct string representation")
     @Test
     void toString_graphWithOneVertexWithoutNeighbors_returnCorrectStringRepresentation() {
-        graph.addVertex(10);
+        directedGraph.addVertex(10);
 
-        assertEquals("10: []", graph.toString());
+        assertEquals("10: []", directedGraph.toString());
     }
 
     @DisplayName("toString - " +
@@ -505,14 +505,14 @@ class GraphTest {
             "Should return the correct string representation")
     @Test
     void toString_graphWithMultipleVerticesWithoutNeighbors_returnCorrectStringRepresentation() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
 
         assertEquals("""
                 10: []
                 20: []
-                30: []""", graph.toString());
+                30: []""", directedGraph.toString());
     }
 
     @DisplayName("toString - " +
@@ -520,15 +520,15 @@ class GraphTest {
             "Should return the correct string representation")
     @Test
     void toString_graphWithVerticesAndNeighbors_returnCorrectStringRepresentation() {
-        graph.addVertex(10);
-        graph.addVertex(20);
-        graph.addVertex(30);
-        graph.addEdge(10, 20);
-        graph.addEdge(20, 30);
+        directedGraph.addVertex(10);
+        directedGraph.addVertex(20);
+        directedGraph.addVertex(30);
+        directedGraph.addEdge(10, 20);
+        directedGraph.addEdge(20, 30);
 
         assertEquals("""
                 10: [20]
                 20: [30]
-                30: []""", graph.toString());
+                30: []""", directedGraph.toString());
     }
 }

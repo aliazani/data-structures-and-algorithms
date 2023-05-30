@@ -1,14 +1,14 @@
-package io.github.aliazani.nonlinear.graph;
+package io.github.aliazani.nonlinear.graph.directed;
 
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Graph<T extends Comparable<T>> {
-    private final Map<T, GraphNode<T>> vertices;
-    private final Map<GraphNode<T>, List<GraphNode<T>>> adjacencyList;
+public class DirectedGraph<T extends Comparable<T>> {
+    private final Map<T, DirectedGraphNode<T>> vertices;
+    private final Map<DirectedGraphNode<T>, List<DirectedGraphNode<T>>> adjacencyList;
 
-    public Graph() {
+    public DirectedGraph() {
         vertices = new HashMap<>();
         adjacencyList = new HashMap<>();
     }
@@ -16,13 +16,13 @@ public class Graph<T extends Comparable<T>> {
     public void addVertex(T value) {
         if (value == null) throw new IllegalArgumentException();
 
-        GraphNode<T> node = new GraphNode<>(value);
+        DirectedGraphNode<T> node = new DirectedGraphNode<>(value);
         vertices.putIfAbsent(value, node);
         adjacencyList.putIfAbsent(node, new ArrayList<>());
     }
 
     public T removeVertex(T value) {
-        GraphNode<T> node = vertices.get(value);
+        DirectedGraphNode<T> node = vertices.get(value);
         if (node == null) throw new IllegalArgumentException();
 
         adjacencyList.keySet().forEach(n -> adjacencyList.get(n).remove(node));
@@ -33,38 +33,38 @@ public class Graph<T extends Comparable<T>> {
     }
 
     public void addEdge(T from, T to) {
-        GraphNode<T> fromNode = vertices.get(from);
-        GraphNode<T> toNode = vertices.get(to);
+        DirectedGraphNode<T> fromNode = vertices.get(from);
+        DirectedGraphNode<T> toNode = vertices.get(to);
         if (fromNode == null || toNode == null) throw new IllegalArgumentException();
 
         adjacencyList.get(fromNode).add(toNode);
     }
 
     public void removeEdge(T from, T to) {
-        GraphNode<T> fromNode = vertices.get(from);
-        GraphNode<T> toNode = vertices.get(to);
+        DirectedGraphNode<T> fromNode = vertices.get(from);
+        DirectedGraphNode<T> toNode = vertices.get(to);
         if (fromNode == null || toNode == null) throw new IllegalArgumentException();
 
         adjacencyList.get(fromNode).remove(toNode);
     }
 
     public List<T> findNeighbors(T value) {
-        GraphNode<T> node = vertices.get(value);
+        DirectedGraphNode<T> node = vertices.get(value);
         if (node == null) throw new IllegalArgumentException();
 
-        return adjacencyList.get(node).stream().map(GraphNode::getValue).toList();
+        return adjacencyList.get(node).stream().map(DirectedGraphNode::getValue).toList();
     }
 
     public boolean queryEdge(T from, T to) {
-        GraphNode<T> fromNode = vertices.get(from);
-        GraphNode<T> toNode = vertices.get(to);
+        DirectedGraphNode<T> fromNode = vertices.get(from);
+        DirectedGraphNode<T> toNode = vertices.get(to);
         if (fromNode == null || toNode == null) throw new IllegalArgumentException();
 
         return adjacencyList.get(fromNode).contains(toNode);
     }
 
     public String traverseDepthFirst(T vertex) {
-        GraphNode<T> node = vertices.get(vertex);
+        DirectedGraphNode<T> node = vertices.get(vertex);
         if (node == null) throw new IllegalArgumentException();
 
         StringBuilder strBuilder = new StringBuilder();
@@ -74,7 +74,7 @@ public class Graph<T extends Comparable<T>> {
         return strBuilder.toString();
     }
 
-    private void traverseDepthFirst(GraphNode<T> node, Set<GraphNode<T>> visited, StringBuilder strBuilder) {
+    private void traverseDepthFirst(DirectedGraphNode<T> node, Set<DirectedGraphNode<T>> visited, StringBuilder strBuilder) {
         strBuilder.append(node.getValue()).append(", ");
         visited.add(node);
 
@@ -84,22 +84,22 @@ public class Graph<T extends Comparable<T>> {
     }
 
     public String traverseDepthFirst2(T vertex) {
-        GraphNode<T> node = vertices.get(vertex);
+        DirectedGraphNode<T> node = vertices.get(vertex);
         if (node == null) throw new IllegalArgumentException();
 
-        Set<GraphNode<T>> visited = new HashSet<>();
+        Set<DirectedGraphNode<T>> visited = new HashSet<>();
         StringBuilder strBuilder = new StringBuilder();
-        Deque<GraphNode<T>> stack = new ArrayDeque<>();
+        Deque<DirectedGraphNode<T>> stack = new ArrayDeque<>();
         stack.push(node);
 
         while (!stack.isEmpty()) {
-            GraphNode<T> current = stack.pop();
+            DirectedGraphNode<T> current = stack.pop();
             if (visited.contains(current)) continue;
 
             visited.add(current);
             strBuilder.append(current.getValue()).append(", ");
 
-            List<GraphNode<T>> unvisitedNeighbors = adjacencyList.get(current).stream()
+            List<DirectedGraphNode<T>> unvisitedNeighbors = adjacencyList.get(current).stream()
                     .filter(n -> !visited.contains(n))
                     .toList();
 
@@ -111,23 +111,23 @@ public class Graph<T extends Comparable<T>> {
     }
 
     public String traverseBreadthFirst(T vertex) {
-        GraphNode<T> node = vertices.get(vertex);
+        DirectedGraphNode<T> node = vertices.get(vertex);
         if (node == null) throw new IllegalArgumentException();
 
         StringBuilder strBuilder = new StringBuilder();
-        Set<GraphNode<T>> visited = new HashSet<>();
-        Queue<GraphNode<T>> queue = new ArrayDeque<>();
+        Set<DirectedGraphNode<T>> visited = new HashSet<>();
+        Queue<DirectedGraphNode<T>> queue = new ArrayDeque<>();
         queue.offer(node);
 
 
         while (!queue.isEmpty()) {
-            GraphNode<T> current = queue.poll();
+            DirectedGraphNode<T> current = queue.poll();
             if (visited.contains(current)) continue;
 
             visited.add(current);
             strBuilder.append(current.getValue()).append(", ");
 
-            List<GraphNode<T>> unvisitedNeighbors = adjacencyList.get(current).stream()
+            List<DirectedGraphNode<T>> unvisitedNeighbors = adjacencyList.get(current).stream()
                     .filter(n -> !visited.contains(n))
                     .toList();
 
@@ -140,16 +140,16 @@ public class Graph<T extends Comparable<T>> {
 
     public List<T> topologicalSort() {
         if (hasCycle()) throw new IllegalStateException();
-        Deque<GraphNode<T>> stack = new ArrayDeque<>();
-        Set<GraphNode<T>> visited = new HashSet<>();
+        Deque<DirectedGraphNode<T>> stack = new ArrayDeque<>();
+        Set<DirectedGraphNode<T>> visited = new HashSet<>();
         vertices.values()
                 .forEach(n -> topologicalSort(n, visited, stack));
 
         return stack.stream().map(n -> stack.pop().getValue()).toList();
     }
 
-    private void topologicalSort(GraphNode<T> node, Set<GraphNode<T>> visited,
-                                 Deque<GraphNode<T>> stack) {
+    private void topologicalSort(DirectedGraphNode<T> node, Set<DirectedGraphNode<T>> visited,
+                                 Deque<DirectedGraphNode<T>> stack) {
         if (visited.contains(node)) return;
         visited.add(node);
 
@@ -160,15 +160,15 @@ public class Graph<T extends Comparable<T>> {
     }
 
     public boolean hasCycle() {
-        Set<GraphNode<T>> all = new HashSet<>(vertices.values());
-        Set<GraphNode<T>> visiting = new HashSet<>();
-        Set<GraphNode<T>> visited = new HashSet<>();
+        Set<DirectedGraphNode<T>> all = new HashSet<>(vertices.values());
+        Set<DirectedGraphNode<T>> visiting = new HashSet<>();
+        Set<DirectedGraphNode<T>> visited = new HashSet<>();
 
         return all.stream()
                 .anyMatch(node -> hasCycle(node, visiting, visited));
     }
 
-    private boolean hasCycle(GraphNode<T> node, Set<GraphNode<T>> visiting, Set<GraphNode<T>> visited) {
+    private boolean hasCycle(DirectedGraphNode<T> node, Set<DirectedGraphNode<T>> visiting, Set<DirectedGraphNode<T>> visited) {
         visiting.add(node);
 
         boolean hasCycle = adjacencyList.get(node).stream()
@@ -187,7 +187,7 @@ public class Graph<T extends Comparable<T>> {
                 .sorted(Comparator.comparing(entry -> entry.getKey().getValue()))
                 .map(entry -> MessageFormat.format("{0}: {1}"
                         , entry.getKey().getValue(), entry.getValue().stream()
-                                .map(GraphNode::getValue)
+                                .map(DirectedGraphNode::getValue)
                                 .toList()))
                 .collect(Collectors.joining("\n"));
     }
