@@ -104,6 +104,57 @@ public class UndirectedWeightedGraph<T extends Comparable<T>> {
                         || hasCycle(edge.to(), node, visited));
     }
 
+    public UndirectedWeightedGraph<T> getMinimumSpanningTree() {
+        if (!hasCycle()) throw new IllegalStateException();
+
+        UndirectedWeightedGraph<T> tree = new UndirectedWeightedGraph<>();
+
+        WeightedGraphNode<T> initialVertex = getInitialVertex();
+
+        if (initialVertex == null) return tree;
+
+        tree.addVertex(initialVertex.getValue());
+        PriorityQueue<WeightedGraphEdge<T>> edges = getSortedEdgesBasedOnTheirWeight(initialVertex);
+
+        while (tree.vertices.size() < vertices.size()) {
+            WeightedGraphEdge<T> minimumEdge = edges.remove();
+            WeightedGraphNode<T> toNode = minimumEdge.to();
+
+            if (containsVertex(tree, toNode)) continue;
+
+            tree.addVertex(toNode.getValue());
+            tree.addEdge(minimumEdge.from().getValue(), toNode.getValue(), minimumEdge.weight());
+
+            addNonVisitedEdges(edges, toNode, tree);
+        }
+
+        return tree;
+    }
+
+    private WeightedGraphNode<T> getInitialVertex() {
+        return vertices.values().stream().findFirst().orElse(null);
+    }
+
+    private PriorityQueue<WeightedGraphEdge<T>> getSortedEdgesBasedOnTheirWeight(WeightedGraphNode<T> vertex) {
+        PriorityQueue<WeightedGraphEdge<T>> edges =
+                new PriorityQueue<>(Comparator.comparingInt(WeightedGraphEdge::weight));
+        edges.addAll(vertex.getEdges().values());
+
+        return edges;
+    }
+
+    private boolean containsVertex(UndirectedWeightedGraph<T> tree, WeightedGraphNode<T> toNode) {
+        return tree.vertices.containsKey(toNode.getValue());
+    }
+
+    private void addNonVisitedEdges(PriorityQueue<WeightedGraphEdge<T>> edges, WeightedGraphNode<T> vertex,
+                                    UndirectedWeightedGraph<T> tree) {
+        edges.addAll(vertex.getEdges().values().stream()
+                .filter(edge -> !containsVertex(tree, edge.to()))
+                .toList());
+    }
+
+
     @Override
     public String toString() {
         return vertices.values().stream()

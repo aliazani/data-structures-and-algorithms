@@ -191,4 +191,126 @@ class UndirectedWeightedGraphTest {
 
         assertFalse(graph.hasCycle());
     }
+
+    @DisplayName("getMinimumSpanningTree - " +
+            "When graph has less than two vertices - " +
+            "Should throw IllegalStateException")
+    @Test
+    void getMinimumSpanningTree_lessThanTwoVertices_throwIllegalState() {
+        assertThrows(IllegalStateException.class, () -> graph.getMinimumSpanningTree());
+    }
+
+    @DisplayName("getMinimumSpanningTree - " +
+            "When graph has no edges - " +
+            "Should throw IllegalStateException")
+    @Test
+    void getMinimumSpanningTree_noEdges_throwIllegalState() {
+        graph.addVertex(1);
+        graph.addVertex(2);
+
+        assertThrows(IllegalStateException.class, () -> graph.getMinimumSpanningTree());
+    }
+
+    @DisplayName("getMinimumSpanningTree - " +
+            "When graph has vertices and edges - " +
+            "Should return the minimum spanning tree")
+    @Test
+    void getMinimumSpanningTree_hasVerticesAndEdges_returnMinimumSpanningTree() {
+        graph.addVertex(1);
+        graph.addVertex(2);
+        graph.addVertex(3);
+        graph.addEdge(1, 2, 5);
+        graph.addEdge(1, 3, 3);
+        graph.addEdge(2, 3, 2);
+
+        assertEquals("""
+                1: [(3, 3)]
+                2: [(3, 2)]
+                3: [(1, 3), (2, 2)]""", graph.getMinimumSpanningTree().toString());
+    }
+
+    @DisplayName("getMinimumSpanningTree - " +
+            "When graph has disconnected vertices - " +
+            "Should return the minimum spanning tree for each connected component")
+    @Test
+    void getMinimumSpanningTree_disconnectedVertices_returnMinimumSpanningTreeForEachComponent() {
+        graph.addVertex(1);
+        graph.addVertex(2);
+        graph.addVertex(3);
+        graph.addVertex(4);
+        graph.addVertex(5);
+        graph.addEdge(1, 2, 5);
+        graph.addEdge(2, 3, 3);
+        graph.addEdge(4, 5, 2);
+
+        assertThrows(IllegalStateException.class, () -> graph.getMinimumSpanningTree());
+    }
+
+    @DisplayName("toString - " +
+            "When graph is empty - " +
+            "Should return an empty string")
+    @Test
+    void toString_emptyGraph_returnEmptyString() {
+        assertEquals("", graph.toString());
+    }
+
+    @DisplayName("toString - " +
+            "When graph has one vertex with no edges - " +
+            "Should return the vertex with empty edge list")
+    @Test
+    void toString_graphWithOneVertexNoEdges_returnVertexWithEmptyEdgeList() {
+        graph.addVertex(1);
+
+        assertEquals("1: []", graph.toString());
+    }
+
+    @DisplayName("toString - " +
+            "When graph has multiple vertices with no edges - " +
+            "Should return each vertex with empty edge list")
+    @Test
+    void toString_graphWithMultipleVerticesNoEdges_returnVerticesWithEmptyEdgeLists() {
+        graph.addVertex(1);
+        graph.addVertex(2);
+        graph.addVertex(3);
+
+        assertEquals("""
+                1: []
+                2: []
+                3: []""", graph.toString());
+    }
+
+    @DisplayName("toString - " +
+            "When graph has vertices with edges - " +
+            "Should return each vertex with its edge list")
+    @Test
+    void toString_graphWithVerticesAndEdges_returnVerticesWithEdgeLists() {
+        graph.addVertex(1);
+        graph.addVertex(2);
+        graph.addVertex(3);
+        graph.addEdge(1, 2, 5);
+        graph.addEdge(2, 3, 3);
+
+        assertEquals("""
+                1: [(2, 5)]
+                2: [(1, 5), (3, 3)]
+                3: [(2, 3)]""", graph.toString());
+    }
+
+    @DisplayName("toString - " +
+            "When graph has vertices with multiple edges - " +
+            "Should return each vertex with its edge list")
+    @Test
+    void toString_graphWithVerticesAndMultipleEdges_returnVerticesWithEdgeLists() {
+        graph.addVertex(1);
+        graph.addVertex(2);
+        graph.addVertex(3);
+        graph.addEdge(1, 2, 5);
+        graph.addEdge(1, 3, 2);
+        graph.addEdge(2, 3, 3);
+
+        assertEquals("""
+                1: [(2, 5), (3, 2)]
+                2: [(1, 5), (3, 3)]
+                3: [(1, 2), (2, 3)]""", graph.toString());
+    }
 }
