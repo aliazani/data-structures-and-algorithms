@@ -14,6 +14,15 @@ public class Sorter<T extends Comparable<T>> {
         }
     }
 
+    public void selectionSort(T[] array) {
+        for (int i = 0; i < array.length; i++) {
+            int minIndex = i;
+            for (int j = i; j < array.length; j++)
+                if (array[j].compareTo(array[minIndex]) < 0) minIndex = j;
+            if (minIndex != i) swap(array, i, minIndex);
+        }
+    }
+
     private void swap(T[] items, int firstIndex, int secondIndex) {
         T temp = items[firstIndex];
         items[firstIndex] = items[secondIndex];

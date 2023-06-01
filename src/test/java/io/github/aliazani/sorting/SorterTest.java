@@ -64,4 +64,69 @@ class SorterTest {
 
         assertArrayEquals(new Integer[]{5}, array);
     }
+
+    @Test
+    @DisplayName("selectionSort - " +
+            "When sorting array with random elements - " +
+            "Should sort the array in ascending order")
+    void selectionSort_randomElements_sortsArrayInAscendingOrder() {
+        Integer[] array = {5, 2, 8, 1, 9, 3};
+        Integer[] expected = {1, 2, 3, 5, 8, 9};
+
+        sorter.selectionSort(array);
+
+        assertArrayEquals(expected, array);
+    }
+
+    @Test
+    @DisplayName("selectionSort - " +
+            "When sorting array with duplicate elements - " +
+            "Should sort the array with duplicates")
+    void selectionSort_duplicateElements_sortArrayWithDuplicateElements() {
+        Integer[] array = {3, 2, 1, 2, 3, 1};
+        Integer[] expected = {1, 1, 2, 2, 3, 3};
+
+        sorter.selectionSort(array);
+
+        assertArrayEquals(expected, array);
+    }
+
+    @Test
+    @DisplayName("selectionSort - " +
+            "When sorting array with already sorted elements - " +
+            "Should keep the elements in the same order")
+    void selectionSort_sortedArray_sortArrayWithAlreadySortedElements() {
+        Integer[] array = {1, 2, 3, 4, 5};
+        Integer[] expected = {1, 2, 3, 4, 5};
+
+        sorter.selectionSort(array);
+
+        assertArrayEquals(expected, array);
+    }
+
+    @Test
+    @DisplayName("selectionSort - " +
+            "When sorting array with single element - " +
+            "Should keep the element unchanged")
+    void selectionSort_singleElement_sortArrayWithSingleElement() {
+        Integer[] array = {5};
+        Integer[] expected = {5};
+
+        sorter.selectionSort(array);
+
+        assertArrayEquals(expected, array);
+    }
+
+    @Test
+    @DisplayName("selectionSort - " +
+            "When sorting empty array - " +
+            "Should keep the array empty")
+    void selectionSort_emptyArray_sortArrayWithNoElements() {
+        Integer[] array = {};
+        Integer[] expected = {};
+
+        sorter.selectionSort(array);
+
+        assertArrayEquals(expected, array);
+    }
 }
