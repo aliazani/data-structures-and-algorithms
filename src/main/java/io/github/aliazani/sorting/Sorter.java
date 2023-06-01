@@ -40,4 +40,36 @@ public class Sorter<T extends Comparable<T>> {
         items[firstIndex] = items[secondIndex];
         items[secondIndex] = temp;
     }
+
+    public void mergeSort(T[] array) {
+        if (array == null || array.length <= 1) return;
+
+        int mid = array.length / 2;
+
+        T[] left = (T[]) new Comparable[mid];
+        System.arraycopy(array, 0, left, 0, mid);
+
+        T[] right = (T[]) new Comparable[array.length - mid];
+        System.arraycopy(array, mid, right, 0, array.length - mid);
+
+        mergeSort(left);
+        mergeSort(right);
+
+        merge(array, left, right);
+    }
+
+    private void merge(T[] array, T[] left, T[] right) {
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        while (i < left.length && j < right.length) {
+            if (left[i].compareTo(right[j]) <= 0)
+                array[k++] = left[i++];
+            else array[k++] = right[j++];
+        }
+
+        while (i < left.length) array[k++] = left[i++];
+        while (j < right.length) array[k++] = right[j++];
+    }
 }

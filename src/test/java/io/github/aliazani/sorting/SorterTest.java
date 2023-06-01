@@ -179,4 +179,62 @@ class SorterTest {
         sorter.insertionSort(array);
         assertArrayEquals(new Integer[]{42}, array);
     }
+
+    @DisplayName("mergeSort - " +
+            "When sorting an empty array - " +
+            "Should return an empty array")
+    @Test
+    void mergeSort_emptyArray_returnEmptyArray() {
+        Integer[] array = {};
+
+        sorter.mergeSort(array);
+
+        assertArrayEquals(new Integer[]{}, array);
+    }
+
+    @DisplayName("mergeSort - " +
+            "When sorting an array with one element - " +
+            "Should return the same array")
+    @Test
+    void mergeSort_arrayWithOneElement_returnSameArray() {
+        Integer[] array = {1};
+
+        sorter.mergeSort(array);
+
+        assertArrayEquals(new Integer[]{1}, array);
+    }
+
+    @DisplayName("mergeSort - " +
+            "When sorting an array with multiple elements - " +
+            "Should return a sorted array")
+    @Test
+    void mergeSort_arrayWithMultipleElements_returnSortedArray() {
+        Integer[] array = {5, 3, 8, 2, 9, 1, 4, 7, 6};
+
+        sorter.mergeSort(array);
+
+        assertArrayEquals(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9}, array);
+    }
+
+    @DisplayName("mergeSort - " +
+            "When sorting an already sorted array - " +
+            "Should return the same sorted array")
+    @Test
+    void mergeSort_alreadySortedArray_returnSameSortedArray() {
+        Integer[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+        sorter.mergeSort(array);
+
+        assertArrayEquals(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9}, array);
+    }
+
+    @DisplayName("mergeSort - When sorting an array with duplicate elements - Should return a sorted array with duplicates")
+    @Test
+    void mergeSort_arrayWithDuplicateElements_returnsSortedArrayWithDuplicates() {
+        Integer[] array = {5, 3, 8, 2, 5, 1, 4, 3, 7, 6};
+
+        sorter.mergeSort(array);
+
+        assertArrayEquals(new Integer[]{1, 2, 3, 3, 4, 5, 5, 6, 7, 8}, array);
+    }
 }
