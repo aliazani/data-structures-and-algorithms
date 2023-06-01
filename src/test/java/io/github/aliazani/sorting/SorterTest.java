@@ -129,4 +129,54 @@ class SorterTest {
 
         assertArrayEquals(expected, array);
     }
+
+    @DisplayName("insertionSort - " +
+            "When array is already sorted in ascending order - " +
+            "Should keep the array unchanged")
+    @Test
+    void insertionSort_arraySortedAscending_noChange() {
+        Integer[] array = {1, 2, 3, 4, 5};
+        sorter.insertionSort(array);
+        assertArrayEquals(new Integer[]{1, 2, 3, 4, 5}, array);
+    }
+
+    @DisplayName("insertionSort - " +
+            "When array is already sorted in descending order - " +
+            "Should sort the array in ascending order")
+    @Test
+    void insertionSort_arraySortedDescending_sortAscending() {
+        Integer[] array = {5, 4, 3, 2, 1};
+        sorter.insertionSort(array);
+        assertArrayEquals(new Integer[]{1, 2, 3, 4, 5}, array);
+    }
+
+    @DisplayName("insertionSort - " +
+            "When array has duplicate elements - " +
+            "Should sort the array correctly")
+    @Test
+    void insertionSort_arrayWithDuplicateElements_sortCorrectly() {
+        Integer[] array = {3, 1, 4, 1, 5, 9, 2, 6, 5};
+        sorter.insertionSort(array);
+        assertArrayEquals(new Integer[]{1, 1, 2, 3, 4, 5, 5, 6, 9}, array);
+    }
+
+    @DisplayName("insertionSort - " +
+            "When array is empty - " +
+            "Should keep the array unchanged")
+    @Test
+    void insertionSort_emptyArray_noChange() {
+        Integer[] array = {};
+        sorter.insertionSort(array);
+        assertArrayEquals(new Integer[]{}, array);
+    }
+
+    @DisplayName("insertionSort - " +
+            "When array has a single element - " +
+            "Should keep the array unchanged")
+    @Test
+    void insertionSort_singleElementArray_noChange() {
+        Integer[] array = {42};
+        sorter.insertionSort(array);
+        assertArrayEquals(new Integer[]{42}, array);
+    }
 }
