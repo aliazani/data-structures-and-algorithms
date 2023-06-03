@@ -1,8 +1,6 @@
 package io.github.aliazani.sorting;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Sorter<T extends Comparable<T>> {
     public void bubbleSort(T[] array) {
@@ -108,5 +106,26 @@ public class Sorter<T extends Comparable<T>> {
         int k = 0;
         for (int i = 0; i < counts.length; i++)
             for (int j = 0; j < counts[i]; j++) array[k++] = i;
+    }
+
+    public void bucketSort(T[] array, int numberOfBuckets) {
+        int i = 0;
+        for (List<T> bucket : createBuckets(array, numberOfBuckets)) {
+            Collections.sort(bucket);
+            for (T item : bucket)
+                array[i++] = item;
+        }
+    }
+
+    private List<List<T>> createBuckets(T[] array, int numberOfBuckets) {
+        List<List<T>> buckets = new ArrayList<>();
+
+        for (var i = 0; i < numberOfBuckets; i++)
+            buckets.add(new ArrayList<>());
+
+        for (T item : array)
+            buckets.get(item.hashCode() / numberOfBuckets).add(item);
+
+        return buckets;
     }
 }

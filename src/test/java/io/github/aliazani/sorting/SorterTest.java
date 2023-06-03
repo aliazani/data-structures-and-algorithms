@@ -314,4 +314,43 @@ class SorterTest {
 
         assertArrayEquals(new int[]{5}, array);
     }
+
+    @DisplayName("bucketSort - " +
+            "When sorting an empty array - " +
+            "Should return an empty array")
+    @Test
+    void bucketSort_emptyArray_returnEmptyArray() {
+        Integer[] array = new Integer[0];
+        int numberOfBuckets = 5;
+
+        sorter.bucketSort(array, numberOfBuckets);
+
+        assertArrayEquals(new Integer[0], array);
+    }
+
+    @DisplayName("bucketSort - " +
+            "When sorting an already sorted array - " +
+            "Should return the same sorted array")
+    @Test
+    void bucketSort_alreadySortedArray_returnSameArray() {
+        Integer[] array = {1, 2, 3, 4, 5};
+        int numberOfBuckets = 5;
+
+        sorter.bucketSort(array, numberOfBuckets);
+
+        assertArrayEquals(new Integer[]{1, 2, 3, 4, 5}, array);
+    }
+
+    @DisplayName("bucketSort - " +
+            "When sorting an array with duplicate elements - " +
+            "Should return the sorted array")
+    @Test
+    void bucketSort_arrayWithDuplicates_returnSortedArray() {
+        Integer[] array = {4, 2, 1, 3, 2, 5, 4, 3};
+        int numberOfBuckets = 5;
+
+        sorter.bucketSort(array, numberOfBuckets);
+
+        assertArrayEquals(new Integer[]{1, 2, 2, 3, 3, 4, 4, 5}, array);
+    }
 }
