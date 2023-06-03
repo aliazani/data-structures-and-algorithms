@@ -60,4 +60,114 @@ class SearchTest {
 
         assertEquals(2, search.linearSearch(array, item));
     }
+
+    @DisplayName("binarySearch - " +
+            "When searching for an existing target in a sorted array - " +
+            "Should return the correct index")
+    @Test
+    void binarySearch_existingTarget_returnCorrectIndex() {
+        Integer[] array = {1, 3, 5, 7, 9, 11, 13};
+        int target = 7;
+
+        assertEquals(3, search.binarySearch(array, target));
+    }
+
+    @DisplayName("binarySearch - " +
+            "When searching for a non-existing target in a sorted array - " +
+            "Should return -1")
+    @Test
+    void binarySearch_nonExistingTarget_returnMinusOne() {
+        Integer[] array = {2, 4, 6, 8, 10};
+        int target = 5;
+
+        assertEquals(-1, search.binarySearchIterative(array, target));
+    }
+
+    @DisplayName("binarySearch - " +
+            "When searching for the first element in a sorted array - " +
+            "Should return the correct index")
+    @Test
+    void binarySearch_firstElement_returnCorrectIndex() {
+        Integer[] array = {1, 2, 3, 4, 5};
+        int target = 1;
+
+        assertEquals(0, search.binarySearch(array, target));
+    }
+
+    @DisplayName("binarySearch - " +
+            "When searching for the last element in a sorted array - " +
+            "Should return the correct index")
+    @Test
+    void binarySearch_lastElement_returnCorrectIndex() {
+        Integer[] array = {1, 2, 3, 4, 5};
+        int target = 5;
+
+        assertEquals(4, search.binarySearch(array, target));
+    }
+
+    @DisplayName("binarySearch - " +
+            "When searching in an empty array - " +
+            "Should return -1")
+    @Test
+    void binarySearch_emptyArray_returnMinusOne() {
+        Integer[] array = {};
+        int target = 10;
+
+        assertEquals(-1, search.binarySearch(array, target));
+    }
+
+    @DisplayName("binarySearchIterative - " +
+            "When searching for an existing target in a sorted array - " +
+            "Should return the correct index")
+    @Test
+    void binarySearchIterative_existingTarget_returnCorrectIndex() {
+        Integer[] array = {1, 3, 5, 7, 9, 11, 13};
+        int target = 7;
+
+        assertEquals(3, search.binarySearchIterative(array, target));
+    }
+
+    @DisplayName("binarySearchIterative - " +
+            "When searching for a non-existing target in a sorted array - " +
+            "Should return -1")
+    @Test
+    void binarySearchIterative_nonExistingTarget_returnMinusOne() {
+        Integer[] array = {2, 4, 6, 8, 10};
+        int target = 5;
+
+        assertEquals(-1, search.binarySearchIterative(array, target));
+    }
+
+    @DisplayName("binarySearchIterative - " +
+            "When searching for the first element in a sorted array - " +
+            "Should return the correct index")
+    @Test
+    void binarySearchIterative_firstElement_returnCorrectIndex() {
+        Integer[] array = {1, 2, 3, 4, 5};
+        int target = 1;
+
+        assertEquals(0, search.binarySearchIterative(array, target));
+    }
+
+    @DisplayName("binarySearchIterative - " +
+            "When searching for the last element in a sorted array - " +
+            "Should return the correct index")
+    @Test
+    void binarySearchIterative_lastElement_returnCorrectIndex() {
+        Integer[] array = {1, 2, 3, 4, 5};
+        int target = 5;
+
+        assertEquals(4, search.binarySearchIterative(array, target));
+    }
+
+    @DisplayName("binarySearchIterative - " +
+            "When searching in an empty array - " +
+            "Should return -1")
+    @Test
+    void binarySearchIterative_emptyArray_returnMinusOne() {
+        Integer[] array = {};
+        int target = 10;
+
+        assertEquals(-1, search.binarySearchIterative(array, target));
+    }
 }
