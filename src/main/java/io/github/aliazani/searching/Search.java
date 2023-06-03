@@ -37,4 +37,23 @@ public class Search<T extends Comparable<T>> {
         }
         return -1;
     }
+
+    public int ternarySearch(T[] array, T target) {
+        return ternarySearch(array, target, 0, array.length - 1);
+    }
+
+    private int ternarySearch(T[] array, T target, int left, int right) {
+        if (left > right) return -1;
+        int partitionSize = (right - left) / 3;
+        int mid1 = left + partitionSize;
+        int mid2 = right - partitionSize;
+
+        if (target.compareTo(array[mid1]) < 0) return ternarySearch(array, target, left, mid1 - 1);
+        else if (target.compareTo(array[mid1]) == 0) return mid1;
+        else if (target.compareTo(array[mid1]) > 0
+                &&
+                target.compareTo(array[mid2]) < 0) return ternarySearch(array, target, mid1 + 1, mid2 - 1);
+        else if (target.compareTo(array[mid2]) == 0) return mid2;
+        else return ternarySearch(array, target, mid2 + 1, right);
+    }
 }

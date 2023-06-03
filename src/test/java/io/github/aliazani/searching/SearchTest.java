@@ -170,4 +170,58 @@ class SearchTest {
 
         assertEquals(-1, search.binarySearchIterative(array, target));
     }
+
+    @Test
+    @DisplayName("ternarySearch - " +
+            "Element present in array - " +
+            "Should return index")
+    void ternarySearch_elementPresentInArray_returnIndex() {
+        Integer[] array = {1, 3, 5, 7, 9};
+        Integer target = 5;
+
+        assertEquals(2, search.ternarySearch(array, target));
+    }
+
+    @Test
+    @DisplayName("ternarySearch - " +
+            "Element not present in array - " +
+            "Should return -1")
+    void ternarySearch_elementNotPresentInArray_returnMinusOne() {
+        Integer[] array = {1, 3, 5, 7, 9};
+        Integer target = 4;
+
+        assertEquals(-1, search.ternarySearch(array, target));
+    }
+
+    @Test
+    @DisplayName("ternarySearch - " +
+            "Empty array - " +
+            "Should return -1")
+    void ternarySearch_emptyArray_returnsMinusOne() {
+        Integer[] array = {};
+        Integer target = 5;
+
+        assertEquals(-1, search.ternarySearch(array, target));
+    }
+
+    @Test
+    @DisplayName("ternarySearch - " +
+            "Single-element array, element present - " +
+            "Should return index 0")
+    void ternarySearch_singleElementArray_elementPresent_returnIndex() {
+        Integer[] array = {5};
+        Integer target = 5;
+
+        assertEquals(0, search.ternarySearch(array, target));
+    }
+
+    @Test
+    @DisplayName("ternarySearch - " +
+            "Single-element array, element not present - " +
+            "Should return -1")
+    void ternarySearch_singleElementArray_elementNotPresent_returnMinusOne() {
+        Integer[] array = {7};
+        Integer target = 5;
+        assertEquals(-1, search.ternarySearch(array, target));
+    }
 }
