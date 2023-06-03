@@ -79,4 +79,14 @@ public class Search<T extends Comparable<T>> {
                 .findFirst()
                 .orElse(-1);
     }
+
+    public int exponentialSearch(T[] array, T target) {
+        int bound = 1;
+        while (bound < array.length && target.compareTo(array[bound]) > 0) bound *= 2;
+
+        int left = bound / 2;
+        int right = Math.min(bound, array.length - 1);
+
+        return binarySearch(array, target, left, right);
+    }
 }

@@ -258,7 +258,7 @@ class SearchTest {
     @Test
     void jumpSearch_targetIsLastElement_returnLastIndex() {
         Integer[] array = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
-        assertEquals(array.length- 1, search.jumpSearch(array, 19));
+        assertEquals(array.length - 1, search.jumpSearch(array, 19));
     }
 
     @DisplayName("jumpSearch - " +
@@ -267,6 +267,55 @@ class SearchTest {
     @Test
     void jumpSearch_emptyArray_returnMinusOne() {
         Integer[] array = {};
-        assertEquals(- 1, search.jumpSearch(array, 5));
+        assertEquals(-1, search.jumpSearch(array, 5));
+    }
+
+    @DisplayName("Exponential search - " +
+            "When searching for an element in a sorted array - " +
+            "Should return the correct index")
+    @Test
+    void exponentialSearch_searchElementInSortedArray_returnCorrectIndex() {
+        Integer[] array = {1, 3, 5, 7, 9, 11, 13, 15, 17};
+        Integer target = 9;
+
+        assertEquals(4, search.exponentialSearch(array, target));
+    }
+
+    @DisplayName("Exponential search - " +
+            "When searching for an element not in a sorted array - " +
+            "Should return -1")
+    @Test
+    void exponentialSearch_searchElementNotInSortedArray_returnMinusOne() {
+        Integer[] array = {2, 4, 6, 8, 10, 12, 14, 16, 18};
+        Integer target = 7;
+
+        assertEquals(-1, search.exponentialSearch(array, target));
+    }
+
+    @DisplayName("exponentialSearch - " +
+            "When target is the first element of the array - " +
+            "Should return 0")
+    @Test
+    void exponentialSearch_targetIsFirstElement_returnZero() {
+        Integer[] array = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+        assertEquals(0, search.exponentialSearch(array, 1));
+    }
+
+    @DisplayName("exponentialSearch - " +
+            "When target is the last element of the array - " +
+            "Should return the last index")
+    @Test
+    void exponentialSearch_targetIsLastElement_returnLastIndex() {
+        Integer[] array = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+        assertEquals(array.length - 1, search.exponentialSearch(array, 19));
+    }
+
+    @DisplayName("exponentialSearch - " +
+            "When array is empty - " +
+            "Should return -1")
+    @Test
+    void exponentialSearch_emptyArray_returnMinusOne() {
+        Integer[] array = {};
+        assertEquals(-1, search.exponentialSearch(array, 5));
     }
 }
