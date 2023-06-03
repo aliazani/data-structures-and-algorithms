@@ -1,5 +1,9 @@
 package io.github.aliazani.sorting;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class Sorter<T extends Comparable<T>> {
     public void bubbleSort(T[] array) {
         boolean isSorted;
@@ -93,5 +97,16 @@ public class Sorter<T extends Comparable<T>> {
                 swap(array, i, ++boundary);
 
         return boundary;
+    }
+
+    public void countingSort(int[] array, int max) {
+        int[] counts = new int[max + 1];
+
+        for (int item : array)
+            counts[item]++;
+
+        int k = 0;
+        for (int i = 0; i < counts.length; i++)
+            for (int j = 0; j < counts[i]; j++) array[k++] = i;
     }
 }

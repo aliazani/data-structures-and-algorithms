@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 @DisplayName("Sorter")
@@ -280,5 +278,40 @@ class SorterTest {
         Integer[] array = {5, 2, 8, 2, 5};
         sorter.quickSort(array);
         assertArrayEquals(new Integer[]{2, 2, 5, 5, 8}, array);
+    }
+
+    @DisplayName("countingSort - " +
+            "When sorting an array with positive integers - " +
+            "Should sort the array in ascending order")
+    @Test
+    void countingSort_sortPositiveIntegers_sortArrayInAscendingOrder() {
+        int[] array = {5, 2, 8, 1, 9, 3, 9, 2, 2, 1, 4};
+        sorter.countingSort(array, 9);
+
+        assertArrayEquals(new int[]{1, 1, 2, 2, 2, 3, 4, 5, 8, 9, 9}, array);
+    }
+
+    @DisplayName("countingSort - " +
+            "When sorting an empty array - " +
+            "Should not change the array")
+    @Test
+    void countingSort_emptyArray_noChangeInArray() {
+        int[] array = {};
+
+        sorter.countingSort(array, 0);
+
+        assertArrayEquals(new int[]{}, array);
+    }
+
+    @DisplayName("countingSort - " +
+            "When sorting an array with single element - " +
+            "Should not change the array")
+    @Test
+    void countingSort_singleElementArray_noChangeInArray() {
+        int[] array = {5};
+
+        sorter.countingSort(array, 5);
+
+        assertArrayEquals(new int[]{5}, array);
     }
 }
