@@ -224,4 +224,49 @@ class SearchTest {
         Integer target = 5;
         assertEquals(-1, search.ternarySearch(array, target));
     }
+
+    @DisplayName("jumpSearch - " +
+            "When target exists in the array - " +
+            "Should return the correct index")
+    @Test
+    void jumpSearch_targetExists_returnCorrectIndex() {
+        Integer[] array = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+        assertEquals(4, search.jumpSearch(array, 9));
+    }
+
+    @DisplayName("jumpSearch - " +
+            "When target does not exist in the array - " +
+            "Should return -1")
+    @Test
+    void jumpSearch_targetDoesNotExist_returnMinusOne() {
+        Integer[] array = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+        assertEquals(-1, search.jumpSearch(array, 8));
+    }
+
+    @DisplayName("jumpSearch - " +
+            "When target is the first element of the array - " +
+            "Should return 0")
+    @Test
+    void jumpSearch_targetIsFirstElement_returnZero() {
+        Integer[] array = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+        assertEquals(0, search.jumpSearch(array, 1));
+    }
+
+    @DisplayName("jumpSearch - " +
+            "When target is the last element of the array - " +
+            "Should return the last index")
+    @Test
+    void jumpSearch_targetIsLastElement_returnLastIndex() {
+        Integer[] array = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+        assertEquals(array.length- 1, search.jumpSearch(array, 19));
+    }
+
+    @DisplayName("jumpSearch - " +
+            "When array is empty - " +
+            "Should return -1")
+    @Test
+    void jumpSearch_emptyArray_returnMinusOne() {
+        Integer[] array = {};
+        assertEquals(- 1, search.jumpSearch(array, 5));
+    }
 }

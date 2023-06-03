@@ -56,4 +56,27 @@ public class Search<T extends Comparable<T>> {
         else if (target.compareTo(array[mid2]) == 0) return mid2;
         else return ternarySearch(array, target, mid2 + 1, right);
     }
+
+    public int jumpSearch(T[] array, T target) {
+        int blockSize = (int) Math.sqrt(array.length);
+        int start = 0;
+        int next = blockSize;
+
+        while (start < array.length
+                &&
+                target.compareTo(array[next - 1]) > 0) {
+            start = next;
+            next += blockSize;
+            if (next > array.length) next = array.length;
+        }
+
+        return linearSearch(array, target, start, next);
+    }
+
+    private int linearSearch(T[] array, T target, int left, int right) {
+        return IntStream.range(left, right)
+                .filter(i -> array[i].compareTo(target) == 0)
+                .findFirst()
+                .orElse(-1);
+    }
 }
