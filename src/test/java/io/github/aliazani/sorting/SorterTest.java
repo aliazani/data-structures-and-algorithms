@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 @DisplayName("Sorter")
@@ -228,13 +230,55 @@ class SorterTest {
         assertArrayEquals(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9}, array);
     }
 
-    @DisplayName("mergeSort - When sorting an array with duplicate elements - Should return a sorted array with duplicates")
+    @DisplayName("mergeSort - " +
+            "When sorting an array with duplicate elements - " +
+            "Should return a sorted array with duplicates")
     @Test
-    void mergeSort_arrayWithDuplicateElements_returnsSortedArrayWithDuplicates() {
+    void mergeSort_arrayWithDuplicateElements_returnSortedArrayWithDuplicates() {
         Integer[] array = {5, 3, 8, 2, 5, 1, 4, 3, 7, 6};
 
         sorter.mergeSort(array);
 
         assertArrayEquals(new Integer[]{1, 2, 3, 3, 4, 5, 5, 6, 7, 8}, array);
+    }
+
+    @DisplayName("quickSort - " +
+            "When sorting an empty array - " +
+            "Should return an empty array")
+    @Test
+    void quickSort_emptyArray_returnsEmptyArray() {
+        Integer[] array = new Integer[0];
+        sorter.quickSort(array);
+        assertArrayEquals(new Integer[0], array);
+    }
+
+    @DisplayName("quickSort - " +
+            "When sorting an array with one element - " +
+            "Should return the same array")
+    @Test
+    void quickSort_arrayWithOneElement_returnSameArray() {
+        Integer[] array = {5};
+        sorter.quickSort(array);
+        assertArrayEquals(new Integer[]{5}, array);
+    }
+
+    @DisplayName("quickSort - " +
+            "When sorting an array with multiple elements - " +
+            "Should sort the array in ascending order")
+    @Test
+    void quickSort_arrayWithMultipleElements_sortArrayInAscendingOrder() {
+        Integer[] array = {9, 3, 7, 1, 5};
+        sorter.quickSort(array);
+        assertArrayEquals(new Integer[]{1, 3, 5, 7, 9}, array);
+    }
+
+    @DisplayName("quickSort - " +
+            "When sorting an array with duplicate elements - " +
+            "Should sort the array correctly")
+    @Test
+    void quickSort_arrayWithDuplicateElements_sortArrayCorrectly() {
+        Integer[] array = {5, 2, 8, 2, 5};
+        sorter.quickSort(array);
+        assertArrayEquals(new Integer[]{2, 2, 5, 5, 8}, array);
     }
 }

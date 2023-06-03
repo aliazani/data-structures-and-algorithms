@@ -72,4 +72,26 @@ public class Sorter<T extends Comparable<T>> {
         while (i < left.length) array[k++] = left[i++];
         while (j < right.length) array[k++] = right[j++];
     }
+
+    public void quickSort(T[] array) {
+        quickSort(array, 0, array.length - 1);
+    }
+
+    private void quickSort(T[] array, int start, int end) {
+        if (start >= end) return;
+        int boundary = partition(array, start, end);
+        quickSort(array, start, boundary - 1);
+        quickSort(array, boundary + 1, end);
+    }
+
+    private int partition(T[] array, int start, int end) {
+        T pivot = array[end];
+        int boundary = start - 1;
+
+        for (int i = start; i <= end; i++)
+            if (array[i].compareTo(pivot) <= 0)
+                swap(array, i, ++boundary);
+
+        return boundary;
+    }
 }
