@@ -225,6 +225,60 @@ class SearchTest {
         assertEquals(-1, search.ternarySearch(array, target));
     }
 
+    @DisplayName("Ternary Search - " +
+            "Target less than all elements - " +
+            "Should return -1")
+    @Test
+    void ternarySearch_targetLessThanAllElements_returnMinusOne() {
+        Integer[] array = {5, 10, 15, 20, 25};
+        assertEquals(-1, search.ternarySearch(array, 2));
+    }
+
+    @DisplayName("Ternary Search - " +
+            "Target equal to first middle element - " +
+            "Should return the correct index")
+    @Test
+    void ternarySearch_targetEqualToFirstMiddleElement_returnCorrectIndex() {
+        Integer[] array = {5, 10, 15, 20, 25};
+        assertEquals(1, search.ternarySearch(array, 10));
+    }
+
+    @DisplayName("Ternary Search - " +
+            "Target within range of middle elements - " +
+            "Should return -1")
+    @Test
+    void ternarySearch_targetWithinRangeOfMiddleElements_returnMinusOne() {
+        Integer[] array = {5, 10, 15, 20, 25};
+        assertEquals(-1, search.ternarySearch(array, 17));
+    }
+
+    @DisplayName("Ternary Search - " +
+            "Target equal to second middle element - " +
+            "Should return the correct index")
+    @Test
+    void ternarySearch_targetEqualToSecondMiddleElement_returnCorrectIndex() {
+        Integer[] array = {5, 10, 15, 20, 25};
+        assertEquals(3, search.ternarySearch(array, 20));
+    }
+
+    @DisplayName("Ternary Search - " +
+            "Target greater than all elements - " +
+            "Should return -1")
+    @Test
+    void ternarySearch_targetGreaterThanAllElements_returnMinusOne() {
+        Integer[] array = {5, 10, 15, 20, 25};
+        assertEquals(-1, search.ternarySearch(array, 30));
+    }
+
+    @DisplayName("Ternary Search - " +
+            "Target equal to last middle element - " +
+            "Should return the correct index")
+    @Test
+    void ternarySearch_targetEqualToLastMiddleElement_returnCorrectIndex() {
+        Integer[] array = {5, 10, 15, 20, 25};
+        assertEquals(4, search.ternarySearch(array, 25));
+    }
+
     @DisplayName("jumpSearch - " +
             "When target exists in the array - " +
             "Should return the correct index")
