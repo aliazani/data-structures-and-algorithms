@@ -4,6 +4,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class StringUtils {
+    private StringUtils() {
+    }
+
     public static int countVowels(String str) {
         Set<Character> vowels = Set.of('a', 'e', 'o', 'u', 'i');
         int count = 0;
@@ -83,4 +86,37 @@ public class StringUtils {
         return Arrays.equals(charArray1, charArray2);
     }
 
+    public static boolean areAnagrams2(String str1, String str2) {
+        if (str1.isEmpty() && str2.isEmpty()) return true;
+        else if (str1.isEmpty() || str2.isEmpty()) return false;
+
+        final int ENGLISH_ALPHABETS = 26;
+        int[] frequencies = new int[ENGLISH_ALPHABETS];
+
+        for (int i = 0; i < str1.length(); i++)
+            frequencies[str1.charAt(i) - 'a']++;
+
+        for (int i = 0; i < str2.length(); i++) {
+            int index = str2.charAt(i) - 'a';
+            if (frequencies[index] == 0) return false;
+
+            frequencies[index]--;
+        }
+
+        return true;
+    }
+
+    public static boolean isPalindrome(String str) {
+//        StringBuilder stringBuilder = new StringBuilder(str);
+//        stringBuilder.reverse();
+//        return stringBuilder.toString().equals(str);
+        String cleanedStr = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        int left = 0;
+        int right = cleanedStr.length() - 1;
+
+        while (left < right)
+            if (cleanedStr.charAt(left++) != cleanedStr.charAt(right--)) return false;
+
+        return true;
+    }
 }

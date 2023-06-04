@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StringUtilsTest {
-
     @DisplayName("countVowels - " +
             "When string is empty - " +
             "Should return 0")
@@ -261,5 +260,132 @@ class StringUtilsTest {
     void capitalize_emptyString_returnEmptyString() {
         String input = "";
         assertEquals("", StringUtils.capitalize(input));
+    }
+
+
+    @DisplayName("areAnagrams - " +
+            "When two strings are anagrams - " +
+            "Should return true")
+    @Test
+    void areAnagrams_twoAnagrams_returnTrue() {
+        String str1 = "listen";
+        String str2 = "silent";
+        assertTrue(StringUtils.areAnagrams(str1, str2));
+    }
+
+    @DisplayName("areAnagrams - " +
+            "When two strings are not anagrams - " +
+            "Should return false")
+    @Test
+    void areAnagrams_twoNonAnagrams_returnFalse() {
+        String str1 = "hello";
+        String str2 = "world";
+        assertFalse(StringUtils.areAnagrams(str1, str2));
+    }
+
+    @DisplayName("areAnagrams - " +
+            "When two strings have different lengths - " +
+            "Should return false")
+    @Test
+    void areAnagrams_differentLengths_returnFalse() {
+        String str1 = "abcd";
+        String str2 = "abcde";
+        assertFalse(StringUtils.areAnagrams(str1, str2));
+    }
+
+    @DisplayName("areAnagrams - " +
+            "When one or both strings are empty - " +
+            "Should return true")
+    @Test
+    void areAnagrams_oneOrBothEmptyStrings_returnTrue() {
+        String str1 = "";
+        String str2 = "";
+        assertTrue(StringUtils.areAnagrams(str1, str2));
+
+        String str3 = "";
+        String str4 = "abc";
+        assertFalse(StringUtils.areAnagrams(str3, str4));
+
+        String str5 = "def";
+        String str6 = "";
+        assertFalse(StringUtils.areAnagrams(str5, str6));
+    }
+
+    @DisplayName("areAnagrams2 - " +
+            "When two strings are anagrams - " +
+            "Should return true")
+    @Test
+    void areAnagrams2_twoAnagrams_returnTrue() {
+        String str1 = "listen";
+        String str2 = "silent";
+        assertTrue(StringUtils.areAnagrams2(str1, str2));
+    }
+
+    @DisplayName("areAnagrams2 - " +
+            "When two strings are not anagrams - " +
+            "Should return false")
+    @Test
+    void areAnagrams2_twoNonAnagrams_returnFalse() {
+        String str1 = "hello";
+        String str2 = "world";
+        assertFalse(StringUtils.areAnagrams2(str1, str2));
+    }
+
+    @DisplayName("areAnagrams2 - " +
+            "When two strings have different lengths - " +
+            "Should return false")
+    @Test
+    void areAnagrams2_differentLengths_returnFalse() {
+        String str1 = "abcd";
+        String str2 = "abcde";
+        assertFalse(StringUtils.areAnagrams2(str1, str2));
+    }
+
+    @DisplayName("areAnagrams2 - " +
+            "When one or both strings are empty - " +
+            "Should return true")
+    @Test
+    void areAnagrams2_oneOrBothEmptyStrings_returnTrue() {
+        String str1 = "";
+        String str2 = "";
+        assertTrue(StringUtils.areAnagrams2(str1, str2));
+
+        String str3 = "";
+        String str4 = "abc";
+        assertFalse(StringUtils.areAnagrams2(str3, str4));
+
+        String str5 = "def";
+        String str6 = "";
+        assertFalse(StringUtils.areAnagrams2(str5, str6));
+    }
+
+    @DisplayName("isPalindrome - " +
+            "When the input is an empty string - " +
+            "Should return true")
+    @Test
+    void isPalindrome_emptyString_returnTrue() {
+        assertTrue(StringUtils.isPalindrome(""));
+    }
+
+    @DisplayName("isPalindrome - " +
+            "When the input is a palindrome string - " +
+            "Should return true")
+    @Test
+    void isPalindrome_palindromeString_returnTrue() {
+        assertTrue(StringUtils.isPalindrome("racecar"));
+        assertTrue(StringUtils.isPalindrome("Madam"));
+        assertTrue(StringUtils.isPalindrome("A man, a plan, a canal: Panama"));
+        assertTrue(StringUtils.isPalindrome("12321"));
+    }
+
+    @DisplayName("isPalindrome - " +
+            "When the input is not a palindrome string - " +
+            "Should return false")
+    @Test
+    void isPalindrome_nonPalindromeString_returnFalse() {
+        assertFalse(StringUtils.isPalindrome("hello"));
+        assertFalse(StringUtils.isPalindrome("world"));
+        assertFalse(StringUtils.isPalindrome("OpenAI"));
+        assertFalse(StringUtils.isPalindrome("12345"));
     }
 }
