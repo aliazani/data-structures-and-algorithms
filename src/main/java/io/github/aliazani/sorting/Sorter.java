@@ -2,7 +2,18 @@ package io.github.aliazani.sorting;
 
 import java.util.*;
 
+/**
+ * Utility class for various sorting algorithms.
+ *
+ * @param <T> the type of elements in the array to be sorted.
+ */
 public class Sorter<T extends Comparable<T>> {
+
+    /**
+     * Performs a bubble sort on the array.
+     *
+     * @param array the array to be sorted.
+     */
     public void bubbleSort(T[] array) {
         boolean isSorted;
         for (int i = 0; i < array.length; i++) {
@@ -16,6 +27,11 @@ public class Sorter<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * Performs a selection sort on the array.
+     *
+     * @param array the array to be sorted.
+     */
     public void selectionSort(T[] array) {
         for (int i = 0; i < array.length; i++) {
             int minIndex = i;
@@ -25,6 +41,11 @@ public class Sorter<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * Performs an insertion sort on the array.
+     *
+     * @param array the array to be sorted.
+     */
     public void insertionSort(T[] array) {
         for (int i = 1; i < array.length; i++) {
             T current = array[i];
@@ -43,6 +64,11 @@ public class Sorter<T extends Comparable<T>> {
         items[secondIndex] = temp;
     }
 
+    /**
+     * Performs a merge sort on the array.
+     *
+     * @param array the array to be sorted.
+     */
     public void mergeSort(T[] array) {
         if (array == null || array.length <= 1) return;
 
@@ -75,6 +101,11 @@ public class Sorter<T extends Comparable<T>> {
         while (j < right.length) array[k++] = right[j++];
     }
 
+    /**
+     * Performs a quick sort on the array.
+     *
+     * @param array the array to be sorted.
+     */
     public void quickSort(T[] array) {
         quickSort(array, 0, array.length - 1);
     }
@@ -97,6 +128,12 @@ public class Sorter<T extends Comparable<T>> {
         return boundary;
     }
 
+    /**
+     * Performs a counting sort on the array.
+     *
+     * @param array the array to be sorted.
+     * @param max   the maximum value in the array.
+     */
     public void countingSort(int[] array, int max) {
         int[] counts = new int[max + 1];
 
@@ -108,6 +145,12 @@ public class Sorter<T extends Comparable<T>> {
             for (int j = 0; j < counts[i]; j++) array[k++] = i;
     }
 
+    /**
+     * Performs a bucket sort on the array using the specified number of buckets.
+     *
+     * @param array           the array to be sorted.
+     * @param numberOfBuckets the number of buckets to use.
+     */
     public void bucketSort(T[] array, int numberOfBuckets) {
         int i = 0;
         for (List<T> bucket : createBuckets(array, numberOfBuckets)) {
