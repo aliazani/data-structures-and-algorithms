@@ -161,7 +161,7 @@ public class MyArray<T extends Comparable<T>> implements Iterable<T> {
      *
      * @param index The index of the element to return.
      * @return The element at the specified index in this MyArray object.
-     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size).
+     * @throws IndexOutOfBoundsException if the index is out of range (index {@literal <} 0 || index {@literal >}= size).
      */
     public T get(int index) {
         if (index < 0 || index >= size) throw new IndexOutOfBoundsException("Index out of bounds: " + index);
