@@ -2,7 +2,20 @@ package io.github.aliazani.searching;
 
 import java.util.stream.IntStream;
 
+/**
+ * Utility class for performing various searching algorithms on arrays.
+ *
+ * @param <T> the type of elements in the array.
+ */
 public class Search<T extends Comparable<T>> {
+
+    /**
+     * Performs linear search on the array to find the target element.
+     *
+     * @param array  the array to search.
+     * @param target the target element to find.
+     * @return the index of the target element if found, or -1 if not found.
+     */
     public int linearSearch(T[] array, T target) {
         return IntStream.range(0, array.length)
                 .filter(i -> array[i].compareTo(target) == 0)
@@ -10,6 +23,13 @@ public class Search<T extends Comparable<T>> {
                 .orElse(-1);
     }
 
+    /**
+     * Performs binary search on the sorted array to find the target element.
+     *
+     * @param array  the sorted array to search.
+     * @param target the target element to find.
+     * @return the index of the target element if found, or -1 if not found.
+     */
     public int binarySearch(T[] array, T target) {
         return binarySearch(array, target, 0, array.length - 1);
     }
@@ -25,6 +45,13 @@ public class Search<T extends Comparable<T>> {
         else return middle;
     }
 
+    /**
+     * Performs binary search on the sorted array to find the target element (iterative approach).
+     *
+     * @param array  the sorted array to search.
+     * @param target the target element to find.
+     * @return the index of the target element if found, or -1 if not found.
+     */
     public int binarySearchIterative(T[] array, T target) {
         int left = 0;
         int right = array.length - 1;
@@ -38,6 +65,13 @@ public class Search<T extends Comparable<T>> {
         return -1;
     }
 
+    /**
+     * Performs ternary search on the sorted array to find the target element.
+     *
+     * @param array  the sorted array to search.
+     * @param target the target element to find.
+     * @return the index of the target element if found, or -1 if not found.
+     */
     public int ternarySearch(T[] array, T target) {
         return ternarySearch(array, target, 0, array.length - 1);
     }
@@ -57,6 +91,13 @@ public class Search<T extends Comparable<T>> {
         else return ternarySearch(array, target, mid2 + 1, right);
     }
 
+    /**
+     * Performs jump search on the sorted array to find the target element.
+     *
+     * @param array  the sorted array to search.
+     * @param target the target element to find.
+     * @return the index of the target element if found, or -1 if not found.
+     */
     public int jumpSearch(T[] array, T target) {
         int blockSize = (int) Math.sqrt(array.length);
         int start = 0;
@@ -80,6 +121,13 @@ public class Search<T extends Comparable<T>> {
                 .orElse(-1);
     }
 
+    /**
+     * Performs an exponential search on the sorted array to find the target element.
+     *
+     * @param array  the sorted array to search.
+     * @param target the target element to find.
+     * @return the index of the target element if found, or -1 if not found.
+     */
     public int exponentialSearch(T[] array, T target) {
         int bound = 1;
         while (bound < array.length && target.compareTo(array[bound]) > 0) bound *= 2;
