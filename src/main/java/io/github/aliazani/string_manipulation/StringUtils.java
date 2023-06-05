@@ -3,10 +3,24 @@ package io.github.aliazani.string_manipulation;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
+/**
+ * Utility class for various string manipulation operations.
+ */
 public class StringUtils {
+
+    /**
+     * Private constructor to prevent instantiation of the class.
+     */
     private StringUtils() {
     }
 
+    /**
+     * Counts the number of vowels in a given string.
+     *
+     * @param str the string to count vowels in.
+     * @return the number of vowels in the string.
+     */
     public static int countVowels(String str) {
         Set<Character> vowels = Set.of('a', 'e', 'o', 'u', 'i');
         int count = 0;
@@ -16,6 +30,12 @@ public class StringUtils {
         return count;
     }
 
+    /**
+     * Reverses the characters in a given string.
+     *
+     * @param str the string to be reversed.
+     * @return the reversed string.
+     */
     public static String reverse(String str) {
         StringBuilder reversed = new StringBuilder();
         for (int i = str.length() - 1; i >= 0; i--)
@@ -24,6 +44,12 @@ public class StringUtils {
         return reversed.toString();
     }
 
+    /**
+     * Reverses the words in a given string.
+     *
+     * @param str the string to reverse the words of.
+     * @return the string with reversed words.
+     */
     public static String reverseWords(String str) {
         String[] words = str.trim().split(" ");
 
@@ -32,6 +58,13 @@ public class StringUtils {
         return String.join(" ", words);
     }
 
+    /**
+     * Checks if two strings are rotations of each other.
+     *
+     * @param str1 the first string.
+     * @param str2 the second string.
+     * @return true if the strings are rotations of each other, false otherwise.
+     */
     public static boolean areRotations(String str1, String str2) {
         if (str1.length() != str2.length()) return false;
         if (str1.isEmpty()) return true;
@@ -40,6 +73,12 @@ public class StringUtils {
         return index != -1 && index < length;
     }
 
+    /**
+     * Removes duplicate characters from a given string.
+     *
+     * @param str the string to remove duplicates from.
+     * @return the string with duplicate characters removed.
+     */
     public static String removeDuplicate(String str) {
         StringBuilder strBuilder = new StringBuilder();
         Set<Character> seen = new HashSet<>();
@@ -50,6 +89,12 @@ public class StringUtils {
         return strBuilder.toString();
     }
 
+    /**
+     * Finds the most repeated character in a given string.
+     *
+     * @param str the string to find the most repeated character in.
+     * @return the most repeated character, or null if the string is empty.
+     */
     public static Character findMostRepeatedCharacter(String str) {
 //        final int ASCII_SIZE = 256;
 //        int[] frequencies = new int[ASCII_SIZE];
@@ -67,6 +112,12 @@ public class StringUtils {
                 .orElse(null);
     }
 
+    /**
+     * Capitalizes the first letter of each word in a given string.
+     *
+     * @param str the string to capitalize.
+     * @return the string with capitalized words.
+     */
     public static String capitalize(String str) {
         if (str.trim().isEmpty()) return "";
 
@@ -75,6 +126,13 @@ public class StringUtils {
                 .collect(Collectors.joining(" "));
     }
 
+    /**
+     * Checks if two strings are anagrams of each other.
+     *
+     * @param str1 the first string.
+     * @param str2 the second string.
+     * @return true if the strings are anagrams, false otherwise.
+     */
     public static boolean areAnagrams(String str1, String str2) {
         if (str1.length() != str2.length()) return false;
 
@@ -86,6 +144,13 @@ public class StringUtils {
         return Arrays.equals(charArray1, charArray2);
     }
 
+    /**
+     * Checks if two strings are anagrams of each other.
+     *
+     * @param str1 the first string.
+     * @param str2 the second string.
+     * @return true if the strings are anagrams, false otherwise.
+     */
     public static boolean areAnagrams2(String str1, String str2) {
         if (str1.isEmpty() && str2.isEmpty()) return true;
         else if (str1.isEmpty() || str2.isEmpty()) return false;
@@ -106,6 +171,12 @@ public class StringUtils {
         return true;
     }
 
+    /**
+     * Checks if a given string is a palindrome.
+     *
+     * @param str the string to check.
+     * @return true if the string is a palindrome, false otherwise.
+     */
     public static boolean isPalindrome(String str) {
 //        StringBuilder stringBuilder = new StringBuilder(str);
 //        stringBuilder.reverse();
