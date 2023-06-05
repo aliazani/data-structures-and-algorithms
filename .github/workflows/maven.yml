@@ -28,7 +28,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: test with Maven
-      run: mvn -B test --file pom.xml
+      run: mvn -B install --file pom.xml
+    - name: Generate Jacoco Test Coverage Report
+      run: mvn jacoco:report
+    - name: Generate JavaDoc
+      run: mvn javadoc:javadoc
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
