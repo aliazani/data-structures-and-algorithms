@@ -4,19 +4,41 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Represents an undirected weighted graph.
+ *
+ * @param <T> the type of nodes in the graph.
+ */
 public class UndirectedWeightedGraph<T extends Comparable<T>> {
     private final Map<T, WeightedGraphNode<T>> vertices;
 
+    /**
+     * Constructs an empty undirected weighted graph.
+     */
     public UndirectedWeightedGraph() {
         vertices = new HashMap<>();
     }
 
+    /**
+     * Adds a vertex to the graph.
+     *
+     * @param value the value of the vertex to add.
+     * @throws IllegalArgumentException if the value is null.
+     */
     public void addVertex(T value) {
         if (value == null) throw new IllegalArgumentException();
 
         vertices.putIfAbsent(value, new WeightedGraphNode<>(value));
     }
 
+    /**
+     * Adds an edge between two vertices in the graph.
+     *
+     * @param from   the value of the source vertex.
+     * @param to     the value of the target vertex.
+     * @param weight the weight of the edge.
+     * @throws IllegalArgumentException if either of the vertices is not present in the graph.
+     */
     public void addEdge(T from, T to, int weight) {
         WeightedGraphNode<T> fromNode = vertices.get(from);
         WeightedGraphNode<T> toNode = vertices.get(to);
@@ -26,6 +48,14 @@ public class UndirectedWeightedGraph<T extends Comparable<T>> {
         toNode.addEdge(fromNode, weight);
     }
 
+    /**
+     * Gets the shortest path between two vertices in the graph using Dijkstra's algorithm.
+     *
+     * @param from the value of the source vertex.
+     * @param to   the value of the target vertex.
+     * @return the shortest path as a Path object.
+     * @throws IllegalArgumentException if either of the vertices is not present in the graph.
+     */
     public Path<T> getShortestPath(T from, T to) {
         WeightedGraphNode<T> fromNode = vertices.get(from);
         WeightedGraphNode<T> toNode = vertices.get(to);
@@ -83,6 +113,12 @@ public class UndirectedWeightedGraph<T extends Comparable<T>> {
         return path;
     }
 
+
+    /**
+     * Checks if the graph contains cycles.
+     *
+     * @return true if cycles exist, false otherwise.
+     */
     public boolean hasCycle() {
         HashSet<WeightedGraphNode<T>> visited = new HashSet<>();
 
@@ -104,6 +140,12 @@ public class UndirectedWeightedGraph<T extends Comparable<T>> {
                         || hasCycle(edge.to(), node, visited));
     }
 
+    /**
+     * Gets the minimum spanning tree of the graph using Prim's algorithm.
+     *
+     * @return the minimum spanning tree as a new UndirectedWeightedGraph.
+     * @throws IllegalStateException if the graph contains cycles.
+     */
     public UndirectedWeightedGraph<T> getMinimumSpanningTree() {
         if (!hasCycle()) throw new IllegalStateException();
 
@@ -154,7 +196,11 @@ public class UndirectedWeightedGraph<T extends Comparable<T>> {
                 .toList());
     }
 
-
+    /**
+     * Returns a string representation of the graph.
+     *
+     * @return a string representation of the graph.
+     */
     @Override
     public String toString() {
         return vertices.values().stream()
